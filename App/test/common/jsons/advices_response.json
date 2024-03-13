@@ -1,0 +1,26 @@
+{
+    "totalItems": 3,
+    "advices": [
+      {
+        "id": "254f3e7f-2784-4968-bb22-1263172c2666",
+        "idUser": "admin",
+        "idPlant": null,
+        "name": "Rose",
+        "advice1": "Ne pas enlever les épines"
+      },
+      {
+        "id": "cb83522e-6424-4f0d-a8bf-9a3e48aa1c25",
+        "idUser": "admin",
+        "idPlant": null,
+        "name": "Tournesol",
+        "advice1": "On peut manger les graines, ou en faire de l'huile"
+      },
+      {
+        "id": "57a55890-c755-4b6e-9928-f6bf41377bb4",
+        "idUser": "admin",
+        "idPlant": null,
+        "name": "Muguet",
+        "advice1": "C'est toxic"
+      }
+    ]
+  }
