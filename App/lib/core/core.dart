@@ -13,6 +13,9 @@ export 'package:get/get.dart';
 //l10n
 export "l10n/l10n.dart";
 
+//theme
+
+
 printDebug(String message) {
   if (kDebugMode) {
     print(message);
