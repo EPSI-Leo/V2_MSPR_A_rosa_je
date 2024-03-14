@@ -7,7 +7,7 @@ part of 'plants.dart';
 // **************************************************************************
 
 _$PlantsImpl _$$PlantsImplFromJson(Map<String, dynamic> json) => _$PlantsImpl(
-      totalItems: json['totalItems'] as int?,
+      totalItems: json['totalItems'] as int,
       plants: (json['plants'] as List<dynamic>?)
           ?.map((e) => Plant.fromJson(e as Map<String, dynamic>))
           .toList(),

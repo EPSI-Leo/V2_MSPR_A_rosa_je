@@ -9,10 +9,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ArosajeContext>(options =>
+builder.Services.AddDbContext<Arosaje2Context>(options =>
 {
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+
+// Add configuration for JwtSettings
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
 
 var app = builder.Build();
 
@@ -30,4 +35,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

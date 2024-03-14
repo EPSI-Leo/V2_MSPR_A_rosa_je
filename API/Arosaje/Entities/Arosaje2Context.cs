@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Arosaje.Entities;
 
-public partial class ArosajeContext : DbContext
+public partial class Arosaje2Context : DbContext
 {
-    public ArosajeContext()
+    public Arosaje2Context()
     {
     }
 
-    public ArosajeContext(DbContextOptions<ArosajeContext> options)
+    public Arosaje2Context(DbContextOptions<Arosaje2Context> options)
         : base(options)
     {
     }
@@ -24,7 +24,6 @@ public partial class ArosajeContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     { }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Advice>(entity =>
@@ -54,20 +53,24 @@ public partial class ArosajeContext : DbContext
 
         modelBuilder.Entity<Plant>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity
+                .HasNoKey()
+                .ToTable("plants");
 
-            entity.ToTable("plants");
-
-            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.BeginAt)
                 .HasColumnType("date")
                 .HasColumnName("beginAt");
-            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Description)
+                .HasColumnType("text")
+                .HasColumnName("description");
             entity.Property(e => e.EndAt)
                 .HasColumnType("date")
                 .HasColumnName("endAt");
+            entity.Property(e => e.Id)
+                .HasMaxLength(191)
+                .HasColumnName("id");
             entity.Property(e => e.IdUser)
-                .HasMaxLength(255)
+                .HasMaxLength(191)
                 .HasColumnName("id_user");
             entity.Property(e => e.Latitude).HasColumnName("latitude");
             entity.Property(e => e.Longitude).HasColumnName("longitude");
@@ -86,6 +89,13 @@ public partial class ArosajeContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(191)
                 .HasColumnName("id");
+            entity.Property(e => e.Cgu).HasColumnName("CGU");
+            entity.Property(e => e.Password)
+                .HasMaxLength(100)
+                .HasColumnName("password");
+            entity.Property(e => e.Role)
+                .HasMaxLength(20)
+                .HasColumnName("role");
             entity.Property(e => e.Username)
                 .HasMaxLength(255)
                 .HasColumnName("username");

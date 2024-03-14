@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthStatus {
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
+  int get cgu => throw _privateConstructorUsedError;
   AuthAlertMessage get alertMessage => throw _privateConstructorUsedError;
   bool get isButtonActive => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
@@ -36,6 +37,7 @@ abstract class $AuthStatusCopyWith<$Res> {
   $Res call(
       {String username,
       String password,
+      int cgu,
       AuthAlertMessage alertMessage,
       bool isButtonActive,
       bool isLoading});
@@ -56,6 +58,7 @@ class _$AuthStatusCopyWithImpl<$Res, $Val extends AuthStatus>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? cgu = null,
     Object? alertMessage = null,
     Object? isButtonActive = null,
     Object? isLoading = null,
@@ -69,6 +72,10 @@ class _$AuthStatusCopyWithImpl<$Res, $Val extends AuthStatus>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      cgu: null == cgu
+          ? _value.cgu
+          : cgu // ignore: cast_nullable_to_non_nullable
+              as int,
       alertMessage: null == alertMessage
           ? _value.alertMessage
           : alertMessage // ignore: cast_nullable_to_non_nullable
@@ -96,6 +103,7 @@ abstract class _$$AuthStatusImplCopyWith<$Res>
   $Res call(
       {String username,
       String password,
+      int cgu,
       AuthAlertMessage alertMessage,
       bool isButtonActive,
       bool isLoading});
@@ -114,6 +122,7 @@ class __$$AuthStatusImplCopyWithImpl<$Res>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? cgu = null,
     Object? alertMessage = null,
     Object? isButtonActive = null,
     Object? isLoading = null,
@@ -127,6 +136,10 @@ class __$$AuthStatusImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      cgu: null == cgu
+          ? _value.cgu
+          : cgu // ignore: cast_nullable_to_non_nullable
+              as int,
       alertMessage: null == alertMessage
           ? _value.alertMessage
           : alertMessage // ignore: cast_nullable_to_non_nullable
@@ -149,6 +162,7 @@ class _$AuthStatusImpl implements _AuthStatus {
   _$AuthStatusImpl(
       {this.username = '',
       this.password = '',
+      this.cgu = 0,
       this.alertMessage = AuthAlertMessage.none,
       this.isButtonActive = false,
       this.isLoading = false});
@@ -161,6 +175,9 @@ class _$AuthStatusImpl implements _AuthStatus {
   final String password;
   @override
   @JsonKey()
+  final int cgu;
+  @override
+  @JsonKey()
   final AuthAlertMessage alertMessage;
   @override
   @JsonKey()
@@ -171,7 +188,7 @@ class _$AuthStatusImpl implements _AuthStatus {
 
   @override
   String toString() {
-    return 'AuthStatus(username: $username, password: $password, alertMessage: $alertMessage, isButtonActive: $isButtonActive, isLoading: $isLoading)';
+    return 'AuthStatus(username: $username, password: $password, cgu: $cgu, alertMessage: $alertMessage, isButtonActive: $isButtonActive, isLoading: $isLoading)';
   }
 
   @override
@@ -183,6 +200,7 @@ class _$AuthStatusImpl implements _AuthStatus {
                 other.username == username) &&
             (identical(other.password, password) ||
                 other.password == password) &&
+            (identical(other.cgu, cgu) || other.cgu == cgu) &&
             (identical(other.alertMessage, alertMessage) ||
                 other.alertMessage == alertMessage) &&
             (identical(other.isButtonActive, isButtonActive) ||
@@ -192,8 +210,8 @@ class _$AuthStatusImpl implements _AuthStatus {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, username, password, alertMessage, isButtonActive, isLoading);
+  int get hashCode => Object.hash(runtimeType, username, password, cgu,
+      alertMessage, isButtonActive, isLoading);
 
   @JsonKey(ignore: true)
   @override
@@ -206,6 +224,7 @@ abstract class _AuthStatus implements AuthStatus {
   factory _AuthStatus(
       {final String username,
       final String password,
+      final int cgu,
       final AuthAlertMessage alertMessage,
       final bool isButtonActive,
       final bool isLoading}) = _$AuthStatusImpl;
@@ -214,6 +233,8 @@ abstract class _AuthStatus implements AuthStatus {
   String get username;
   @override
   String get password;
+  @override
+  int get cgu;
   @override
   AuthAlertMessage get alertMessage;
   @override

@@ -12,9 +12,9 @@ namespace Arosaje.Controllers
     [ApiController]
     public class AdvicesController : ControllerBase
     {
-        private readonly ArosajeContext _context;
+        private readonly Arosaje2Context _context;
 
-        public AdvicesController(ArosajeContext context)
+        public AdvicesController(Arosaje2Context context)
         {
             _context = context;
         }

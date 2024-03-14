@@ -1,22 +1,29 @@
 ﻿using Arosaje.Entities;
+using BCrypt.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
-
 namespace Arosaje.ModelViews
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ArosajeContext _context;
+        private readonly Arosaje2Context _context;
+        private readonly JwtSettings _jwtSettings;
 
-        public UsersController(ArosajeContext context)
+        public UsersController(Arosaje2Context context, IOptions<JwtSettings> jwtSettings)
         {
             _context = context;
-        }
+           _jwtSettings = jwtSettings.Value; }
 
         // POST: api/Users/Register
         [HttpPost("Register")]
@@ -32,6 +39,9 @@ namespace Arosaje.ModelViews
             // Générer une clé unique aléatoire
             user.Id = Guid.NewGuid().ToString();
 
+            // Hacher le mot de passe avant de l'ajouter à la base de données
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
             // Ajouter l'utilisateur à la base de données
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -39,30 +49,59 @@ namespace Arosaje.ModelViews
             // Retourner la réponse avec l'ID de l'utilisateur
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, new { Id = user.Id, Message = "Utilisateur créé avec succès !" });
         }
-
-
         // POST: api/Users/Login
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Login([FromBody] User user)
+        public IActionResult Login([FromBody] LoginModel model)
         {
-            // Vérifier si l'utilisateur existe
-            var existingUser = _context.Users.FirstOrDefault(u => u.Username == user.Username);
+            // Récupérer l'utilisateur par son nom d'utilisateur
+            var existingUser = _context.Users.FirstOrDefault(u => u.Username == model.Username);
 
             if (existingUser == null)
             {
                 return NotFound("Utilisateur non trouvé.");
             }
 
-            // Vous pouvez ajouter d'autres vérifications ici (par exemple, vérifier le mot de passe)
-            // Pour l'instant, la vérification se fait uniquement sur le nom d'utilisateur.
+            // Vérifier le mot de passe haché
+            if (!BCrypt.Net.BCrypt.Verify(model.Password, existingUser.Password))
+            {
+                return NotFound("Mot de passe incorrect.");
+            }
 
-            // Retourner l'ID de l'utilisateur en tant que partie de la réponse
-            return Ok(new { Id = existingUser.Id, Message = "Connexion réussie !" });
+            // Générer le token JWT
+            var token = GenerateJwtToken(existingUser);
+
+            // Retourner l'ID de l'utilisateur et le token JWT en tant que partie de la réponse
+            return Ok(new { Id = existingUser.Id, Token = token, Message = "Connexion réussie !" });
         }
-    
 
+        public class LoginModel
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
+        private string GenerateJwtToken(User user)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+        new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    };
+
+            var token = new JwtSecurityToken(
+                issuer: "votre_issuer",
+                audience: "votre_audience",
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(4), 
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
         // GET: api/Users/GetUserById/{id}
         [HttpGet("GetUserById/{id}")]
@@ -95,7 +134,6 @@ namespace Arosaje.ModelViews
             return Ok(users);
         }
 
-
         // DELETE: api/Users/DeleteUser/{id}
         [HttpDelete("DeleteUser/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -109,16 +147,11 @@ namespace Arosaje.ModelViews
                 return NotFound("Utilisateur non trouvé.");
             }
 
-            // Remove the user from the database
+            // Supprimer l'utilisateur de la base de données
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return Ok(new { Message = "Utilisateur supprimé avec succès !" });
         }
-
-
     }
-
-
-
 }

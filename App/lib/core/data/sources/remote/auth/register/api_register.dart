@@ -24,8 +24,15 @@ class ApiRegister extends ApiClient {
   Future<bool?> register(
     String username,
     String password,
+    int cgu,
   ) async {
-    var body = {'id': '', 'username': username};
+    var body = {
+      'id': '',
+      'username': username,
+      'password': password,
+      'role': 'user',
+      'CGU': cgu
+    };
     return this.post('/api/Users/Register',
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',

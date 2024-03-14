@@ -6,7 +6,7 @@ part of 'notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$registerHash() => r'521d61050289b54b8a13e60295ef403da63bd164';
+String _$registerHash() => r'6a1804f2c6a0cb9dd49a6c134e9a18a2411951ab';
 
 /// See also [Register].
 @ProviderFor(Register)
@@ -21,7 +21,7 @@ final registerProvider =
 );
 
 typedef _$Register = AutoDisposeAsyncNotifier<bool>;
-String _$registerFormHash() => r'1f36abe2fa6ce132f262c8f0d7c4a7dfa6b43257';
+String _$registerFormHash() => r'0a06da11696fe1e2768b959f68d7d05eadc8e4aa';
 
 /// See also [RegisterForm].
 @ProviderFor(RegisterForm)
