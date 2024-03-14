@@ -23,6 +23,7 @@ class ApiRegister extends ApiClient {
 
   Future<bool?> register(
     String username,
+    String password,
   ) async {
     var body = {'id': '', 'username': username};
     return this.post('/api/Users/Register',

@@ -14,7 +14,10 @@ export 'package:get/get.dart';
 export "l10n/l10n.dart";
 
 //theme
-
+export 'theme/colors.dart';
+export 'theme/dimensions.dart';
+export 'theme/radius.dart';
+export 'theme/text_style.dart';
 
 printDebug(String message) {
   if (kDebugMode) {

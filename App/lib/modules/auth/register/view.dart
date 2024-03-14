@@ -18,14 +18,16 @@ class RegisterView extends ConsumerStatefulWidget {
 }
 
 class _RegisterViewState extends ConsumerState<RegisterView> {
-  final _register = TextEditingController();
+  final username = TextEditingController();
+  final password = TextEditingController();
 
   bool isChecked = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _register.dispose();
+    username.dispose();
+    password.dispose();
     super.dispose();
   }
 
@@ -84,23 +86,21 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   const AppGap.xxl(),
                   const AppGap.xs(),
                   TextFormField(
-                    controller: _register,
+                    controller: username,
                     onChanged: (value) {
                       ref
                           .read(registerFormProvider.notifier)
                           .setUsername(value);
                     },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelText: coreL10n.signinUsername,
-                      labelStyle: const TextStyle(color: Colors.black),
-                      hintText: coreL10n.signinUsernameSentence,
-                    ),
+                  ),
+                  const AppGap.small(),
+                  TextFormField(
+                    controller: password,
+                    onChanged: (value) {
+                      ref
+                          .read(registerFormProvider.notifier)
+                          .setPassword(value);
+                    },
                   ),
                   const AppGap.small(),
                   Padding(
@@ -120,7 +120,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                                     false) {
                                   ref
                                       .read(registerProvider.notifier)
-                                      .register(_register.text);
+                                      .register(username.text, password.text);
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               }

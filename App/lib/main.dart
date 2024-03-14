@@ -1,4 +1,5 @@
 import 'package:arosa_je/core/core.dart';
+import 'package:arosa_je/core/theme/material3/app_theme.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,7 @@ class MainApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate
       ],
+      theme: ArosajeTheme.lightTheme(),
       supportedLocales: CoreLocalizations.supportedLocales,
     );
   }
