@@ -14,6 +14,8 @@ class Register extends _$Register {
 
   Future<void> register(
     String username,
+    String password,
+    int cgu,
   ) async {
     state = const AsyncLoading();
     ref.read(registerFormProvider.notifier).setConnectionMessageError(
@@ -22,6 +24,8 @@ class Register extends _$Register {
     final registerRepository = ref.read(registerRepositoryProvider);
     state = await AsyncValue.guard(() => registerRepository.register(
           username,
+          password,
+          cgu,
         ));
   }
 }
@@ -49,6 +53,20 @@ class RegisterForm extends _$RegisterForm {
     isFieldsEmpty();
   }
 
+  void setPassword(String password) {
+    state = state.copyWith(
+      password: password,
+    );
+
+    isFieldsEmpty();
+  }
+
+  void setCGU(int cgu) {
+    state = state.copyWith(
+      cgu: cgu,
+    );
+  }
+
   void setIsButtonActive(bool isActive) {
     state = state.copyWith(
       isButtonActive: isActive,
@@ -60,7 +78,9 @@ class RegisterForm extends _$RegisterForm {
   }
 
   void isFieldsEmpty() {
-    setIsButtonActive(state.username.isNotEmpty);
+    setIsButtonActive(state.username.isNotEmpty &&
+        state.password.isNotEmpty &&
+        state.cgu == 1);
   }
 
   void setLoading(bool isLoading) {

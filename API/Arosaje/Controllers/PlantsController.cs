@@ -1,4 +1,4 @@
-﻿using Arosaje.Entities;  // Make sure to add the appropriate namespace for your entities
+﻿using Arosaje.Entities;
 using Arosaje.ModelViews;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +14,9 @@ namespace Arosaje.Controllers
     [ApiController]
     public class PlantsController : ControllerBase
     {
-        private readonly ArosajeContext _context;
+        private readonly Arosaje2Context _context;
 
-        public PlantsController(ArosajeContext context)
+        public PlantsController(Arosaje2Context context)
         {
             _context = context;
         }

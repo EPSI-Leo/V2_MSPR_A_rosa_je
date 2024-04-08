@@ -14,6 +14,8 @@ void main() {
   late MockRegisterRepository registerRepository;
 
   late String username;
+  late String password;
+  late int cgu;
   setUpAll(() {});
 
   setUp(() {
@@ -30,16 +32,26 @@ void main() {
   group('RegisterNotifier Tests', () {
     test('registerRepository called', () async {
       username = 'username';
+      password = 'password';
+      cgu = 1;
 
       when(() => registerRepository.register(
             username,
+            password,
+            cgu,
           )).thenAnswer((_) async => true);
 
       await container.read(registerProvider.notifier).register(
             username,
+            password,
+            cgu,
           );
 
-      verify(() => registerRepository.register(username)).called(1);
+      verify(() => registerRepository.register(
+            username,
+            password,
+            cgu,
+          )).called(1);
       final result = await container.read(registerProvider.future);
 
       expect(result, true);

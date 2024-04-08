@@ -18,11 +18,11 @@ class RegisterRepository {
   });
   final ApiRegister api;
 
-  Future<bool> register(
-    String username,
-  ) async {
+  Future<bool> register(String username, String password, int cgu) async {
     await api.register(
       username,
+      password,
+      cgu,
     );
 
     return true;
