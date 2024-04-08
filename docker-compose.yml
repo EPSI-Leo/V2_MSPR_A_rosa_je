@@ -10,7 +10,8 @@ services:
       MYSQL_PASSWORD: moi123
       MYSQL_ROOT_PASSWORD: aaaaaaaa
     volumes:
-      - /f/dev/bdd_mspr:/docker-entrypoint-initdb.d
+      - /c/dev/bdd_mspr:/docker-entrypoint-initdb.d
+      - volume_mspr:/var/lib/mysql
 
   api:
     build: ./API
@@ -19,3 +20,6 @@ services:
       - "8081:8081"
     depends_on:
       - db
+
+volumes:
+  volume_mspr:
