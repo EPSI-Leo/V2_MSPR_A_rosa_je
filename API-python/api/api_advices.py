@@ -3,9 +3,9 @@ from flask import Blueprint, jsonify, request
 from tools.middleware import token_required
 from tools.token_to_uuid import token_to_uuid
 
-api_advice = Blueprint('api_advice', __name__)
+api_advices = Blueprint('api_advices', __name__)
 
-@api_advice.route('/add_advice', methods=['POST'])
+@api_advices.route('/add_advice', methods=['POST'])
 @token_required
 def add_advice():
     try:
@@ -27,7 +27,7 @@ def add_advice():
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
-@api_advice.route('/delete_advice', methods=['DELETE'])
+@api_advices.route('/delete_advice', methods=['DELETE'])
 @token_required
 def delete_advice():
     try:
@@ -50,7 +50,7 @@ def delete_advice():
 
     except Exception as err:
         return jsonify({"error": str(err)}), 500
-@api_advice.route('/get_advices', methods=['GET'])
+@api_advices.route('/get_advices', methods=['GET'])
 @token_required
 def get_advices():
     try:
@@ -84,7 +84,7 @@ def get_advices():
         return jsonify({"error": str(err)}), 500
 
 
-@api_advice.route('/get_plant', methods=['GET'])
+@api_advices.route('/get_plant', methods=['GET'])
 @token_required
 def get_plant():
     try:

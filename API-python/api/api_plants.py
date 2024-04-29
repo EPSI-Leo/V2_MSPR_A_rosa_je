@@ -1,12 +1,13 @@
+import base64
 from config.database import close_database_connection, get_database_connection
 from flask import Blueprint, jsonify, request
 from tools.middleware import token_required
 from tools.token_to_uuid import token_to_uuid
 
-api_plant = Blueprint('api_plant', __name__)
+api_plants = Blueprint('api_plants', __name__)
 
 # Endpoint to add data to the database
-@api_plant.route('/add_plant', methods=['POST'])
+@api_plants.route('/add_plant', methods=['POST'])
 @token_required
 def add_plant():
     try:
@@ -30,7 +31,7 @@ def add_plant():
 
 
 # Endpoint to delete a feedback from the database
-@api_plant.route('/delete_plant', methods=['DELETE'])
+@api_plants.route('/delete_plant', methods=['DELETE'])
 @token_required
 def delete_plant():
     try:
@@ -54,7 +55,7 @@ def delete_plant():
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
-@api_plant.route('/get_plant', methods=['GET'])
+@api_plants.route('/get_plant', methods=['GET'])
 @token_required
 def get_plant():
     try:
@@ -91,8 +92,7 @@ def get_plant():
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
-
-@api_plant.route('/get_plants', methods=['GET'])
+@api_plants.route('/get_plants', methods=['GET'])
 @token_required
 def get_plants():
     try:
@@ -102,20 +102,22 @@ def get_plants():
         query = 'SELECT * FROM plants;'
 
         cursor, connection = get_database_connection()
-        cursor.execute(query, (id_user,))
+        cursor.execute(query)
         results = cursor.fetchall()
 
         close_database_connection(cursor, connection)
 
         plants = []
         for result in results:
+            picture_base64 = base64.b64encode(result[6]).decode('utf-8')
+
             plant = {
                 "id": result[0],
                 "name": result[2],
                 "beginAt": result[3],
                 "endAt": result[4],
                 "description": result[5],
-                "picture": result[6],
+                "picture": picture_base64,
                 "latitude": result[7],
                 "longitude": result[8]
             }
@@ -128,4 +130,3 @@ def get_plants():
 
     except Exception as err:
         return jsonify({"error": str(err)}), 500
-
