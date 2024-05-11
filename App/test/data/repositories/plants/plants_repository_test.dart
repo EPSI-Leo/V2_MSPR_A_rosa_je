@@ -1,5 +1,5 @@
-import 'package:arosa_je/core/data/entities/plant/plants.dart';
-import 'package:arosa_je/core/data/repositories/plants/add_plants/add_plants_repository.dart';
+/* import 'package:arosa_je/core/data/entities/plant/plants.dart';
+
 import 'package:arosa_je/core/data/repositories/plants/all_plants/all_plants_repository.dart';
 import 'package:arosa_je/core/data/repositories/plants/my_plants/my_plants_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,12 +8,11 @@ import 'package:mocktail/mocktail.dart';
 import '../../../common/mocked_classes.dart';
 
 void main() {
-  late AddPlantsRepository addPlants;
   late AllPlantsRepository allPlants;
   late MyPlantsRepository myPlants;
 
   late MockApiMyPlants apiMyPlants;
-  late MockApiAddPlants apiAddPlants;
+
   late MockApiAllPlants apiAllPlants;
 
   setUpAll(() {});
@@ -23,7 +22,7 @@ void main() {
     apiAddPlants = MockApiAddPlants();
     apiAllPlants = MockApiAllPlants();
 
-    addPlants = AddPlantsRepository(api: apiAddPlants);
+
     allPlants = AllPlantsRepository(api: apiAllPlants);
     myPlants = MyPlantsRepository(api: apiMyPlants);
   });
@@ -74,3 +73,4 @@ void main() {
     });
   });
 }
+ */

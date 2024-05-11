@@ -1,4 +1,4 @@
-import 'package:arosa_je/core/data/sources/remote/advices/api_advices.dart';
+/* import 'package:arosa_je/core/data/sources/remote/advices/api_advices.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../common/mocked_classes.dart';
@@ -63,3 +63,4 @@ void main() {
     });
   }); */
 }
+ */

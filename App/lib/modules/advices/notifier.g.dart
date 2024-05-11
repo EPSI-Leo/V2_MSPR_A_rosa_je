@@ -6,7 +6,7 @@ part of 'notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getAdvicesHash() => r'791968c9702915e4ea5ce454773c7ba7aaf1b853';
+String _$getAdvicesHash() => r'552566fa6137d34d181f82b535adca2b30c8ec79';
 
 /// See also [GetAdvices].
 @ProviderFor(GetAdvices)

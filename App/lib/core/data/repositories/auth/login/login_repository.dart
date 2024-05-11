@@ -26,15 +26,21 @@ class LoginRepository {
 
   Future<bool> login(
     String username,
+    String password,
   ) async {
     final response = await api.login(
       username,
+      password,
     );
 
     if (response != null) {
       await sessionManager.writeSecureStorage(
         SecureStorageKeys.userInfos,
         response.id.toString(),
+      );
+      await sessionManager.writeSecureStorage(
+        SecureStorageKeys.userInfos,
+        response.token.toString(),
       );
     }
     return true;

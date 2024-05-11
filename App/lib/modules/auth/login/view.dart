@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:arosa_je/core/api_client_exception.dart';
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/theme/app_spacing.dart';
-import 'package:arosa_je/modules/auth/login/notifier.dart';
 import 'package:arosa_je/modules/auth/login/model/auth_alert_message.dart';
+import 'package:arosa_je/modules/auth/login/notifier.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,14 +18,16 @@ class LoginView extends ConsumerStatefulWidget {
 }
 
 class _LoginViewState extends ConsumerState<LoginView> {
-  final _login = TextEditingController();
-
-  bool isChecked = false;
+  final TextEditingController _login = TextEditingController();
+  final TextEditingController _password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool obscureText = true;
 
   @override
   void dispose() {
     _login.dispose();
+    _password.dispose();
+    obscureText = true;
     super.dispose();
   }
 
@@ -80,27 +82,42 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
-                  const AppGap.xxl(),
                   Text(
                     coreL10n.signinSentence1,
                   ),
                   const AppGap.xs(),
                   TextFormField(
+                    decoration: InputDecoration(
+                      hintText: coreL10n.signinUsername,
+                      hintStyle: Theme.of(context).textTheme.bodyLarge,
+                    ),
                     controller: _login,
                     onChanged: (value) {
                       ref.read(loginFormProvider.notifier).setUsername(value);
                     },
+                  ),
+                  const AppGap.xs(),
+                  TextFormField(
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      hintText: coreL10n.signinPassword,
+                      hintStyle: Theme.of(context).textTheme.bodyLarge,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          obscureText ? Icons.visibility_off : Icons.visibility,
+                          color: AppColors.grey300,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            obscureText = !obscureText;
+                          });
+                        },
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelText: coreL10n.signinUsername,
-                      labelStyle: const TextStyle(color: Colors.black),
-                      hintText: coreL10n.signinUsernameSentence,
                     ),
+                    obscureText: obscureText,
+                    controller: _password,
+                    onChanged: (value) {
+                      ref.read(loginFormProvider.notifier).setPassword(value);
+                    },
                   ),
                   const AppGap.small(),
                   Padding(
@@ -120,7 +137,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                     false) {
                                   ref
                                       .read(loginProvider.notifier)
-                                      .login(_login.text);
+                                      .login(_login.text, _password.text);
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               }
@@ -152,7 +169,32 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
-                  const AppGap.xxl()
+                  if (ref.read(loginFormProvider.notifier).isError())
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: AppDimensions.large + AppDimensions.tiny),
+                      child: Center(
+                        child: Text(
+                          ref
+                              .read(loginFormProvider)
+                              .alertMessage
+                              .getErrorMessage(
+                                localizations: coreL10n,
+                              ),
+                          style: const TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (loginForm.isLoading)
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: AppDimensions.xxLarge),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
                 ],
               ),
             ),

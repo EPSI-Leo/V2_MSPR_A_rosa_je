@@ -17,10 +17,10 @@ namespace Arosaje.ModelViews
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly Arosaje2Context _context;
+        private readonly ArosajeContext _context;
         private readonly JwtSettings _jwtSettings;
 
-        public UsersController(Arosaje2Context context, IOptions<JwtSettings> jwtSettings)
+        public UsersController(ArosajeContext context, IOptions<JwtSettings> jwtSettings)
         {
             _context = context;
            _jwtSettings = jwtSettings.Value; }
@@ -36,10 +36,6 @@ namespace Arosaje.ModelViews
                 return Conflict("Ce nom d'utilisateur est déjà utilisé.");
             }
 
-            // Générer une clé unique aléatoire
-            user.Id = Guid.NewGuid().ToString();
-
-            // Hacher le mot de passe avant de l'ajouter à la base de données
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             // Ajouter l'utilisateur à la base de données
@@ -60,20 +56,20 @@ namespace Arosaje.ModelViews
 
             if (existingUser == null)
             {
-                return NotFound("Utilisateur non trouvé.");
+                return NotFound("Utilisateur ou mot de passe incorrect.");
             }
 
             // Vérifier le mot de passe haché
             if (!BCrypt.Net.BCrypt.Verify(model.Password, existingUser.Password))
             {
-                return NotFound("Mot de passe incorrect.");
+                return NotFound("Utilisateur ou mot de passe incorrect.");
             }
 
             // Générer le token JWT
             var token = GenerateJwtToken(existingUser);
 
             // Retourner l'ID de l'utilisateur et le token JWT en tant que partie de la réponse
-            return Ok(new { Id = existingUser.Id, Token = token, Message = "Connexion réussie !" });
+            return Ok(new { Id = existingUser.Id, Token = token });
         }
 
         public class LoginModel
@@ -86,22 +82,24 @@ namespace Arosaje.ModelViews
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
-            {
+            var claims = new List<Claim>
+    {
         new Claim(JwtRegisteredClaimNames.Sub, user.Username),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), 
     };
 
             var token = new JwtSecurityToken(
-                issuer: "votre_issuer",
-                audience: "votre_audience",
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(4), 
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.TokenLifetimeMinutes), 
                 signingCredentials: credentials
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
         // GET: api/Users/GetUserById/{id}
         [HttpGet("GetUserById/{id}")]
@@ -117,21 +115,6 @@ namespace Arosaje.ModelViews
             }
 
             return Ok(user);
-        }
-
-        // GET: api/Users/GetAllUsers
-        [HttpGet("GetAllUsers")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult GetAllUsers()
-        {
-            var users = _context.Users.ToList();
-
-            if (users == null || users.Count == 0)
-            {
-                return NotFound("Aucun utilisateur trouvé.");
-            }
-
-            return Ok(users);
         }
 
         // DELETE: api/Users/DeleteUser/{id}

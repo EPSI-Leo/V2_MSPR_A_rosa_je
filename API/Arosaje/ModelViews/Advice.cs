@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 
 namespace Arosaje.Entities;
@@ -14,4 +14,4 @@ public partial class Advice
     public string? Name { get; set; }
 
     public string? Advice1 { get; set; }
-}
+}*/

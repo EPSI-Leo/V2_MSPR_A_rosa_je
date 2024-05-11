@@ -12,9 +12,9 @@ namespace Arosaje.Controllers
     [ApiController]
     public class AdvicesController : ControllerBase
     {
-        private readonly Arosaje2Context _context;
+        private readonly ArosajeContext _context;
 
-        public AdvicesController(Arosaje2Context context)
+        public AdvicesController(ArosajeContext context)
         {
             _context = context;
         }
@@ -48,7 +48,6 @@ namespace Arosaje.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Advice advice)
         {
-            advice.Id = GenerateRandomId();
             _context.Advices.Add(advice);
             _context.SaveChanges();
 
@@ -95,7 +94,7 @@ namespace Arosaje.Controllers
 
         // GET: api/Advices/ByUser/5
         [HttpGet("ByUser/{idUser}")]
-        public IActionResult GetByUser(string idUser)
+        public IActionResult GetByUser(int idUser)
         {
             var userAdvices = _context.Advices.Where(a => a.IdUser == idUser).ToList();
             if (userAdvices == null || userAdvices.Count == 0)

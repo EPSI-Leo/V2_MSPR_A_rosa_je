@@ -45,8 +45,10 @@ class HomeDrawer extends ConsumerWidget {
             title: Text(coreL10n.disconnect,
                 style: const TextStyle(color: Colors.red)),
             onTap: () async {
-              await sessionManager
-                  .deleteMultipleSecureStorage([SecureStorageKeys.userInfos]);
+              await sessionManager.deleteMultipleSecureStorage([
+                SecureStorageKeys.userInfos,
+                SecureStorageKeys.token,
+              ]);
 
               context.goNamed(AppRoute.login.name);
             },

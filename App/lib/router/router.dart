@@ -1,4 +1,3 @@
-import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/modules/advices/add_advice/view.dart';
 import 'package:arosa_je/modules/advices/view.dart';
 import 'package:arosa_je/modules/app/app.dart';
@@ -26,50 +25,46 @@ GoRouter router(RouterRef ref) {
               path: AppRoute.login.path,
               name: AppRoute.login.name,
               builder: (context, state) => const LoginView(),
+            ),
+            GoRoute(
+                path: AppRoute.register.path,
+                name: AppRoute.register.name,
+                builder: (context, state) => const RegisterView()),
+            GoRoute(
+              path: AppRoute.home.path,
+              name: AppRoute.home.name,
+              builder: (context, state) {
+                return const HomeView();
+              },
               routes: [
                 GoRoute(
-                    path: AppRoute.register.path,
-                    name: AppRoute.register.name,
-                    builder: (context, state) => const RegisterView()),
+                    path: AppRoute.camera.path,
+                    name: AppRoute.camera.name,
+                    builder: (context, state) {
+                      return const CameraView(
+                        cameras: [],
+                      );
+                    }),
                 GoRoute(
-                  path: AppRoute.home.path,
-                  name: AppRoute.home.name,
+                  path: AppRoute.userPlantList.path,
+                  name: AppRoute.userPlantList.name,
                   builder: (context, state) {
-                    printDebug('Router: HomeView');
-
-                    return const HomeView();
+                    return const MyPlants();
+                  },
+                ),
+                GoRoute(
+                  path: AppRoute.advice.path,
+                  name: AppRoute.advice.name,
+                  builder: (context, state) {
+                    return const AdvicesView();
                   },
                   routes: [
                     GoRoute(
-                        path: AppRoute.camera.path,
-                        name: AppRoute.camera.name,
-                        builder: (context, state) {
-                          return const CameraView(
-                            cameras: [],
-                          );
-                        }),
-                    GoRoute(
-                      path: AppRoute.userPlantList.path,
-                      name: AppRoute.userPlantList.name,
+                      path: AppRoute.addAdvice.path,
+                      name: AppRoute.addAdvice.name,
                       builder: (context, state) {
-                        return const MyPlants();
+                        return const AddAdviceScreen();
                       },
-                    ),
-                    GoRoute(
-                      path: AppRoute.advice.path,
-                      name: AppRoute.advice.name,
-                      builder: (context, state) {
-                        return const AdvicesView();
-                      },
-                      routes: [
-                        GoRoute(
-                          path: AppRoute.addAdvice.path,
-                          name: AppRoute.addAdvice.name,
-                          builder: (context, state) {
-                            return const AddAdviceScreen();
-                          },
-                        ),
-                      ],
                     ),
                   ],
                 ),

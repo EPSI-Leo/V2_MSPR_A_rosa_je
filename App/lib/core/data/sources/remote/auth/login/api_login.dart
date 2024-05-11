@@ -24,8 +24,12 @@ class ApiLogin extends ApiClient {
 
   Future<LoginResponse?> login(
     String username,
+    String password,
   ) async {
-    var body = {'id': '', 'username': username};
+    var body = {
+      'username': username,
+      'password': password,
+    };
     return this.post('/api/Users/Login',
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',

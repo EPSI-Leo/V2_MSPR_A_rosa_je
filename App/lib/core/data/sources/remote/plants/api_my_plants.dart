@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:arosa_je/core/api_client.dart';
 import 'package:arosa_je/core/data/entities/plant/plants.dart';
 import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';

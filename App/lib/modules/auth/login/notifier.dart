@@ -14,6 +14,7 @@ class Login extends _$Login {
 
   Future<void> login(
     String username,
+    String password,
   ) async {
     state = const AsyncLoading();
     ref.read(loginFormProvider.notifier).setConnectionMessageError(
@@ -22,6 +23,7 @@ class Login extends _$Login {
     final loginRepository = ref.read(loginRepositoryProvider);
     state = await AsyncValue.guard(() => loginRepository.login(
           username,
+          password,
         ));
   }
 }
@@ -49,6 +51,14 @@ class LoginForm extends _$LoginForm {
     isFieldsEmpty();
   }
 
+  void setPassword(String passsword) {
+    state = state.copyWith(
+      password: passsword,
+    );
+
+    isFieldsEmpty();
+  }
+
   void setIsButtonActive(bool isActive) {
     state = state.copyWith(
       isButtonActive: isActive,
@@ -60,7 +70,7 @@ class LoginForm extends _$LoginForm {
   }
 
   void isFieldsEmpty() {
-    setIsButtonActive(state.username.isNotEmpty);
+    setIsButtonActive(state.username.isNotEmpty && state.password.isNotEmpty);
   }
 
   void setLoading(bool isLoading) {

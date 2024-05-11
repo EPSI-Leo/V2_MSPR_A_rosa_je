@@ -14,9 +14,9 @@ namespace Arosaje.Controllers
     [ApiController]
     public class PlantsController : ControllerBase
     {
-        private readonly Arosaje2Context _context;
+        private readonly ArosajeContext _context;
 
-        public PlantsController(Arosaje2Context context)
+        public PlantsController(ArosajeContext context)
         {
             _context = context;
         }
@@ -64,13 +64,8 @@ namespace Arosaje.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreatePlant([FromBody] Plant plant)
         {
-            // Assuming you want to associate the plant with a user
-            // You might want to validate user existence here
 
-            // Generate a unique ID for the plant
-            plant.Id = Guid.NewGuid().ToString();
 
-            // Add the plant to the database
             _context.Plants.Add(plant);
             await _context.SaveChangesAsync();
 
@@ -79,7 +74,7 @@ namespace Arosaje.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] Plant updatedPlant)
+        public IActionResult Put(int id, [FromBody] Plant updatedPlant)
         {
             if (id != updatedPlant.Id)
             {
@@ -135,7 +130,7 @@ namespace Arosaje.Controllers
         [HttpGet("GetPlantsByUserId/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetPlantsByUserId(string userId)
+        public IActionResult GetPlantsByUserId(int userId)
         {
             var plants = _context.Plants.Where(p => p.IdUser == userId).ToList();
 

@@ -6,7 +6,7 @@ part of 'notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginHash() => r'89d200ab7221c374c23e41bc1d72491c400a1194';
+String _$loginHash() => r'adb3bd05dc01c9100bb910a5d683c99f82bb822f';
 
 /// See also [Login].
 @ProviderFor(Login)
@@ -20,7 +20,7 @@ final loginProvider = AutoDisposeAsyncNotifierProvider<Login, bool>.internal(
 );
 
 typedef _$Login = AutoDisposeAsyncNotifier<bool>;
-String _$loginFormHash() => r'1c77c6a7bb0d3056a137c0c0ebc9b82f668df7e8';
+String _$loginFormHash() => r'd5453dd279ef98cf9879eca44b5a441270a66dd1';
 
 /// See also [LoginForm].
 @ProviderFor(LoginForm)

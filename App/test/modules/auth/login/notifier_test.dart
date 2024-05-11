@@ -12,6 +12,7 @@ void main() {
   late MockLoginRepository loginRepository;
 
   late String login;
+  late String password;
   setUpAll(() {});
 
   setUp(() {
@@ -28,16 +29,16 @@ void main() {
   group('LoginNotifier Tests', () {
     test('loginRepository called', () async {
       login = 'login';
+      password = 'password';
 
       when(() => loginRepository.login(
             login,
+            password,
           )).thenAnswer((_) async => true);
 
-      await container.read(loginProvider.notifier).login(
-            login,
-          );
+      await container.read(loginProvider.notifier).login(login, password);
 
-      verify(() => loginRepository.login(login)).called(1);
+      verify(() => loginRepository.login(login, password)).called(1);
       final result = await container.read(loginProvider.future);
 
       expect(result, true);
