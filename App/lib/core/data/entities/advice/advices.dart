@@ -7,7 +7,7 @@ part 'advices.g.dart';
 @freezed
 class Advices with _$Advices {
   const factory Advices({
-    required int? totalItems,
+    required int totalItems,
     required List<Advice>? advices,
   }) = _Advices;
 

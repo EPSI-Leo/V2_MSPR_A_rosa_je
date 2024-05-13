@@ -7,11 +7,11 @@ part of 'advice.dart';
 // **************************************************************************
 
 _$AdviceImpl _$$AdviceImplFromJson(Map<String, dynamic> json) => _$AdviceImpl(
-      id: json['id'] as String?,
-      idUser: json['idUser'] as String?,
-      idPlant: json['idPlant'] as String?,
-      name: json['name'] as String?,
-      advice1: json['advice1'] as String?,
+      id: json['id'] as int,
+      idUser: json['idUser'] as int,
+      idPlant: json['idPlant'] as int?,
+      name: json['name'] as String,
+      advice1: json['advice1'] as String,
     );
 
 Map<String, dynamic> _$$AdviceImplToJson(_$AdviceImpl instance) =>

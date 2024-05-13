@@ -79,7 +79,6 @@ namespace Arosaje.ModelViews
             // Récupérez l'ID de l'utilisateur à partir du token JWT
             var userId = User.FindFirst("UserId")?.Value;
 
-
             // Vérifiez si l'ID de l'utilisateur est présent dans le token JWT
             if (string.IsNullOrEmpty(userId))
             {
@@ -95,9 +94,21 @@ namespace Arosaje.ModelViews
                 return NotFound("Utilisateur non trouvé.");
             }
 
-            // Retournez les informations de l'utilisateur
-            return Ok(user);
+            // Exclure le mot de passe et l'ID des informations renvoyées
+            var userInfo = new
+            {
+                user.Id,
+                user.FirstName,
+                user.LastName,
+                user.Email,
+                user.Username,
+                user.Role
+            };
+
+            // Retournez les informations de l'utilisateur sans le mot de passe et l'ID
+            return Ok(userInfo);
         }
+
 
         // DELETE: api/Users/DeleteUser/{id}
         [HttpDelete("DeleteUser/{id}")]

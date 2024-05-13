@@ -105,6 +105,12 @@ class _CGUState extends ConsumerState<CGU> {
                     "En acceptant ces CGU lors de votre inscription, vous consentez à la collecte et à l'utilisation de vos données comme décrit ci-dessus. Vous avez le droit de nous contacter par mail pour toute demande de rétractation ou pour exercer vos droits d'accès, de rectification, et de suppression de vos données.",
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(left: AppDimensions.small),
+                  child: Text(
+                    "Aucune donnée ne sera transmise à des tiers sans votre consentement préalable.",
+                  ),
+                ),
               ],
             ),
           ),

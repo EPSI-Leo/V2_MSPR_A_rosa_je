@@ -1,5 +1,8 @@
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/advice/advice.dart';
+import 'package:arosa_je/core/data/entities/user/user.dart';
+import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
+import 'package:arosa_je/core/local/session_manager/session_manager.dart';
 import 'package:arosa_je/modules/advices/notifier.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +17,30 @@ class AdvicesView extends ConsumerStatefulWidget {
 }
 
 class _AdvicesViewState extends ConsumerState<AdvicesView> {
-  final Map<String, bool> _expandedState = {};
+  final Map<int, bool> _expandedState = {};
+
+  late User user;
+
+  getUserInfos() async {
+    final sessionManager = ref.read(sessionManagerProvider);
+    final userInfos =
+        await sessionManager.readSecureStorage(SecureStorageKeys.userInfos);
+    final user = User.fromString(userInfos!);
+    return user;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Utiliser 'await' pour attendre la résolution de l'objet 'user'
+    getUserInfos().then((value) {
+      setState(() {
+        user = value;
+        print(user);
+        print(user.role);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +66,7 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
               child: SingleChildScrollView(
                 child: ExpansionPanelList(
                   expansionCallback: (int index, bool isExpanded) {
-                    final adviceId = data[index].advice.id!;
+                    final adviceId = data[index].advice.id;
                     setState(() {
                       _expandedState[adviceId] = isExpanded;
                     });
@@ -49,33 +75,36 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
                     return ExpansionPanel(
                       headerBuilder: (BuildContext context, bool isExpanded) {
                         return ListTile(
-                          title: Text(item.advice.name!),
+                          title: Text(item.advice.name),
                         );
                       },
                       body: ListTile(
-                        title: Text(item.advice.advice1!),
+                        title: Text(item.advice.advice1),
                       ),
-                      isExpanded: _expandedState[item.advice.id!] ?? false,
+                      isExpanded: _expandedState[item.advice.id] ?? false,
                     );
                   }).toList(),
                 ),
               ),
             ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: FilledButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                ),
-                child: Text(coreL10n.addAdvice),
-                onPressed: () async {
-                  context.goNamed(AppRoute.addAdvice.name);
-                },
-              ),
-            ),
+            bottomNavigationBar: (user.role == 'role: admin' ||
+                    user.role == 'role: botaniste') //TODO à corriger ?
+                ? Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: FilledButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.green),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                      ),
+                      child: Text(coreL10n.addAdvice),
+                      onPressed: () async {
+                        context.goNamed(AppRoute.addAdvice.name);
+                      },
+                    ),
+                  )
+                : null,
           );
         }
         return const Text('No advices found');
@@ -83,7 +112,11 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
       loading: () => const Center(
         child: CircularProgressIndicator(color: Colors.black),
       ),
-      error: (error, stackTrace) => Text('Error: $error'),
+      error: (error, stackTrace) => Scaffold(
+          appBar: AppBar(
+            title: Text(coreL10n.advices),
+          ),
+          body: Center(child: Text('Une erreur est survenue : $error'))),
     );
   }
 }

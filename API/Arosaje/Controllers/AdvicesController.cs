@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Arosaje.Entities;
 using System.Numerics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Arosaje.Controllers
 {
@@ -21,6 +22,7 @@ namespace Arosaje.Controllers
 
         // GET: api/Advices
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
             var advices = _context.Advices.ToList();
@@ -33,50 +35,41 @@ namespace Arosaje.Controllers
             return Ok(response);
         }
 
-        // GET: api/Advices/5
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
-        {
-            var advice = _context.Advices.Find(id);
-            if (advice == null)
-                return NotFound();
-
-            return Ok(advice);
-        }
-
         // POST: api/Advices
         [HttpPost]
-        public IActionResult Post([FromBody] Advice advice)
+        [Authorize]
+        public IActionResult Post([FromBody] AdviceCreateRequest request)
         {
+            // Récupérez l'ID de l'utilisateur à partir du token JWT
+            var userId = User.FindFirst("UserId")?.Value;
+
+            // Vérifiez si l'ID de l'utilisateur est présent dans le token JWT
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("Utilisateur non autorisé.");
+            }
+
+            // Créez un nouvel objet Advice à partir des données de la demande et de l'ID utilisateur
+            var advice = new Advice
+            {
+                IdUser = Convert.ToInt32(userId),
+                Name = request.Name,
+                Advice1 = request.Advice1
+            };
+
             _context.Advices.Add(advice);
             _context.SaveChanges();
 
             return CreatedAtAction(nameof(Get), new { id = advice.Id }, advice);
         }
 
-        // Méthode pour générer un ID aléatoire sous forme de chaîne
-        private string GenerateRandomId()
+        public class AdviceCreateRequest
         {
-            return Guid.NewGuid().ToString();
+            public string Name { get; set; }
+            public string Advice1 { get; set; }
         }
 
-        // PUT: api/Advices/5
-        [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] Advice updatedAdvice)
-        {
-            var existingAdvice = _context.Advices.Find(id);
-            if (existingAdvice == null)
-                return NotFound();
 
-            existingAdvice.IdUser = updatedAdvice.IdUser;
-            existingAdvice.IdPlant = updatedAdvice.IdPlant;
-            existingAdvice.Name = updatedAdvice.Name;
-            existingAdvice.Advice1 = updatedAdvice.Advice1;
-
-            _context.SaveChanges();
-
-            return NoContent();
-        }
 
         // DELETE: api/Advices/5
         [HttpDelete("{id}")]

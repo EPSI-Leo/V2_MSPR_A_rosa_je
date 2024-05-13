@@ -96,7 +96,7 @@ class _AppState extends ConsumerState<App> {
       if (_locationPermissionChecked) {
         if (initialCenter != null) {
           if (isLoggedIn) {
-            context.goNamed(AppRoute.login.name); //TODO home
+            context.goNamed(AppRoute.home.name);
           } else {
             context.goNamed(AppRoute.login.name);
           }

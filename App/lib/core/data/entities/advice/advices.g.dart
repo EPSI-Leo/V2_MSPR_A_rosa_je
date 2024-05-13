@@ -8,7 +8,7 @@ part of 'advices.dart';
 
 _$AdvicesImpl _$$AdvicesImplFromJson(Map<String, dynamic> json) =>
     _$AdvicesImpl(
-      totalItems: json['totalItems'] as int?,
+      totalItems: json['totalItems'] as int,
       advices: (json['advices'] as List<dynamic>?)
           ?.map((e) => Advice.fromJson(e as Map<String, dynamic>))
           .toList(),

@@ -20,11 +20,11 @@ Advice _$AdviceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Advice {
-  String? get id => throw _privateConstructorUsedError;
-  String? get idUser => throw _privateConstructorUsedError;
-  String? get idPlant => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get advice1 => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  int get idUser => throw _privateConstructorUsedError;
+  int? get idPlant => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get advice1 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,12 +36,7 @@ abstract class $AdviceCopyWith<$Res> {
   factory $AdviceCopyWith(Advice value, $Res Function(Advice) then) =
       _$AdviceCopyWithImpl<$Res, Advice>;
   @useResult
-  $Res call(
-      {String? id,
-      String? idUser,
-      String? idPlant,
-      String? name,
-      String? advice1});
+  $Res call({int id, int idUser, int? idPlant, String name, String advice1});
 }
 
 /// @nodoc
@@ -57,33 +52,33 @@ class _$AdviceCopyWithImpl<$Res, $Val extends Advice>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? idUser = freezed,
+    Object? id = null,
+    Object? idUser = null,
     Object? idPlant = freezed,
-    Object? name = freezed,
-    Object? advice1 = freezed,
+    Object? name = null,
+    Object? advice1 = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      idUser: freezed == idUser
+              as int,
+      idUser: null == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       idPlant: freezed == idPlant
           ? _value.idPlant
           : idPlant // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
+              as int?,
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      advice1: freezed == advice1
+              as String,
+      advice1: null == advice1
           ? _value.advice1
           : advice1 // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -95,12 +90,7 @@ abstract class _$$AdviceImplCopyWith<$Res> implements $AdviceCopyWith<$Res> {
       __$$AdviceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? id,
-      String? idUser,
-      String? idPlant,
-      String? name,
-      String? advice1});
+  $Res call({int id, int idUser, int? idPlant, String name, String advice1});
 }
 
 /// @nodoc
@@ -114,33 +104,33 @@ class __$$AdviceImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? idUser = freezed,
+    Object? id = null,
+    Object? idUser = null,
     Object? idPlant = freezed,
-    Object? name = freezed,
-    Object? advice1 = freezed,
+    Object? name = null,
+    Object? advice1 = null,
   }) {
     return _then(_$AdviceImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      idUser: freezed == idUser
+              as int,
+      idUser: null == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       idPlant: freezed == idPlant
           ? _value.idPlant
           : idPlant // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
+              as int?,
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      advice1: freezed == advice1
+              as String,
+      advice1: null == advice1
           ? _value.advice1
           : advice1 // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -151,7 +141,7 @@ class _$AdviceImpl implements _Advice {
   const _$AdviceImpl(
       {required this.id,
       required this.idUser,
-      required this.idPlant,
+      this.idPlant,
       required this.name,
       required this.advice1});
 
@@ -159,15 +149,15 @@ class _$AdviceImpl implements _Advice {
       _$$AdviceImplFromJson(json);
 
   @override
-  final String? id;
+  final int id;
   @override
-  final String? idUser;
+  final int idUser;
   @override
-  final String? idPlant;
+  final int? idPlant;
   @override
-  final String? name;
+  final String name;
   @override
-  final String? advice1;
+  final String advice1;
 
   @override
   String toString() {
@@ -207,24 +197,24 @@ class _$AdviceImpl implements _Advice {
 
 abstract class _Advice implements Advice {
   const factory _Advice(
-      {required final String? id,
-      required final String? idUser,
-      required final String? idPlant,
-      required final String? name,
-      required final String? advice1}) = _$AdviceImpl;
+      {required final int id,
+      required final int idUser,
+      final int? idPlant,
+      required final String name,
+      required final String advice1}) = _$AdviceImpl;
 
   factory _Advice.fromJson(Map<String, dynamic> json) = _$AdviceImpl.fromJson;
 
   @override
-  String? get id;
+  int get id;
   @override
-  String? get idUser;
+  int get idUser;
   @override
-  String? get idPlant;
+  int? get idPlant;
   @override
-  String? get name;
+  String get name;
   @override
-  String? get advice1;
+  String get advice1;
   @override
   @JsonKey(ignore: true)
   _$$AdviceImplCopyWith<_$AdviceImpl> get copyWith =>

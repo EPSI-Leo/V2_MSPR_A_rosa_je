@@ -20,7 +20,7 @@ Advices _$AdvicesFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Advices {
-  int? get totalItems => throw _privateConstructorUsedError;
+  int get totalItems => throw _privateConstructorUsedError;
   List<Advice>? get advices => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class $AdvicesCopyWith<$Res> {
   factory $AdvicesCopyWith(Advices value, $Res Function(Advices) then) =
       _$AdvicesCopyWithImpl<$Res, Advices>;
   @useResult
-  $Res call({int? totalItems, List<Advice>? advices});
+  $Res call({int totalItems, List<Advice>? advices});
 }
 
 /// @nodoc
@@ -49,14 +49,14 @@ class _$AdvicesCopyWithImpl<$Res, $Val extends Advices>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? totalItems = freezed,
+    Object? totalItems = null,
     Object? advices = freezed,
   }) {
     return _then(_value.copyWith(
-      totalItems: freezed == totalItems
+      totalItems: null == totalItems
           ? _value.totalItems
           : totalItems // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       advices: freezed == advices
           ? _value.advices
           : advices // ignore: cast_nullable_to_non_nullable
@@ -72,7 +72,7 @@ abstract class _$$AdvicesImplCopyWith<$Res> implements $AdvicesCopyWith<$Res> {
       __$$AdvicesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? totalItems, List<Advice>? advices});
+  $Res call({int totalItems, List<Advice>? advices});
 }
 
 /// @nodoc
@@ -86,14 +86,14 @@ class __$$AdvicesImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? totalItems = freezed,
+    Object? totalItems = null,
     Object? advices = freezed,
   }) {
     return _then(_$AdvicesImpl(
-      totalItems: freezed == totalItems
+      totalItems: null == totalItems
           ? _value.totalItems
           : totalItems // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       advices: freezed == advices
           ? _value._advices
           : advices // ignore: cast_nullable_to_non_nullable
@@ -113,7 +113,7 @@ class _$AdvicesImpl implements _Advices {
       _$$AdvicesImplFromJson(json);
 
   @override
-  final int? totalItems;
+  final int totalItems;
   final List<Advice>? _advices;
   @override
   List<Advice>? get advices {
@@ -160,13 +160,13 @@ class _$AdvicesImpl implements _Advices {
 
 abstract class _Advices implements Advices {
   const factory _Advices(
-      {required final int? totalItems,
+      {required final int totalItems,
       required final List<Advice>? advices}) = _$AdvicesImpl;
 
   factory _Advices.fromJson(Map<String, dynamic> json) = _$AdvicesImpl.fromJson;
 
   @override
-  int? get totalItems;
+  int get totalItems;
   @override
   List<Advice>? get advices;
   @override
