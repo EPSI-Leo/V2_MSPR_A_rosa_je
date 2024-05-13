@@ -231,6 +231,12 @@ abstract class CoreLocalizations {
   /// **'Enter your email'**
   String get signupEmailSentence;
 
+  /// No description provided for @validateEmailValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get validateEmailValid;
+
   /// No description provided for @signupPhone.
   ///
   /// In en, this message translates to:

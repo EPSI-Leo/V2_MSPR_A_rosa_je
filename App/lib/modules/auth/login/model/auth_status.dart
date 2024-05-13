@@ -8,6 +8,10 @@ class AuthStatus with _$AuthStatus {
   factory AuthStatus({
     @Default('') String username,
     @Default('') String password,
+    @Default('') String firstName,
+    @Default('') String lastName,
+    @Default('') String email,
+    @Default(false) bool isEmailError,
     @Default(0) int cgu,
     @Default(AuthAlertMessage.none) AuthAlertMessage alertMessage,
     @Default(false) bool isButtonActive,

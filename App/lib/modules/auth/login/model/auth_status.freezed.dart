@@ -18,6 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthStatus {
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  bool get isEmailError => throw _privateConstructorUsedError;
   int get cgu => throw _privateConstructorUsedError;
   AuthAlertMessage get alertMessage => throw _privateConstructorUsedError;
   bool get isButtonActive => throw _privateConstructorUsedError;
@@ -37,6 +41,10 @@ abstract class $AuthStatusCopyWith<$Res> {
   $Res call(
       {String username,
       String password,
+      String firstName,
+      String lastName,
+      String email,
+      bool isEmailError,
       int cgu,
       AuthAlertMessage alertMessage,
       bool isButtonActive,
@@ -58,6 +66,10 @@ class _$AuthStatusCopyWithImpl<$Res, $Val extends AuthStatus>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? isEmailError = null,
     Object? cgu = null,
     Object? alertMessage = null,
     Object? isButtonActive = null,
@@ -72,6 +84,22 @@ class _$AuthStatusCopyWithImpl<$Res, $Val extends AuthStatus>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      isEmailError: null == isEmailError
+          ? _value.isEmailError
+          : isEmailError // ignore: cast_nullable_to_non_nullable
+              as bool,
       cgu: null == cgu
           ? _value.cgu
           : cgu // ignore: cast_nullable_to_non_nullable
@@ -103,6 +131,10 @@ abstract class _$$AuthStatusImplCopyWith<$Res>
   $Res call(
       {String username,
       String password,
+      String firstName,
+      String lastName,
+      String email,
+      bool isEmailError,
       int cgu,
       AuthAlertMessage alertMessage,
       bool isButtonActive,
@@ -122,6 +154,10 @@ class __$$AuthStatusImplCopyWithImpl<$Res>
   $Res call({
     Object? username = null,
     Object? password = null,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? isEmailError = null,
     Object? cgu = null,
     Object? alertMessage = null,
     Object? isButtonActive = null,
@@ -136,6 +172,22 @@ class __$$AuthStatusImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      isEmailError: null == isEmailError
+          ? _value.isEmailError
+          : isEmailError // ignore: cast_nullable_to_non_nullable
+              as bool,
       cgu: null == cgu
           ? _value.cgu
           : cgu // ignore: cast_nullable_to_non_nullable
@@ -162,6 +214,10 @@ class _$AuthStatusImpl implements _AuthStatus {
   _$AuthStatusImpl(
       {this.username = '',
       this.password = '',
+      this.firstName = '',
+      this.lastName = '',
+      this.email = '',
+      this.isEmailError = false,
       this.cgu = 0,
       this.alertMessage = AuthAlertMessage.none,
       this.isButtonActive = false,
@@ -173,6 +229,18 @@ class _$AuthStatusImpl implements _AuthStatus {
   @override
   @JsonKey()
   final String password;
+  @override
+  @JsonKey()
+  final String firstName;
+  @override
+  @JsonKey()
+  final String lastName;
+  @override
+  @JsonKey()
+  final String email;
+  @override
+  @JsonKey()
+  final bool isEmailError;
   @override
   @JsonKey()
   final int cgu;
@@ -188,7 +256,7 @@ class _$AuthStatusImpl implements _AuthStatus {
 
   @override
   String toString() {
-    return 'AuthStatus(username: $username, password: $password, cgu: $cgu, alertMessage: $alertMessage, isButtonActive: $isButtonActive, isLoading: $isLoading)';
+    return 'AuthStatus(username: $username, password: $password, firstName: $firstName, lastName: $lastName, email: $email, isEmailError: $isEmailError, cgu: $cgu, alertMessage: $alertMessage, isButtonActive: $isButtonActive, isLoading: $isLoading)';
   }
 
   @override
@@ -200,6 +268,13 @@ class _$AuthStatusImpl implements _AuthStatus {
                 other.username == username) &&
             (identical(other.password, password) ||
                 other.password == password) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.isEmailError, isEmailError) ||
+                other.isEmailError == isEmailError) &&
             (identical(other.cgu, cgu) || other.cgu == cgu) &&
             (identical(other.alertMessage, alertMessage) ||
                 other.alertMessage == alertMessage) &&
@@ -210,8 +285,18 @@ class _$AuthStatusImpl implements _AuthStatus {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, username, password, cgu,
-      alertMessage, isButtonActive, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+      isEmailError,
+      cgu,
+      alertMessage,
+      isButtonActive,
+      isLoading);
 
   @JsonKey(ignore: true)
   @override
@@ -224,6 +309,10 @@ abstract class _AuthStatus implements AuthStatus {
   factory _AuthStatus(
       {final String username,
       final String password,
+      final String firstName,
+      final String lastName,
+      final String email,
+      final bool isEmailError,
       final int cgu,
       final AuthAlertMessage alertMessage,
       final bool isButtonActive,
@@ -233,6 +322,14 @@ abstract class _AuthStatus implements AuthStatus {
   String get username;
   @override
   String get password;
+  @override
+  String get firstName;
+  @override
+  String get lastName;
+  @override
+  String get email;
+  @override
+  bool get isEmailError;
   @override
   int get cgu;
   @override

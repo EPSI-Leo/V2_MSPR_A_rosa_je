@@ -15,7 +15,9 @@ class Register extends _$Register {
   Future<void> register(
     String username,
     String password,
-    int cgu,
+    String firstName,
+    String lastName,
+    String email,
   ) async {
     state = const AsyncLoading();
     ref.read(registerFormProvider.notifier).setConnectionMessageError(
@@ -25,7 +27,9 @@ class Register extends _$Register {
     state = await AsyncValue.guard(() => registerRepository.register(
           username,
           password,
-          cgu,
+          firstName,
+          lastName,
+          email,
         ));
   }
 }
@@ -45,26 +49,43 @@ class RegisterForm extends _$RegisterForm {
     );
   }
 
+  void setFirstName(String firstName) {
+    state = state.copyWith(
+      firstName: firstName,
+    );
+
+    isFieldsEmpty();
+  }
+
+  void setLastName(String lastName) {
+    state = state.copyWith(
+      lastName: lastName,
+    );
+
+    isFieldsEmpty();
+  }
+
   void setUsername(String username) {
     state = state.copyWith(
       username: username,
     );
-
-    isFieldsEmpty();
   }
 
-  void setPassword(String password) {
+  void setPassword(String passsword) {
     state = state.copyWith(
-      password: password,
+      password: passsword,
     );
 
     isFieldsEmpty();
   }
 
-  void setCGU(int cgu) {
+  void setEmail(String email) {
     state = state.copyWith(
-      cgu: cgu,
+      email: email,
     );
+
+    isFieldsEmpty();
+    isValidEmail(email);
   }
 
   void setIsButtonActive(bool isActive) {
@@ -78,12 +99,33 @@ class RegisterForm extends _$RegisterForm {
   }
 
   void isFieldsEmpty() {
-    setIsButtonActive(state.username.isNotEmpty &&
-        state.password.isNotEmpty &&
-        state.cgu == 1);
+    setIsButtonActive(
+      state.firstName.isNotEmpty &&
+          state.lastName.isNotEmpty &&
+          state.username.isNotEmpty &&
+          state.password.isNotEmpty &&
+          state.email.isNotEmpty &&
+          !state.isEmailError,
+    );
   }
 
   void setLoading(bool isLoading) {
     state = state.copyWith(isLoading: isLoading);
+  }
+
+  void isValidEmail(String email) {
+    final isEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+
+    if (isEmail) {
+      state = state.copyWith(
+        email: email,
+        isEmailError: false,
+      );
+    } else {
+      state = state.copyWith(
+        email: email,
+        isEmailError: true,
+      );
+    }
   }
 }

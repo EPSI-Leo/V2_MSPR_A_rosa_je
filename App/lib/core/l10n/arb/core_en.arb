@@ -24,6 +24,7 @@
   "signupLastNameSentence":"Enter your last name",
   "signupEmail":"Email",
   "signupEmailSentence":"Enter your email",
+  "validateEmailValid": "Please enter a valid email address",
   "signupPhone":"Phone number",
   "signupPhoneSentence":"Enter your phone number",
   "signupAddress":"Address",

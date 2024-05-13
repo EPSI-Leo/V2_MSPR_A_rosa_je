@@ -74,6 +74,9 @@ class CoreLocalizationsEn extends CoreLocalizations {
   String get signupEmailSentence => 'Enter your email';
 
   @override
+  String get validateEmailValid => 'Please enter a valid email address';
+
+  @override
   String get signupPhone => 'Phone number';
 
   @override

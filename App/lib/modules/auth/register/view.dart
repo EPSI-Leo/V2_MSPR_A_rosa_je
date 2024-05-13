@@ -4,7 +4,6 @@ import 'package:arosa_je/core/api_client_exception.dart';
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/theme/app_spacing.dart';
 import 'package:arosa_je/modules/auth/login/model/auth_alert_message.dart';
-import 'package:arosa_je/modules/auth/register/cgu.dart';
 import 'package:arosa_je/modules/auth/register/notifier.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +18,11 @@ class RegisterView extends ConsumerStatefulWidget {
 }
 
 class _RegisterViewState extends ConsumerState<RegisterView> {
-  final username = TextEditingController();
-  final password = TextEditingController();
+  final _username = TextEditingController();
+  final _password = TextEditingController();
+  final _firstName = TextEditingController();
+  final _lastName = TextEditingController();
+  final _email = TextEditingController();
   final int cgu = 0;
   bool obscureText = true;
 
@@ -29,8 +31,8 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   @override
   void dispose() {
-    username.dispose();
-    password.dispose();
+    _username.dispose();
+    _password.dispose();
     super.dispose();
   }
 
@@ -86,30 +88,24 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
-                  const AppGap.xxl(),
-                  const AppGap.xs(),
                   TextFormField(
-                    controller: username,
+                    decoration: InputDecoration(
+                      hintText: coreL10n.signinUsername,
+                      hintStyle: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    controller: _username,
                     onChanged: (value) {
                       ref
-                          .watch(registerFormProvider.notifier)
+                          .read(registerFormProvider.notifier)
                           .setUsername(value);
                     },
                   ),
-                  const AppGap.small(),
-                  Stack(
-                    alignment: Alignment.centerRight,
-                    children: [
-                      TextFormField(
-                        obscureText: obscureText,
-                        controller: password,
-                        onChanged: (value) {
-                          ref
-                              .watch(registerFormProvider.notifier)
-                              .setPassword(value);
-                        },
-                      ),
-                      IconButton(
+                  const AppGap.xs(),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: coreL10n.signinPassword,
+                      hintStyle: Theme.of(context).textTheme.bodyLarge,
+                      suffixIcon: IconButton(
                         icon: Icon(
                           obscureText ? Icons.visibility_off : Icons.visibility,
                           color: AppColors.grey300,
@@ -120,36 +116,60 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                           });
                         },
                       ),
-                    ],
+                    ),
+                    obscureText: obscureText,
+                    controller: _password,
+                    onChanged: (value) {
+                      ref
+                          .read(registerFormProvider.notifier)
+                          .setPassword(value);
+                    },
+                  ),
+                  const AppGap.xs(),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: coreL10n.signupFirstName,
+                      hintStyle: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    controller: _firstName,
+                    onChanged: (value) {
+                      ref
+                          .read(registerFormProvider.notifier)
+                          .setFirstName(value);
+                    },
+                  ),
+                  const AppGap.xs(),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: coreL10n.signupLastName,
+                      hintStyle: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    controller: _lastName,
+                    onChanged: (value) {
+                      ref
+                          .read(registerFormProvider.notifier)
+                          .setLastName(value);
+                    },
+                  ),
+                  const AppGap.xs(),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: coreL10n.signupEmail,
+                      hintStyle: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    controller: _email,
+                    onChanged: (value) {
+                      ref.read(registerFormProvider.notifier).setEmail(value);
+                    },
+                    validator: (value) {
+                      if (ref.watch(registerFormProvider).isEmailError) {
+                        //TODO message if not valid email
+                        return coreL10n.validateEmailValid;
+                      }
+                      return null;
+                    },
                   ),
                   const AppGap.small(),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked = value ?? false;
-                            ref
-                                .watch(registerFormProvider.notifier)
-                                .setCGU(isChecked ? 1 : 0);
-                          });
-                        },
-                      ),
-                      TextButton(
-                        child: Text(coreL10n.signupTermsOfuse),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const CGU();
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: spacings.xs),
                     child: SizedBox(
@@ -165,8 +185,14 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                             ? () {
                                 if (_formKey.currentState?.validate() ??
                                     false) {
-                                  ref.read(registerProvider.notifier).register(
-                                      username.text, password.text, cgu);
+                                  context.goNamed(AppRoute.cgu.name,
+                                      pathParameters: {
+                                        'username': _username.text,
+                                        'password': _password.text,
+                                        'firstName': _firstName.text,
+                                        'lastName': _lastName.text,
+                                        'email': _email.text,
+                                      });
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               }

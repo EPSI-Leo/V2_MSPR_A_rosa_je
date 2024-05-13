@@ -1,4 +1,4 @@
-import 'package:arosa_je/core/data/repositories/auth/login/login_repository.dart';
+/* import 'package:arosa_je/core/data/repositories/auth/login/login_repository.dart';
 import 'package:arosa_je/core/data/repositories/auth/register/register_repository.dart';
 import 'package:arosa_je/modules/auth/login/model/auth_alert_message.dart';
 import 'package:arosa_je/modules/auth/login/notifier.dart';
@@ -115,3 +115,4 @@ void main() {
     });
   });
 }
+ */

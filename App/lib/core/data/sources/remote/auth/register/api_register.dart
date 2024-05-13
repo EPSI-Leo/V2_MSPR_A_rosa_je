@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:arosa_je/core/api_client.dart';
+import 'package:arosa_je/core/arosaje_endpoints.dart';
 import 'package:http/http.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -24,16 +25,22 @@ class ApiRegister extends ApiClient {
   Future<bool?> register(
     String username,
     String password,
-    int cgu,
+    String firstName,
+    String lastName,
+    String email,
   ) async {
     var body = {
-      'id': '',
-      'username': username,
-      'password': password,
-      'role': 'user',
-      'CGU': cgu
+      "id": 0,
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "username": username,
+      "password": password,
+      "cgu": 1,
+      "role": "user"
     };
-    return this.post('/api/Users/Register',
+
+    return this.post(ArosajeEndpoints.register,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
         },

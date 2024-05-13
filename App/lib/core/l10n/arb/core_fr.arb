@@ -18,13 +18,14 @@
 
 
   "signupTitle":"Créer mon compte",
-   "signupEnterText" : "Veuillez entrer du texte",
+  "signupEnterText" : "Veuillez entrer du texte",
   "signupFirstName":"Prénom",
   "signupFirstNameSentence":"Entrer votre prénom",
   "signupLastName":"Nom",
   "signupLastNameSentence":"Entrer votre nom",
   "signupEmail":"Email",
   "signupEmailSentence":"Entrer votre email",
+  "validateEmailValid": "Veuillez entrer une adresse e-mail valide",
   "signupPhone":"Numéro de téléphone",
   "signupPhoneSentence":"Entrer votre",
   "signupAddress":"Adresse",

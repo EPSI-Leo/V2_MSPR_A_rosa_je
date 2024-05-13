@@ -2,6 +2,7 @@ import 'package:arosa_je/modules/advices/add_advice/view.dart';
 import 'package:arosa_je/modules/advices/view.dart';
 import 'package:arosa_je/modules/app/app.dart';
 import 'package:arosa_je/modules/auth/login/view.dart';
+import 'package:arosa_je/modules/auth/register/cgu.dart';
 import 'package:arosa_je/modules/auth/register/view.dart';
 import 'package:arosa_je/modules/camera/view.dart';
 import 'package:arosa_je/modules/home/view.dart';
@@ -29,7 +30,23 @@ GoRouter router(RouterRef ref) {
             GoRoute(
                 path: AppRoute.register.path,
                 name: AppRoute.register.name,
-                builder: (context, state) => const RegisterView()),
+                builder: (context, state) => const RegisterView(),
+                routes: [
+                  GoRoute(
+                    path:
+                        '${AppRoute.cgu.path}/:firstName/:lastName/:username/:password/:email',
+                    name: AppRoute.cgu.name,
+                    builder: (context, state) {
+                      return const CGU(
+                        firstName: 'firstName',
+                        lastName: 'lastName',
+                        username: 'username',
+                        password: 'password',
+                        email: 'email',
+                      );
+                    },
+                  ),
+                ]),
             GoRoute(
               path: AppRoute.home.path,
               name: AppRoute.home.name,
@@ -83,6 +100,7 @@ class AppRoute {
   static const AppRoute root = AppRoute._('/', 'root');
   static const AppRoute login = AppRoute._('login', 'login');
   static const AppRoute register = AppRoute._('register', 'register');
+  static const AppRoute cgu = AppRoute._('cgu', 'cgu');
   static const AppRoute home = AppRoute._('home', 'home');
 
   static const AppRoute userPlantList =
