@@ -7,8 +7,8 @@ part of 'plant.dart';
 // **************************************************************************
 
 _$PlantImpl _$$PlantImplFromJson(Map<String, dynamic> json) => _$PlantImpl(
-      id: json['id'] as String?,
-      idUser: json['idUser'] as String?,
+      id: json['id'] as int?,
+      idUser: json['idUser'] as int?,
       name: json['name'] as String?,
       beginAt: json['beginAt'] as String?,
       endAt: json['endAt'] as String?,

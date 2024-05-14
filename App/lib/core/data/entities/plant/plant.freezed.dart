@@ -20,8 +20,8 @@ Plant _$PlantFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Plant {
-  String? get id => throw _privateConstructorUsedError;
-  String? get idUser => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  int? get idUser => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get beginAt => throw _privateConstructorUsedError;
   String? get endAt => throw _privateConstructorUsedError;
@@ -41,8 +41,8 @@ abstract class $PlantCopyWith<$Res> {
       _$PlantCopyWithImpl<$Res, Plant>;
   @useResult
   $Res call(
-      {String? id,
-      String? idUser,
+      {int? id,
+      int? idUser,
       String? name,
       String? beginAt,
       String? endAt,
@@ -79,11 +79,11 @@ class _$PlantCopyWithImpl<$Res, $Val extends Plant>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       idUser: freezed == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -124,8 +124,8 @@ abstract class _$$PlantImplCopyWith<$Res> implements $PlantCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? id,
-      String? idUser,
+      {int? id,
+      int? idUser,
       String? name,
       String? beginAt,
       String? endAt,
@@ -160,11 +160,11 @@ class __$$PlantImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       idUser: freezed == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -215,9 +215,9 @@ class _$PlantImpl implements _Plant {
       _$$PlantImplFromJson(json);
 
   @override
-  final String? id;
+  final int? id;
   @override
-  final String? idUser;
+  final int? idUser;
   @override
   final String? name;
   @override
@@ -278,8 +278,8 @@ class _$PlantImpl implements _Plant {
 
 abstract class _Plant implements Plant {
   const factory _Plant(
-      {required final String? id,
-      required final String? idUser,
+      {required final int? id,
+      required final int? idUser,
       required final String? name,
       required final String? beginAt,
       required final String? endAt,
@@ -291,9 +291,9 @@ abstract class _Plant implements Plant {
   factory _Plant.fromJson(Map<String, dynamic> json) = _$PlantImpl.fromJson;
 
   @override
-  String? get id;
+  int? get id;
   @override
-  String? get idUser;
+  int? get idUser;
   @override
   String? get name;
   @override

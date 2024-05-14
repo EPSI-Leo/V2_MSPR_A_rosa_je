@@ -53,7 +53,6 @@ class _AddPlantViewState extends ConsumerState<AddPlantView> {
     ref.listen(addPlantsProvider, (_, next) {
       next.when(
         data: (isAuthenticated) {
-          printDebug('test');
           if (isAuthenticated) {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return const HomeView();
@@ -62,13 +61,11 @@ class _AddPlantViewState extends ConsumerState<AddPlantView> {
           }
         },
         error: (error, stackTrace) {
-          printDebug('il y a une erreur');
           printDebug(error.toString());
           if (error is ApiClientException) {}
           ref.read(loginFormProvider.notifier).setLoading(false);
         },
         loading: () {
-          printDebug('patiente');
           ref.read(loginFormProvider.notifier).setLoading(true);
         },
       );
@@ -156,6 +153,11 @@ class _AddPlantViewState extends ConsumerState<AddPlantView> {
                                     _descriptionController.text,
                                     widget.picture,
                                   );
+                              //TODO à corriger mais ça me casse les couilles fort
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const HomeView();
+                              }));
                             }
                           },
                           style: ButtonStyle(

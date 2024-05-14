@@ -32,12 +32,10 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
   @override
   void initState() {
     super.initState();
-    // Utiliser 'await' pour attendre la résolution de l'objet 'user'
+
     getUserInfos().then((value) {
       setState(() {
         user = value;
-        print(user);
-        print(user.role);
       });
     });
   }

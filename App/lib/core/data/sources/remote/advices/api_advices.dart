@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:arosa_je/core/api_client.dart';
 import 'package:arosa_je/core/arosaje_endpoints.dart';
-import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/advice/advices.dart';
 import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
 import 'package:arosa_je/core/local/session_manager/session_manager.dart';
@@ -57,7 +56,6 @@ class ApiAdvices extends ApiClient {
       "advice1": advice1.toString(),
     };
 
-    printDebug(body.toString());
     return this.post(ArosajeEndpoints.postAdvice,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',

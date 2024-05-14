@@ -6,8 +6,8 @@ part 'plant.g.dart';
 @freezed
 class Plant with _$Plant {
   const factory Plant({
-    required String? id,
-    required String? idUser,
+    required int? id,
+    required int? idUser,
     required String? name,
     required String? beginAt,
     required String? endAt,

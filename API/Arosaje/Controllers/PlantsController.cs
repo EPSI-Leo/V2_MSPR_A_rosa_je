@@ -1,5 +1,6 @@
 ﻿using Arosaje.Entities;
 using Arosaje.ModelViews;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,22 +22,32 @@ namespace Arosaje.Controllers
             _context = context;
         }
 
-        // GET: api/Plants/GetPlantById/{id}
-        [HttpGet("GetPlantById/{id}")]
+        // GET: api/Plants/GetMyPlants
+        [HttpGet("GetMyPlants")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetPlantById(string id)
+        public IActionResult GetMyPlants()
         {
-            var plant = _context.Plants.Find(id);
+            // Récupérer l'ID de l'utilisateur à partir du token JWT
+            var userId = User.FindFirst("UserId")?.Value;
 
-            if (plant == null)
+            // Vérifier si l'ID de l'utilisateur est présent dans le token JWT
+            if (string.IsNullOrEmpty(userId))
             {
-                return NotFound("Plante non trouvee.");
+                return Unauthorized("Utilisateur non autorisé.");
             }
 
+            // Récupérer les plantes associées à l'ID utilisateur
+            var userPlants = _context.Plants.Where(p => p.IdUser == Convert.ToInt32(userId)).ToList();
 
-            return Ok(plant);
+            if (userPlants == null || userPlants.Count == 0)
+            {
+                return NotFound("Aucune plante trouvée pour cet utilisateur.");
+            }
+
+            return Ok(userPlants);
         }
+
         // GET: api/Plants/GetAllPlants
         [HttpGet("GetAllPlants")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -59,93 +70,50 @@ namespace Arosaje.Controllers
         }
 
 
-        // POST: api/Plants/CreatePlant
-        [HttpPost("CreatePlant")]
+        // POST: api/Plants/AddPlant
+        [HttpPost("AddPlant")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreatePlant([FromBody] Plant plant)
+        public async Task<IActionResult> AddPlant([FromBody] PlantCreateRequest request)
         {
+            // Récupérer l'ID de l'utilisateur à partir du token JWT
+            var userId = User.FindFirst("UserId")?.Value;
 
+            // Vérifier si l'ID de l'utilisateur est présent dans le token JWT
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("Utilisateur non autorisé.");
+            }
+
+            // Créer un nouvel objet Plant à partir des données de la demande et de l'ID utilisateur
+            var plant = new Plant
+            {
+                IdUser = Convert.ToInt32(userId),
+                Name = request.Name,
+                BeginAt = request.BeginAt,
+                EndAt = request.EndAt,
+                Description = request.Description,
+                Picture = request.Picture,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude
+            };
 
             _context.Plants.Add(plant);
             await _context.SaveChangesAsync();
 
-            // Return the response with the ID of the plant
-            return CreatedAtAction(nameof(GetPlantById), new { id = plant.Id }, new { Id = plant.Id, Message = "Plante creee avec succes " });
+            // Retourner la réponse avec l'ID de la plante
+            return Ok("Plante créée avec succès.");
+
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Plant updatedPlant)
+        public class PlantCreateRequest
         {
-            if (id != updatedPlant.Id)
-            {
-                return BadRequest("L'ID spécifié ne correspond pas à l'ID de la plante.");
-            }
-
-            // Vérifiez si la plante existe dans la base de données
-            var existingPlant = _context.Plants.Find(id);
-            if (existingPlant == null)
-            {
-                return NotFound("Plante non trouvée.");
-            }
-
-            // Mettez à jour les propriétés de la plante existante avec les valeurs de la plante mise à jour
-            existingPlant.IdUser = updatedPlant.IdUser;
-            existingPlant.Name = updatedPlant.Name;
-            existingPlant.BeginAt = updatedPlant.BeginAt;
-            existingPlant.EndAt = updatedPlant.EndAt;
-            existingPlant.Description = updatedPlant.Description;
-            existingPlant.Picture = updatedPlant.Picture;
-            existingPlant.Latitude = updatedPlant.Latitude;
-            existingPlant.Longitude = updatedPlant.Longitude;
-
-            // Mettez à jour la base de données
-            _context.SaveChanges();
-
-            return NoContent(); // 204 No Content
+            public string Name { get; set; }
+            public DateTime BeginAt { get; set; }
+            public DateTime EndAt { get; set; }
+            public string Description { get; set; }
+            public byte[] Picture { get; set; }
+            public double Latitude { get; set; }
+            public double Longitude { get; set; }
         }
-   
-
-
-    // DELETE: api/Plants/DeletePlant/{id}
-    [HttpDelete("DeletePlant/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePlant(string id)
-        {
-            var plant = await _context.Plants.FindAsync(id);
-
-            if (plant == null)
-            {
-                return NotFound("Plante non trouvee.");
-            }
-
-            // Remove the plant from the database
-            _context.Plants.Remove(plant);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { Message = "Plante supprimee avec succes !" });
-        }
-
-        // GET: api/Plants/GetPlantsByUserId/{userId}
-        [HttpGet("GetPlantsByUserId/{userId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetPlantsByUserId(int userId)
-        {
-            var plants = _context.Plants.Where(p => p.IdUser == userId).ToList();
-
-            if (plants == null || plants.Count == 0)
-            {
-                return NotFound("Aucune plante trouvee pour cet utilisateur.");
-            }
-
-            var response = new
-            {
-                TotalItems = plants.Count,
-                Plants = plants
-            };
-
-            return Ok(response);
-        }
-    }
 }

@@ -1,23 +1,24 @@
-import 'package:arosa_je/core/data/sources/remote/plants/api_add_plant.dart';
+import 'package:arosa_je/core/data/entities/plant/plant.dart';
+import 'package:arosa_je/core/data/sources/remote/plants/api_plants.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'add_plants_repository.g.dart';
+part 'plants_repository.g.dart';
 
 @riverpod
-AddPlantsRepository addPlantsRepository(AddPlantsRepositoryRef ref) {
-  final api = ref.watch(apiAddPlantsProvider);
+PlantsRepository plantsRepository(PlantsRepositoryRef ref) {
+  final api = ref.watch(apiPlantsProvider);
 
-  return AddPlantsRepository(
+  return PlantsRepository(
     api: api,
   );
 }
 
-class AddPlantsRepository {
-  const AddPlantsRepository({
+class PlantsRepository {
+  const PlantsRepository({
     required this.api,
   });
-  final ApiAddPlants api;
+  final ApiPlants api;
 
   Future<bool> addPlants(
     String name,
@@ -36,13 +37,16 @@ class AddPlantsRepository {
     String formattedEndAt =
         DateFormat('yyyy-MM-ddTHH:mm:ss.sssZ').format(endDateTime);
 
-    await api.postNewPlant(
+    return await api.addPlants(
       name,
       formattedBeginAt,
       formattedEndAt,
       description,
       picture,
     );
-    return true;
+  }
+
+  Future<List<Plant>?> myPlants() async {
+    return await api.myPlants();
   }
 }

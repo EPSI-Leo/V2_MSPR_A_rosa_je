@@ -68,32 +68,5 @@ namespace Arosaje.Controllers
             public string Name { get; set; }
             public string Advice1 { get; set; }
         }
-
-
-
-        // DELETE: api/Advices/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
-        {
-            var advice = _context.Advices.Find(id);
-            if (advice == null)
-                return NotFound();
-
-            _context.Advices.Remove(advice);
-            _context.SaveChanges();
-
-            return NoContent();
-        }
-
-        // GET: api/Advices/ByUser/5
-        [HttpGet("ByUser/{idUser}")]
-        public IActionResult GetByUser(int idUser)
-        {
-            var userAdvices = _context.Advices.Where(a => a.IdUser == idUser).ToList();
-            if (userAdvices == null || userAdvices.Count == 0)
-                return NotFound("No advices found for the specified user.");
-
-            return Ok(userAdvices);
-        }
     }
 }

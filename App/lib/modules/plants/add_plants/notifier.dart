@@ -1,4 +1,4 @@
-import 'package:arosa_je/core/data/repositories/plants/add_plants/add_plants_repository.dart';
+import 'package:arosa_je/core/data/repositories/plants/plants/plants_repository.dart';
 import 'package:arosa_je/modules/plants/add_plants/model/add_plant_status.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,7 +11,7 @@ class AddPlants extends _$AddPlants {
     return false;
   }
 
-  Future<void> addPlants(
+  Future<bool> addPlants(
     String name,
     String beginAt,
     String endAt,
@@ -20,14 +20,15 @@ class AddPlants extends _$AddPlants {
   ) async {
     state = const AsyncLoading();
 
-    final addPlantsRepository = ref.read(addPlantsRepositoryProvider);
-    state = await AsyncValue.guard(() => addPlantsRepository.addPlants(
-          name,
-          beginAt,
-          endAt,
-          description,
-          picture,
-        ));
+    final addPlantsRepository = ref.read(plantsRepositoryProvider);
+    addPlantsRepository.addPlants(
+      name,
+      beginAt,
+      endAt,
+      description,
+      picture,
+    );
+    return true;
   }
 }
 
