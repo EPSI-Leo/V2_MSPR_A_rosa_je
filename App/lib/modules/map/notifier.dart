@@ -1,5 +1,6 @@
+import 'package:arosa_je/core/data/entities/plant/plant.dart';
 import 'package:arosa_je/core/data/entities/plant/plants.dart';
-import 'package:arosa_je/core/data/repositories/plants/all_plants/all_plants_repository.dart';
+import 'package:arosa_je/core/data/repositories/plants/plants/plants_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notifier.g.dart';
@@ -7,14 +8,14 @@ part 'notifier.g.dart';
 @Riverpod(keepAlive: false)
 class AllPlants extends _$AllPlants {
   @override
-  FutureOr<Plants?> build() {
+  FutureOr<List<Plant>?> build() {
     return fetchAllPlants();
   }
 
-  Future<Plants?> fetchAllPlants() async {
-    final repository = ref.read(allPlantsRepositoryProvider);
+  Future<List<Plant>?> fetchAllPlants() async {
+    final repository = ref.read(plantsRepositoryProvider);
     final plants = await repository.allPlants();
-    print(await plants.toString());
+    print(plants.toString());
     return plants;
   }
 }

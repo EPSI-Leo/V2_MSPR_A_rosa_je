@@ -51,6 +51,7 @@ namespace Arosaje.Controllers
         // GET: api/Plants/GetAllPlants
         [HttpGet("GetAllPlants")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize] // Ajout de l'attribut Authorize
         public IActionResult GetAllPlants()
         {
             var plants = _context.Plants.ToList();
@@ -60,13 +61,7 @@ namespace Arosaje.Controllers
                 return NotFound("Aucune plante trouvee.");
             }
 
-            var response = new
-            {
-                TotalItems = plants.Count,
-                Plants = plants
-            };
-
-            return Ok(response);
+            return Ok(plants);
         }
 
 
@@ -116,4 +111,5 @@ namespace Arosaje.Controllers
             public double Latitude { get; set; }
             public double Longitude { get; set; }
         }
+    }
 }

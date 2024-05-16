@@ -49,4 +49,8 @@ class PlantsRepository {
   Future<List<Plant>?> myPlants() async {
     return await api.myPlants();
   }
+
+  Future<List<Plant>?> allPlants() async {
+    return await api.allPlants();
+  }
 }

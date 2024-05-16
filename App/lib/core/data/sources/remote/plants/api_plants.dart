@@ -108,4 +108,23 @@ class ApiPlants extends ApiClient {
       return null;
     }
   }
+
+  Future<List<Plant>?> allPlants() async {
+    final token =
+        await sessionManager.readSecureStorage(SecureStorageKeys.token);
+
+    return this.get(
+      ArosajeEndpoints.getAllPlants,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: 'Bearer $token'
+      },
+      deserializer: (json) {
+        final List<dynamic> plantJsonList = json as List<dynamic>;
+        return plantJsonList
+            .map((plantJson) => Plant.fromJson(plantJson))
+            .toList();
+      },
+    );
+  }
 }

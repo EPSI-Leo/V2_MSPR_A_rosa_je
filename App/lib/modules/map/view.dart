@@ -73,7 +73,7 @@ class MapView extends ConsumerWidget {
     return plantsList.when(
       data: (plants) {
         if (plants != null) {
-          for (final plant in plants.plants!) {
+          for (final plant in plants) {
             markers.add(
               Marker(
                 width: 80.0,
