@@ -26,7 +26,6 @@ class PreviewPage extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
-                print('picture.path ${picture.path}');
                 Navigator.push(
                     context,
                     MaterialPageRoute(

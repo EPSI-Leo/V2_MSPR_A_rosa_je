@@ -1,5 +1,4 @@
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
-import 'package:arosa_je/core/data/entities/plant/plants.dart';
 import 'package:arosa_je/core/data/repositories/plants/plants/plants_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,7 +14,6 @@ class AllPlants extends _$AllPlants {
   Future<List<Plant>?> fetchAllPlants() async {
     final repository = ref.read(plantsRepositoryProvider);
     final plants = await repository.allPlants();
-    print(plants.toString());
     return plants;
   }
 }

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:arosa_je/core/api_client_exception.dart';
-import 'package:arosa_je/core/arosaje_endpoints.dart';
 import 'package:http/http.dart';
 
 abstract class ApiClient {
@@ -14,21 +13,17 @@ abstract class ApiClient {
   final Client _innerClient;
 
   /// The base url for each service.
-  String get baseUrl => ArosajeEndpoints.baseUrl;
+  String get baseUrl;
 
   /// The timeout for each http calls.
   Duration get timeout => const Duration(seconds: 30);
 
-  /// Sends get request through `innerClient`.
-  ///
-  /// if `deserializer` is specified, returns an object of type [T]
   Future<T?> get<T>(
     String relativeUrl, {
     Map<String, String>? headers,
     T Function(Object)? deserializer,
   }) async {
     final uri = Uri.parse('$baseUrl$relativeUrl');
-    print(uri);
     final response = await _innerClient.get(
       uri,
       headers: headers,
@@ -47,7 +42,7 @@ abstract class ApiClient {
     T Function(Object)? deserializer,
   }) async {
     final uri = Uri.parse('$baseUrl$relativeUrl');
-    print(uri);
+
     final response = await _innerClient.post(
       uri,
       headers: headers,

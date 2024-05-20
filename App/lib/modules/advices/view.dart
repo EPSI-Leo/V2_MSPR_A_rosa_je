@@ -13,7 +13,7 @@ class AdvicesView extends ConsumerStatefulWidget {
   const AdvicesView({super.key});
 
   @override
-  _AdvicesViewState createState() => _AdvicesViewState();
+  ConsumerState<AdvicesView> createState() => _AdvicesViewState();
 }
 
 class _AdvicesViewState extends ConsumerState<AdvicesView> {

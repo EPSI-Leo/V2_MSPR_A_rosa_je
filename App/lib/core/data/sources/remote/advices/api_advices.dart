@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:arosa_je/core/api_client.dart';
 import 'package:arosa_je/core/arosaje_endpoints.dart';
 import 'package:arosa_je/core/data/entities/advice/advices.dart';
+import 'package:arosa_je/core/foundation/config.dart';
 import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
 import 'package:arosa_je/core/local/session_manager/session_manager.dart';
 import 'package:http/http.dart';
@@ -15,10 +16,12 @@ part 'api_advices.g.dart';
 ApiAdvices apiAdvices(ApiAdvicesRef ref) {
   final client = Client();
   final sessionManager = ref.read(sessionManagerProvider);
+  final config = ref.watch(configProvider);
 
   return ApiAdvices(
     innerClient: client,
     sessionManager: sessionManager,
+    config: config,
   );
 }
 
@@ -26,9 +29,15 @@ class ApiAdvices extends ApiClient {
   ApiAdvices({
     required super.innerClient,
     required this.sessionManager,
+    required this.config,
   });
 
   final SessionManager sessionManager;
+
+  final Config config;
+
+  @override
+  String get baseUrl => config.baseUrl;
 
   Future<Advices?> getAllAdvices() async {
     final token =

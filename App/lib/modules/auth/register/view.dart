@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:arosa_je/core/api_client_exception.dart';
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/theme/app_spacing.dart';
-import 'package:arosa_je/modules/auth/login/model/auth_alert_message.dart';
+import 'package:arosa_je/modules/auth/register/model/auth_alert_message.dart';
 import 'package:arosa_je/modules/auth/register/notifier.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:flutter/material.dart';
@@ -23,16 +23,16 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _email = TextEditingController();
-  final int cgu = 0;
   bool obscureText = true;
-
-  bool isChecked = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _username.dispose();
     _password.dispose();
+    _firstName.dispose();
+    _lastName.dispose();
+    _email.dispose();
     super.dispose();
   }
 
@@ -40,8 +40,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   Widget build(BuildContext context) {
     final spacings = ref.read(spacingThemeProvider);
     final coreL10n = context.coreL10n;
-    final registerForm = ref.watch(registerFormProvider);
-    ref.read(registerProvider);
+
+    final isButtonActive =
+        ref.watch(registerFormProvider.select((state) => state.isButtonActive));
 
     ref.listen(registerProvider, (_, next) {
       next.when(
@@ -98,6 +99,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       ref
                           .read(registerFormProvider.notifier)
                           .setUsername(value);
+                      ref.read(registerFormProvider.notifier).isFieldsEmpty();
                     },
                   ),
                   const AppGap.xs(),
@@ -123,6 +125,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       ref
                           .read(registerFormProvider.notifier)
                           .setPassword(value);
+                      ref.read(registerFormProvider.notifier).isFieldsEmpty();
                     },
                   ),
                   const AppGap.xs(),
@@ -136,6 +139,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       ref
                           .read(registerFormProvider.notifier)
                           .setFirstName(value);
+                      ref.read(registerFormProvider.notifier).isFieldsEmpty();
                     },
                   ),
                   const AppGap.xs(),
@@ -149,6 +153,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       ref
                           .read(registerFormProvider.notifier)
                           .setLastName(value);
+                      ref.read(registerFormProvider.notifier).isFieldsEmpty();
                     },
                   ),
                   const AppGap.xs(),
@@ -156,17 +161,20 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                     decoration: InputDecoration(
                       hintText: coreL10n.signupEmail,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
+                      errorText: ref.watch(registerFormProvider).isEmailError
+                          ? coreL10n.validateEmailValid
+                          : null,
                     ),
                     controller: _email,
                     onChanged: (value) {
+                      final isEmail =
+                          RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value);
                       ref.read(registerFormProvider.notifier).setEmail(value);
-                    },
-                    validator: (value) {
-                      if (ref.watch(registerFormProvider).isEmailError) {
-                        //TODO message if not valid email
-                        return coreL10n.validateEmailValid;
-                      }
-                      return null;
+                      ref
+                          .read(registerFormProvider.notifier)
+                          .setIsEmailError(!isEmail);
+                      ref.read(registerFormProvider.notifier).isFieldsEmpty();
                     },
                   ),
                   const AppGap.small(),
@@ -177,11 +185,11 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       height: spacings.large,
                       child: FilledButton(
                         style: ButtonStyle(
-                          backgroundColor: registerForm.isButtonActive
+                          backgroundColor: isButtonActive
                               ? MaterialStateProperty.all(Colors.green)
                               : null,
                         ),
-                        onPressed: registerForm.isButtonActive
+                        onPressed: isButtonActive
                             ? () {
                                 if (_formKey.currentState?.validate() ??
                                     false) {
@@ -199,7 +207,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                             : null,
                         child: Text(
                           coreL10n.signup,
-                          style: registerForm.isButtonActive
+                          style: isButtonActive
                               ? const TextStyle(color: Colors.white)
                               : null,
                         ),

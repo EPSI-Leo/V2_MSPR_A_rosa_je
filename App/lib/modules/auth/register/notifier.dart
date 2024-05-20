@@ -1,6 +1,6 @@
 import 'package:arosa_je/core/data/repositories/auth/register/register_repository.dart';
-import 'package:arosa_je/modules/auth/login/model/auth_alert_message.dart';
-import 'package:arosa_je/modules/auth/login/model/auth_status.dart';
+import 'package:arosa_je/modules/auth/register/model/auth_alert_message.dart';
+import 'package:arosa_je/modules/auth/register/model/register_status.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notifier.g.dart';
@@ -37,8 +37,8 @@ class Register extends _$Register {
 @Riverpod(keepAlive: false)
 class RegisterForm extends _$RegisterForm {
   @override
-  AuthStatus build() {
-    return AuthStatus();
+  RegisterStatus build() {
+    return RegisterStatus();
   }
 
   void setConnectionMessageError(
@@ -85,7 +85,6 @@ class RegisterForm extends _$RegisterForm {
     );
 
     isFieldsEmpty();
-    isValidEmail(email);
   }
 
   void setIsButtonActive(bool isActive) {
@@ -113,19 +112,7 @@ class RegisterForm extends _$RegisterForm {
     state = state.copyWith(isLoading: isLoading);
   }
 
-  void isValidEmail(String email) {
-    final isEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
-
-    if (isEmail) {
-      state = state.copyWith(
-        email: email,
-        isEmailError: false,
-      );
-    } else {
-      state = state.copyWith(
-        email: email,
-        isEmailError: true,
-      );
-    }
+  void setIsEmailError(bool isError) {
+    state = state.copyWith(isEmailError: isError);
   }
 }

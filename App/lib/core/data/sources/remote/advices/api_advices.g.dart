@@ -6,7 +6,7 @@ part of 'api_advices.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$apiAdvicesHash() => r'd044aa3c860f03854743def851375fabb63db660';
+String _$apiAdvicesHash() => r'dc607871ef815da69f9e308aaf20ea4d974d689d';
 
 /// See also [apiAdvices].
 @ProviderFor(apiAdvices)

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:arosa_je/core/api_client.dart';
 import 'package:arosa_je/core/arosaje_endpoints.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
+import 'package:arosa_je/core/foundation/config.dart';
 import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
 import 'package:arosa_je/core/local/session_manager/session_manager.dart';
 import 'package:camera/camera.dart';
@@ -17,10 +18,12 @@ part 'api_plants.g.dart';
 ApiPlants apiPlants(ApiPlantsRef ref) {
   final client = Client();
   final sessionManager = ref.read(sessionManagerProvider);
+  final config = ref.watch(configProvider);
 
   return ApiPlants(
     innerClient: client,
     sessionManager: sessionManager,
+    config: config,
   );
 }
 
@@ -28,9 +31,15 @@ class ApiPlants extends ApiClient {
   ApiPlants({
     required super.innerClient,
     required this.sessionManager,
+    required this.config,
   });
 
   final SessionManager sessionManager;
+
+  final Config config;
+
+  @override
+  String get baseUrl => config.baseUrl;
 
   Future<bool> addPlants(
     String name,

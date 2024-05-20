@@ -6,7 +6,7 @@ import 'package:arosa_je/modules/auth/register/cgu.dart';
 import 'package:arosa_je/modules/auth/register/view.dart';
 import 'package:arosa_je/modules/camera/view.dart';
 import 'package:arosa_je/modules/home/view.dart';
-import 'package:arosa_je/modules/plants/myPlants/view.dart';
+import 'package:arosa_je/modules/plants/my_plants/view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

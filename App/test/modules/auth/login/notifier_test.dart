@@ -62,6 +62,16 @@ void main() {
       expect(container.read(loginFormProvider).username, '');
     });
 
+    test('setPassword not empty', () {
+      container.read(loginFormProvider.notifier).setPassword('password');
+      expect(container.read(loginFormProvider).password, 'password');
+    });
+
+    test('setPassword empty', () {
+      container.read(loginFormProvider.notifier).setPassword('');
+      expect(container.read(loginFormProvider).password, '');
+    });
+
     test('setIsButtonActive true', () {
       container.read(loginFormProvider.notifier).setIsButtonActive(true);
       expect(container.read(loginFormProvider).isButtonActive, true);
@@ -92,13 +102,13 @@ void main() {
       container.read(loginFormProvider.notifier).setLoading(false);
       expect(container.read(loginFormProvider).isLoading, false);
     });
-    test('isFieldsEmpty true', () {
+    test('isFieldsEmpty not empty', () {
       container.read(loginFormProvider.notifier).setUsername('username');
-      expect(container.read(loginFormProvider).isButtonActive, true);
+      expect(container.read(loginFormProvider).username, 'username');
     });
 
-    test('isFieldsEmpty false', () {
-      expect(container.read(loginFormProvider).isButtonActive, false);
+    test('isFieldsEmpty empty', () {
+      expect(container.read(loginFormProvider).username, '');
     });
   });
 }

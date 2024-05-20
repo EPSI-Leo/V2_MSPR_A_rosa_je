@@ -21,12 +21,12 @@ final registerProvider =
 );
 
 typedef _$Register = AutoDisposeAsyncNotifier<bool>;
-String _$registerFormHash() => r'47f8f921a767f64002f4f8657b1ff526925896b2';
+String _$registerFormHash() => r'1ee54ea3c93c0654d3d7737ba9b7692a1ecd6fb8';
 
 /// See also [RegisterForm].
 @ProviderFor(RegisterForm)
 final registerFormProvider =
-    AutoDisposeNotifierProvider<RegisterForm, AuthStatus>.internal(
+    AutoDisposeNotifierProvider<RegisterForm, RegisterStatus>.internal(
   RegisterForm.new,
   name: r'registerFormProvider',
   debugGetCreateSourceHash:
@@ -35,6 +35,6 @@ final registerFormProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$RegisterForm = AutoDisposeNotifier<AuthStatus>;
+typedef _$RegisterForm = AutoDisposeNotifier<RegisterStatus>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

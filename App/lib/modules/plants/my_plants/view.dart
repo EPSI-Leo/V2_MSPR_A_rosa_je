@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
-import 'package:arosa_je/modules/plants/myPlants/notifier.dart';
+import 'package:arosa_je/modules/plants/my_plants/notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +10,7 @@ class MyPlants extends ConsumerStatefulWidget {
   const MyPlants({super.key});
 
   @override
-  _MyPlantsState createState() => _MyPlantsState();
+  ConsumerState<MyPlants> createState() => _MyPlantsState();
 }
 
 class _MyPlantsState extends ConsumerState<MyPlants> {
@@ -34,7 +33,7 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
   @override
   Widget build(BuildContext context) {
     final plantsList = ref.watch(myPlantsProvider);
-    final coreL10n = context.coreL10n;
+    //TODO   final coreL10n = context.coreL10n;
 
     return plantsList.when(
         data: (plants) {
@@ -48,7 +47,7 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
             return Scaffold(
               backgroundColor: Colors.grey[200],
               appBar: AppBar(
-                title: const Text('My Plants'), //TODO localizations
+                title: const Text('My Plants'),
               ),
               body: SafeArea(
                 child: SingleChildScrollView(

@@ -51,7 +51,6 @@ class LoginRepository {
         return false;
       }
     } catch (e) {
-      print('Erreur lors de la connexion : $e');
       return false;
     }
   }
