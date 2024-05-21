@@ -64,19 +64,26 @@ class _LoginViewState extends ConsumerState<LoginView> {
     });
 
     return Scaffold(
+      key: const Key(LoginWidgetKeys.scaffoldKey),
       body: Center(
         child: SingleChildScrollView(
+          key: const Key(LoginWidgetKeys.scrollViewKey),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: spacings.small),
             child: Form(
               key: _formKey,
               child: Column(
+                key: const Key(LoginWidgetKeys.columnKey),
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Image(image: AssetImage('lib/assets/images/icon.png')),
+                  const Image(
+                    key: Key(LoginWidgetKeys.imageKey),
+                    image: AssetImage('assets/images/icon.png'),
+                  ),
                   Text(
                     coreL10n.signinTitle1,
+                    key: const Key(LoginWidgetKeys.titleKey),
                     style: const TextStyle(
                         fontSize: 32,
                         color: Colors.black,
@@ -84,9 +91,11 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   ),
                   Text(
                     coreL10n.signinSentence1,
+                    key: const Key(LoginWidgetKeys.sentenceKey),
                   ),
                   const AppGap.xs(),
                   TextFormField(
+                    key: const Key(LoginWidgetKeys.usernameFieldKey),
                     decoration: InputDecoration(
                       hintText: coreL10n.signinUsername,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
@@ -98,6 +107,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   ),
                   const AppGap.xs(),
                   TextFormField(
+                    key: const Key(LoginWidgetKeys.passwordFieldKey),
                     decoration: InputDecoration(
                       hintText: coreL10n.signinPassword,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
@@ -126,6 +136,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       width: double.infinity,
                       height: spacings.large,
                       child: FilledButton(
+                        key: const Key(LoginWidgetKeys.loginButtonKey),
                         style: ButtonStyle(
                           backgroundColor: loginForm.isButtonActive
                               ? MaterialStateProperty.all(Colors.green)
@@ -152,12 +163,15 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     ),
                   ),
                   Row(
-                    // ignore: sort_child_properties_last
+                    key: const Key(LoginWidgetKeys.registerRowKey),
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
                         coreL10n.signinDontHaveAccount,
+                        key: const Key(LoginWidgetKeys.noAccountTextKey),
                       ),
                       TextButton(
+                        key: const Key(LoginWidgetKeys.signupButtonKey),
                         child: Text(
                           coreL10n.signup,
                           style: const TextStyle(color: Colors.black),
@@ -167,7 +181,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         },
                       )
                     ],
-                    mainAxisAlignment: MainAxisAlignment.center,
                   ),
                   if (ref.read(loginFormProvider.notifier).isError())
                     Padding(
@@ -192,7 +205,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       padding:
                           EdgeInsets.symmetric(vertical: AppDimensions.xxLarge),
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          key: Key(LoginWidgetKeys.loadingIndicatorKey),
+                        ),
                       ),
                     ),
                 ],
@@ -203,4 +218,20 @@ class _LoginViewState extends ConsumerState<LoginView> {
       ),
     );
   }
+}
+
+class LoginWidgetKeys {
+  static const String scaffoldKey = 'scaffold_key';
+  static const String scrollViewKey = 'scroll_view_key';
+  static const String columnKey = 'column_key';
+  static const String imageKey = 'image_key';
+  static const String titleKey = 'title_key';
+  static const String sentenceKey = 'sentence_key';
+  static const String usernameFieldKey = 'username_field_key';
+  static const String passwordFieldKey = 'password_field_key';
+  static const String loginButtonKey = 'login_button_key';
+  static const String registerRowKey = 'register_row_key';
+  static const String noAccountTextKey = 'no_account_text_key';
+  static const String signupButtonKey = 'signup_button_key';
+  static const String loadingIndicatorKey = 'loading_indicator_key';
 }

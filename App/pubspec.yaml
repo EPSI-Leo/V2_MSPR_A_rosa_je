@@ -1,18 +1,15 @@
 name: arosa_je
 description: "A new Flutter project."
-publish_to: 'none'
-
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: ">=3.2.3 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
-
 
   cupertino_icons: ^1.0.6
   flutter_localization: ^0.2.0
@@ -45,19 +42,17 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
+  integration_test:
+    sdk: flutter
   flutter_lints: ^3.0.0
   riverpod_generator: ^2.3.9
   custom_lint: ^0.5.7
   riverpod_lint: ^2.3.7
 
-
 flutter:
-
   uses-material-design: true
   generate: false
   assets:
-    - lib/assets/images/icon.png
-    - lib/assets/plants/rose.jpg
-    - lib/assets/plants/fern.jpg
+    - assets/images/icon.png
+    - assets/plants/rose.jpg
+    - assets/plants/fern.jpg

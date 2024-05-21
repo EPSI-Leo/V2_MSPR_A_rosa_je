@@ -71,25 +71,33 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
     });
 
     return Scaffold(
+      key: const Key(RegisterWidgetKeys.scaffoldKey),
       body: Center(
         child: SingleChildScrollView(
+          key: const Key(RegisterWidgetKeys.scrollViewKey),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: spacings.small),
             child: Form(
               key: _formKey,
               child: Column(
+                key: const Key(RegisterWidgetKeys.columnKey),
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Image(image: AssetImage('lib/assets/images/icon.png')),
+                  const Image(
+                    key: Key(RegisterWidgetKeys.imageKey),
+                    image: AssetImage('assets/images/icon.png'),
+                  ),
                   Text(
                     coreL10n.signupTitle,
+                    key: const Key(RegisterWidgetKeys.titleKey),
                     style: const TextStyle(
                         fontSize: 32,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
                   TextFormField(
+                    key: const Key(RegisterWidgetKeys.usernameFieldKey),
                     decoration: InputDecoration(
                       hintText: coreL10n.signinUsername,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
@@ -104,6 +112,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   ),
                   const AppGap.xs(),
                   TextFormField(
+                    key: const Key(RegisterWidgetKeys.passwordFieldKey),
                     decoration: InputDecoration(
                       hintText: coreL10n.signinPassword,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
@@ -130,6 +139,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   ),
                   const AppGap.xs(),
                   TextFormField(
+                    key: const Key(RegisterWidgetKeys.firstNameFieldKey),
                     decoration: InputDecoration(
                       hintText: coreL10n.signupFirstName,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
@@ -144,6 +154,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   ),
                   const AppGap.xs(),
                   TextFormField(
+                    key: const Key(RegisterWidgetKeys.lastNameFieldKey),
                     decoration: InputDecoration(
                       hintText: coreL10n.signupLastName,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
@@ -158,6 +169,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   ),
                   const AppGap.xs(),
                   TextFormField(
+                    key: const Key(RegisterWidgetKeys.emailFieldKey),
                     decoration: InputDecoration(
                       hintText: coreL10n.signupEmail,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
@@ -184,6 +196,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       width: double.infinity,
                       height: spacings.large,
                       child: FilledButton(
+                        key: const Key(RegisterWidgetKeys.registerButtonKey),
                         style: ButtonStyle(
                           backgroundColor: isButtonActive
                               ? MaterialStateProperty.all(Colors.green)
@@ -215,12 +228,15 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                     ),
                   ),
                   Row(
-                    // ignore: sort_child_properties_last
+                    key: const Key(RegisterWidgetKeys.loginRowKey),
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
                         coreL10n.signinDontHaveAccount,
+                        key: const Key(RegisterWidgetKeys.noAccountTextKey),
                       ),
                       TextButton(
+                        key: const Key(RegisterWidgetKeys.loginButtonKey),
                         child: Text(
                           coreL10n.signin,
                           style: const TextStyle(color: Colors.black),
@@ -230,7 +246,6 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         },
                       )
                     ],
-                    mainAxisAlignment: MainAxisAlignment.center,
                   ),
                   const AppGap.xxl()
                 ],
@@ -241,4 +256,21 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
       ),
     );
   }
+}
+
+class RegisterWidgetKeys {
+  static const String scaffoldKey = 'scaffold_key';
+  static const String scrollViewKey = 'scroll_view_key';
+  static const String columnKey = 'column_key';
+  static const String imageKey = 'image_key';
+  static const String titleKey = 'title_key';
+  static const String usernameFieldKey = 'username_field_key';
+  static const String passwordFieldKey = 'password_field_key';
+  static const String firstNameFieldKey = 'first_name_field_key';
+  static const String lastNameFieldKey = 'last_name_field_key';
+  static const String emailFieldKey = 'email_field_key';
+  static const String registerButtonKey = 'register_button_key';
+  static const String loginRowKey = 'login_row_key';
+  static const String noAccountTextKey = 'no_account_text_key';
+  static const String loginButtonKey = 'login_button_key';
 }

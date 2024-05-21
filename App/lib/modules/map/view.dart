@@ -84,7 +84,7 @@ class MapView extends ConsumerWidget {
                     showAlertDialog(context, plant);
                   },
                   icon: const Image(
-                    image: AssetImage('lib/assets/images/icon.png'),
+                    image: AssetImage('assets/images/icon.png'),
                   ),
                 ),
               ),
