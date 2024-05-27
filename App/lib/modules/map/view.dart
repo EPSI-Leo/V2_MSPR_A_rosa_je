@@ -107,33 +107,29 @@ class MapView extends ConsumerWidget {
   }
 
   Widget map(LatLng initialCenter, List<Marker> markers) {
-    return Expanded(
-      child: SizedBox.expand(
-        child: FlutterMap(
-          options: MapOptions(
-            initialCenter: initialCenter,
-            initialZoom: 16.0,
-          ),
-          children: [
-            TileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            ),
-            RichAttributionWidget(
-              attributions: [
-                TextSourceAttribution(
-                  'OpenStreetMap contributors',
-                  onTap: () => launchUrl(
-                    Uri.parse('https://openstreetmap.org/copyright'),
-                  ),
-                ),
-              ],
-            ),
-            MarkerLayer(
-              markers: [for (int i = 0; i < markers.length; i++) markers[i]],
+    return FlutterMap(
+      options: MapOptions(
+        initialCenter: initialCenter,
+        initialZoom: 16.0,
+      ),
+      children: [
+        TileLayer(
+          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        ),
+        RichAttributionWidget(
+          attributions: [
+            TextSourceAttribution(
+              'OpenStreetMap contributors',
+              onTap: () => launchUrl(
+                Uri.parse('https://openstreetmap.org/copyright'),
+              ),
             ),
           ],
         ),
-      ),
+        MarkerLayer(
+          markers: [for (int i = 0; i < markers.length; i++) markers[i]],
+        ),
+      ],
     );
   }
 }

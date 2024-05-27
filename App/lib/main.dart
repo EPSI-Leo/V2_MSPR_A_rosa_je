@@ -1,4 +1,5 @@
 import 'package:arosa_je/core/core.dart';
+import 'package:arosa_je/core/foundation/config.dart';
 import 'package:arosa_je/core/theme/material3/app_theme.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(
-    const ProviderScope(
+    ProviderScope(
+      overrides: [
+        configProvider.overrideWithValue(Config.prod()),
+      ],
       child: MainApp(),
     ),
   );
@@ -22,6 +27,7 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: ref.watch(routerProvider),
       localizationsDelegates: const [
         CoreLocalizations.delegate,
