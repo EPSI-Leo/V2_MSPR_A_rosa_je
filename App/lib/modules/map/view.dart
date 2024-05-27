@@ -4,8 +4,11 @@ import 'dart:typed_data';
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
 import 'package:arosa_je/modules/app/app_initialcenter_providers.dart';
+import 'package:arosa_je/modules/chat/chat_view.dart';
 import 'package:arosa_je/modules/map/notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -47,7 +50,24 @@ class MapView extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${coreL10n.plantName}: ${plant.name}'),
+                Row(
+                  children: [
+                    Text('${coreL10n.plantName}: ${plant.name}'),
+                    Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                      user: User(
+                                          id: plant.idUser.toString(),
+                                          firstName: plant.name,
+                                          lastName: plant.name))));
+                        },
+                        icon: const Icon(Icons.chat, color: Colors.black)),
+                  ],
+                ),
                 Text('${coreL10n.description}: ${plant.description}'),
                 // Display each image in the list
                 if (plant.picture is String)
