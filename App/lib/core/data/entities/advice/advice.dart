@@ -7,7 +7,7 @@ part 'advice.g.dart';
 class Advice with _$Advice {
   const factory Advice({
     required int id,
-    required int idUser,
+    required int? idUser,
     int? idPlant,
     required String name,
     required String advice1,

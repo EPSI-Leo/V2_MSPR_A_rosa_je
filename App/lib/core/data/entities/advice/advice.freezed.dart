@@ -21,7 +21,7 @@ Advice _$AdviceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Advice {
   int get id => throw _privateConstructorUsedError;
-  int get idUser => throw _privateConstructorUsedError;
+  int? get idUser => throw _privateConstructorUsedError;
   int? get idPlant => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get advice1 => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $AdviceCopyWith<$Res> {
   factory $AdviceCopyWith(Advice value, $Res Function(Advice) then) =
       _$AdviceCopyWithImpl<$Res, Advice>;
   @useResult
-  $Res call({int id, int idUser, int? idPlant, String name, String advice1});
+  $Res call({int id, int? idUser, int? idPlant, String name, String advice1});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$AdviceCopyWithImpl<$Res, $Val extends Advice>
   @override
   $Res call({
     Object? id = null,
-    Object? idUser = null,
+    Object? idUser = freezed,
     Object? idPlant = freezed,
     Object? name = null,
     Object? advice1 = null,
@@ -63,10 +63,10 @@ class _$AdviceCopyWithImpl<$Res, $Val extends Advice>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      idUser: null == idUser
+      idUser: freezed == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       idPlant: freezed == idPlant
           ? _value.idPlant
           : idPlant // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$AdviceImplCopyWith<$Res> implements $AdviceCopyWith<$Res> {
       __$$AdviceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int idUser, int? idPlant, String name, String advice1});
+  $Res call({int id, int? idUser, int? idPlant, String name, String advice1});
 }
 
 /// @nodoc
@@ -105,7 +105,7 @@ class __$$AdviceImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? idUser = null,
+    Object? idUser = freezed,
     Object? idPlant = freezed,
     Object? name = null,
     Object? advice1 = null,
@@ -115,10 +115,10 @@ class __$$AdviceImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      idUser: null == idUser
+      idUser: freezed == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       idPlant: freezed == idPlant
           ? _value.idPlant
           : idPlant // ignore: cast_nullable_to_non_nullable
@@ -151,7 +151,7 @@ class _$AdviceImpl implements _Advice {
   @override
   final int id;
   @override
-  final int idUser;
+  final int? idUser;
   @override
   final int? idPlant;
   @override
@@ -198,7 +198,7 @@ class _$AdviceImpl implements _Advice {
 abstract class _Advice implements Advice {
   const factory _Advice(
       {required final int id,
-      required final int idUser,
+      required final int? idUser,
       final int? idPlant,
       required final String name,
       required final String advice1}) = _$AdviceImpl;
@@ -208,7 +208,7 @@ abstract class _Advice implements Advice {
   @override
   int get id;
   @override
-  int get idUser;
+  int? get idUser;
   @override
   int? get idPlant;
   @override

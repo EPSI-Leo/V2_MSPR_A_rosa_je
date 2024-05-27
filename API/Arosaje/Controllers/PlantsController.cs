@@ -54,15 +54,37 @@ namespace Arosaje.Controllers
         [Authorize] // Ajout de l'attribut Authorize
         public IActionResult GetAllPlants()
         {
-            var plants = _context.Plants.ToList();
+            var plants = _context.Plants
+                .Join(
+                    _context.Users,
+                    plant => plant.IdUser,
+                    user => user.Id,
+                    (plant, user) => new
+                    {
+                        plant.Id,
+                        plant.Name,
+                        plant.BeginAt,
+                        plant.EndAt,
+                        plant.Description,
+                        plant.Picture,
+                        plant.Latitude,
+                        plant.Longitude,
+                        plant.IdUser,
+                        UserFirebaseUid = user.FirebaseUid,
+                        UserUsername = user.Username
+                    }
+                )
+                .ToList();
 
             if (plants == null || plants.Count == 0)
             {
-                return NotFound("Aucune plante trouvee.");
+                return NotFound("Aucune plante trouvée.");
             }
 
             return Ok(plants);
         }
+
+
 
 
         // POST: api/Plants/AddPlant

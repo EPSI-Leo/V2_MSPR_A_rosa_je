@@ -21,7 +21,7 @@ class User with _$User {
     final cleanedData = userData.replaceAll('User(', '').replaceAll(')', '');
     final List<String> data =
         cleanedData.split(',').map((e) => e.trim()).toList();
-    if (data.length != 6) {
+    if (data.length != 7) {
       throw ArgumentError('Invalid user data');
     }
     return User(
