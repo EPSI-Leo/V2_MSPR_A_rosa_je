@@ -1,0 +1,31 @@
+name: Flutter TI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'latest'
+
+    - name: Install dependencies
+      run: flutter pub get
+      working-directory: ./app
+
+    - name: Run Flutter tests
+      run: flutter test lib/integration_test/modules/auth/
+      working-directory: ./app
