@@ -1,0 +1,31 @@
+name: Flutter TU
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.22'
+
+    - name: Install dependencies
+      run: flutter pub get
+      working-directory: ./App
+
+    - name: Run Flutter tests
+      run: flutter test
+      working-directory: ./App
