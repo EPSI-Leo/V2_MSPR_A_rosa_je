@@ -23,7 +23,4 @@ public partial class Plant
 
     public double Longitude { get; set; }
 
-    public virtual ICollection<Advice> Advices { get; set; } = new List<Advice>();
-
-    public virtual User IdUserNavigation { get; set; } = null!;
 }

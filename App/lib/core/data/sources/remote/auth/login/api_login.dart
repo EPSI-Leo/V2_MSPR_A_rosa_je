@@ -37,7 +37,7 @@ class ApiLogin extends ApiClient {
     String password,
   ) async {
     var body = {
-      'username': username,
+      'email': username,
       'password': password,
     };
     return this.post(ArosajeEndpoints.login,
