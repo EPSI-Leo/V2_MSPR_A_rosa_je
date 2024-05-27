@@ -43,3 +43,4 @@ jobs:
       with:
         name: A_rosa_je.apk
         path: apk
+        working-directory: ./App
