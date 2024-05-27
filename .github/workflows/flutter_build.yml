@@ -36,8 +36,8 @@ jobs:
       run: flutter build apk --release
       working-directory: ./App
 
-    #- name: Upload APK
-     # uses: actions/upload-artifact@v3
-      #with:
-       # name: app-release.apk
-        #path: build/app/outputs/flutter-apk/app-release.apk
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: A_rosa_je.apk
+        path: build/app/outputs/flutter-apk/A_rosa_je.apk
