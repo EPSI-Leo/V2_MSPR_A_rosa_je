@@ -33,19 +33,25 @@ GoRouter router(RouterRef ref) {
                 builder: (context, state) => const RegisterView(),
                 routes: [
                   GoRoute(
-                    path:
-                        '${AppRoute.cgu.path}/:firstName/:lastName/:username/:password/:email',
-                    name: AppRoute.cgu.name,
-                    builder: (context, state) {
-                      return const CGU(
-                        firstName: 'firstName',
-                        lastName: 'lastName',
-                        username: 'username',
-                        password: 'password',
-                        email: 'email',
-                      );
-                    },
-                  ),
+  path: '${AppRoute.cgu.path}/:firstName/:lastName/:username/:password/:email',
+  name: AppRoute.cgu.name,
+  builder: (context, state) {
+    final firstName = state.pathParameters['firstName']!;
+    final lastName = state.pathParameters['lastName']!;
+    final username = state.pathParameters['username']!;
+    final password = state.pathParameters['password']!;
+    final email = state.pathParameters['email']!;
+
+    return CGU(
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      password: password,
+      email: email,
+    );
+  },
+),
+
                 ]),
             GoRoute(
               path: AppRoute.home.path,

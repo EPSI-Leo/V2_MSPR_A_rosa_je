@@ -1,4 +1,4 @@
-import 'package:arosa_je/core/l10n/core_localizations.dart'; // Assurez-vous que ce chemin est correct
+import 'package:arosa_je/core/l10n/core_localizations.dart'; 
 import 'package:arosa_je/integration_test/robots/robot.dart';
 import 'package:arosa_je/modules/auth/register/view.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,6 @@
 import "package:arosa_je/core/core.dart";
 import "package:arosa_je/modules/auth/register/notifier.dart";
+import "package:arosa_je/router/router.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
@@ -147,6 +148,7 @@ class _CGUState extends ConsumerState<CGU> {
                             widget.firstName,
                             widget.email,
                           );
+                          context.goNamed(AppRoute.login.name);
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.blue,

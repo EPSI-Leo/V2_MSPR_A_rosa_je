@@ -17,7 +17,6 @@ class User with _$User {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   factory User.fromString(String userData) {
-    // Supprimer les informations de structure (id:, firstName:, etc.)
     final cleanedData = userData.replaceAll('User(', '').replaceAll(')', '');
     final List<String> data =
         cleanedData.split(',').map((e) => e.trim()).toList();

@@ -23,11 +23,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: [
-              MapView(),
-            ],
-          ),
+           MapView(),
           Positioned(
             top: 30.0,
             left: 16.0,
