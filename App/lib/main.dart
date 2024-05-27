@@ -16,7 +16,7 @@ void main() {
       overrides: [
         configProvider.overrideWithValue(Config.prod()),
       ],
-      child: MainApp(),
+      child: const MainApp(),
     ),
   );
 }

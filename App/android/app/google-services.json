@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "350774075445",
+    "project_id": "arosaje-mspr",
+    "storage_bucket": "arosaje-mspr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350774075445:android:c04e2df6fe7f345253d17c",
+        "android_client_info": {
+          "package_name": "com.example.a_rosa_je"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf8CVRIFAD--8i3frGZecxQwMwWD0lnXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

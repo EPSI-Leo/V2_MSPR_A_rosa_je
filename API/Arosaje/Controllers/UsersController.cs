@@ -62,7 +62,7 @@ namespace Arosaje.ModelViews
             }
 
             // Générer le token JWT
-            var token = _tokenService.CreateToken("1");
+            var token = _tokenService.CreateToken(existingUser.Id.ToString());
 
             // Retourner l'ID de l'utilisateur et le token JWT en tant que partie de la réponse
             return Ok(new { Id = existingUser.Id, Token = token });

@@ -85,6 +85,7 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
                 ),
               ),
             ),
+           
             bottomNavigationBar: (user.role == 'role: admin' ||
                     user.role == 'role: botaniste') //TODO à corriger ?
                 ? Padding(
