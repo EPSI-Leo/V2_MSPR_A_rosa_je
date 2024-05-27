@@ -59,11 +59,7 @@ class MapView extends ConsumerWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ChatPage(
-                                      user: User(
-                                          id: plant.idUser.toString(),
-                                          firstName: plant.name,
-                                          lastName: plant.name))));
+                                  builder: (context) => ChatScreen()));
                         },
                         icon: const Icon(Icons.chat, color: Colors.black)),
                   ],

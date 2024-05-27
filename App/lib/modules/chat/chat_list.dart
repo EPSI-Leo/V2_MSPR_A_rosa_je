@@ -23,7 +23,7 @@ class PeoplePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatPage(user: user),
+                  builder: (context) => ChatScreen(),
                 ),
               );
             },
