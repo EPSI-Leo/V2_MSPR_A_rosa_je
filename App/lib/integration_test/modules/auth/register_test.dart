@@ -9,7 +9,7 @@ import 'package:integration_test/integration_test.dart';
 
 void main() {
   group('Login Integration Tests', () {
-    final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
     late Robot robot;
 
     testWidgets('Verify register screen elements and registration process',
