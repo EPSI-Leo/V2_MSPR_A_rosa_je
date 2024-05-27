@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `advices` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_advices_users` FOREIGN KEY (`id_user`) REFERENCES `users`(`id`),
   CONSTRAINT `fk_advices_plants` FOREIGN KEY (`id_plant`) REFERENCES `plants`(`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `advices`
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `plants` (
   `longitude` double NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_plants_users` FOREIGN KEY (`id_user`) REFERENCES `users`(`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `plants`
@@ -85,8 +85,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `cgu` int NOT NULL,
   `role` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --
 -- Dumping data for table `users`
 --
