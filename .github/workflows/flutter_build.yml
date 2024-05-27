@@ -1,12 +1,14 @@
 name: Build Flutter APK
 
+#on:
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    branches:
+#      - main
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    workflow_dispatch:  # Déclenchement manuel
 
 jobs:
   build:
@@ -40,4 +42,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: A_rosa_je.apk
-        path: build/app/outputs/flutter-apk/A_rosa_je.apk
+        path: apk
