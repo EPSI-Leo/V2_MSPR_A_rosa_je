@@ -13,6 +13,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       email: json['email'] as String?,
       username: json['username'] as String?,
       role: json['role'] as String?,
+      firebaseUid: json['firebaseUid'] as String?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -23,4 +24,5 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'email': instance.email,
       'username': instance.username,
       'role': instance.role,
+      'firebaseUid': instance.firebaseUid,
     };

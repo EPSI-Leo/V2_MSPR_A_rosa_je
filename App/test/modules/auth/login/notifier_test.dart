@@ -53,12 +53,12 @@ void main() {
     });
 
     test('setUsername not empty', () {
-      container.read(loginFormProvider.notifier).setUsername('username');
+      container.read(loginFormProvider.notifier).setEmail('username');
       expect(container.read(loginFormProvider).username, 'username');
     });
 
     test('setUsername  empty', () {
-      container.read(loginFormProvider.notifier).setUsername('');
+      container.read(loginFormProvider.notifier).setEmail('');
       expect(container.read(loginFormProvider).username, '');
     });
 
@@ -103,7 +103,7 @@ void main() {
       expect(container.read(loginFormProvider).isLoading, false);
     });
     test('isFieldsEmpty not empty', () {
-      container.read(loginFormProvider.notifier).setUsername('username');
+      container.read(loginFormProvider.notifier).setEmail('username');
       expect(container.read(loginFormProvider).username, 'username');
     });
 

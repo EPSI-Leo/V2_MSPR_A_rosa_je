@@ -18,6 +18,7 @@ class Register extends _$Register {
     String firstName,
     String lastName,
     String email,
+    String firebaseUid,
   ) async {
     state = const AsyncLoading();
     ref.read(registerFormProvider.notifier).setConnectionMessageError(
@@ -25,12 +26,7 @@ class Register extends _$Register {
         );
     final registerRepository = ref.read(registerRepositoryProvider);
     state = await AsyncValue.guard(() => registerRepository.register(
-          username,
-          password,
-          firstName,
-          lastName,
-          email,
-        ));
+        username, password, firstName, lastName, email, firebaseUid));
   }
 }
 
@@ -71,9 +67,10 @@ class RegisterForm extends _$RegisterForm {
     );
   }
 
-  void setPassword(String passsword) {
+  void setPassword(String password) {
     state = state.copyWith(
-      password: passsword,
+      password: password,
+      isPasswordError: password.length < 6,
     );
 
     isFieldsEmpty();
@@ -104,7 +101,8 @@ class RegisterForm extends _$RegisterForm {
           state.username.isNotEmpty &&
           state.password.isNotEmpty &&
           state.email.isNotEmpty &&
-          !state.isEmailError,
+          !state.isEmailError &&
+          !state.isPasswordError,
     );
   }
 

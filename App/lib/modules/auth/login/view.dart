@@ -97,12 +97,22 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   TextFormField(
                     key: const Key(LoginWidgetKeys.usernameFieldKey),
                     decoration: InputDecoration(
-                      hintText: coreL10n.signinUsername,
+                      hintText: coreL10n.signupEmail,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
+                      errorText: ref.watch(loginFormProvider).isEmailError
+                          ? coreL10n.validateEmailValid
+                          : null,
                     ),
                     controller: _login,
                     onChanged: (value) {
-                      ref.read(loginFormProvider.notifier).setUsername(value);
+                      final isEmail =
+                          RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value);
+                      ref.read(loginFormProvider.notifier).setEmail(value);
+                      ref
+                          .read(loginFormProvider.notifier)
+                          .setIsEmailError(!isEmail);
+                      ref.read(loginFormProvider.notifier).isFieldsEmpty();
                     },
                   ),
                   const AppGap.xs(),

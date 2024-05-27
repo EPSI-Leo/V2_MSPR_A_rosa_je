@@ -4,6 +4,7 @@ import "package:arosa_je/router/router.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CGU extends ConsumerStatefulWidget {
   const CGU({
@@ -140,15 +141,34 @@ class _CGUState extends ConsumerState<CGU> {
               const AppGap.medium(),
               Expanded(
                 child: ElevatedButton(
-                    onPressed: () {
-                      ref.read(registerProvider.notifier).register(
-                            widget.username,
-                            widget.password,
-                            widget.lastName,
-                            widget.firstName,
-                            widget.email,
-                          );
-                          context.goNamed(AppRoute.login.name);
+                    onPressed: () async {
+                      try {
+                        await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: widget.email,
+                          password: widget.password,
+                        )
+                            .then((value) async {
+                          print(value.user);
+                          print(value.user!.uid);
+                          await ref.read(registerProvider.notifier).register(
+                              widget.username,
+                              widget.password,
+                              widget.lastName,
+                              widget.firstName,
+                              widget.email,
+                              value.user!.uid);
+                        });
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'weak-password') {
+                          print('The password provided is too weak.');
+                        } else if (e.code == 'email-already-in-use') {
+                          print('The account already exists for that email.');
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                      context.goNamed(AppRoute.login.name);
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.blue,

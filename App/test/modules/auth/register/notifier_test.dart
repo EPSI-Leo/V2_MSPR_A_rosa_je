@@ -16,6 +16,7 @@ void main() {
   late String firstName;
   late String lastName;
   late String email;
+  late String firebaseUid;
 
   setUpAll(() {});
 
@@ -37,6 +38,7 @@ void main() {
       firstName = 'First';
       lastName = 'Last';
       email = 'email@example.com';
+      firebaseUid = 'firebaseUid';
 
       when(() => registerRepository.register(
             username,
@@ -44,6 +46,7 @@ void main() {
             firstName,
             lastName,
             email,
+            firebaseUid,
           )).thenAnswer((_) async => true);
 
       await container.read(registerProvider.notifier).register(
@@ -52,6 +55,7 @@ void main() {
             firstName,
             lastName,
             email,
+            firebaseUid,
           );
 
       verify(() => registerRepository.register(
@@ -60,6 +64,7 @@ void main() {
             firstName,
             lastName,
             email,
+            firebaseUid,
           )).called(1);
       final result = await container.read(registerProvider.future);
 

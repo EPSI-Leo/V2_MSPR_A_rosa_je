@@ -18,19 +18,15 @@ class RegisterRepository {
   });
   final ApiRegister api;
 
-  Future<bool> register(
-    String username,
-    String password,
-    String firstName,
-    String lastName,
-    String email,
-  ) async {
+  Future<bool> register(String username, String password, String firstName,
+      String lastName, String email, String firebaseUid) async {
     await api.register(
       username,
       password,
       firstName,
       lastName,
       email,
+      firebaseUid,
     );
 
     return true;

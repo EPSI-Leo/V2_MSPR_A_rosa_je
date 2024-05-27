@@ -31,13 +31,8 @@ class ApiRegister extends ApiClient {
   @override
   String get baseUrl => config.baseUrl;
 
-  Future<bool?> register(
-    String username,
-    String password,
-    String firstName,
-    String lastName,
-    String email,
-  ) async {
+  Future<bool?> register(String username, String password, String firstName,
+      String lastName, String email, String firebaseUid) async {
     var body = {
       "id": 0,
       "firstName": firstName,
@@ -45,8 +40,9 @@ class ApiRegister extends ApiClient {
       "email": email,
       "username": username,
       "password": password,
-      "cgu": 1,
-      "role": "user"
+      "cgu": true,
+      "role": "user",
+      "firebaseUid": firebaseUid
     };
 
     return this.post(ArosajeEndpoints.register,
