@@ -13,6 +13,7 @@
   "signinContinueWith":"ou continuer avec",
   "signinGoogle":"Se connecter avec Google",
   "signinDontHaveAccount":"Pas encore inscrit ?",
+  "signinAlreadyHaveAccount":"Déjà un compte ?",
   "signinLoginSuccess":"Login Success",
   "signinIncorrect":"Identifiant ou mot de passe invalide",
 
