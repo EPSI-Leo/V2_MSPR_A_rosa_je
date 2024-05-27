@@ -17,13 +17,16 @@ public partial class ArosajeContext : DbContext
 
     public virtual DbSet<Advice> Advices { get; set; }
 
+    public virtual DbSet<Message> Messages { get; set; }
+
     public virtual DbSet<Plant> Plants { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=;database=arosaje");
+    {
+        optionsBuilder.UseMySQL("server=127.0.0.1;port=3306;user=root;password=;database=arosaje");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,21 +44,44 @@ public partial class ArosajeContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("id");
             entity.Property(e => e.Advice1)
-                .HasDefaultValueSql("'NULL'")
                 .HasColumnType("text")
                 .HasColumnName("advice");
             entity.Property(e => e.IdPlant)
-                .HasDefaultValueSql("'NULL'")
                 .HasColumnType("int(11)")
                 .HasColumnName("id_plant");
             entity.Property(e => e.IdUser)
-                .HasDefaultValueSql("'NULL'")
                 .HasColumnType("int(11)")
                 .HasColumnName("id_user");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
-                .HasDefaultValueSql("'NULL'")
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("messages");
+
+            entity.HasIndex(e => e.IdReceiver, "id_receiver");
+
+            entity.HasIndex(e => e.IdSender, "id_sender");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Content)
+                .HasColumnType("text")
+                .HasColumnName("content");
+            entity.Property(e => e.IdReceiver)
+                .HasColumnType("int(11)")
+                .HasColumnName("id_receiver");
+            entity.Property(e => e.IdSender)
+                .HasColumnType("int(11)")
+                .HasColumnName("id_sender");
+            entity.Property(e => e.Timestamp)
+                .HasColumnType("datetime")
+                .HasColumnName("timestamp");
         });
 
         modelBuilder.Entity<Plant>(entity =>

@@ -1,4 +1,5 @@
 using Arosaje.Entities;
+using Arosaje.Hubs;
 using JwtRoleAuthentication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddSignalR();
 builder.Services.AddSwaggerGen(option =>
 {
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Test API", Version = "v1" });
@@ -44,7 +45,7 @@ builder.Services.AddProblemDetails();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 
-builder.Services.AddScoped<TokenService>(); // Ajout de TokenService dans le conteneur d'injection de dépendances
+builder.Services.AddScoped<TokenService>(); // Ajout de TokenService dans le conteneur d'injection de dï¿½pendances
 
 builder.Services.AddDbContext<ArosajeContext>(options =>
 {
@@ -95,6 +96,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapHub<ChatHub>("/chatHub");
 app.UseHttpsRedirection();
 app.UseStatusCodePages();
 app.UseAuthentication(); 
