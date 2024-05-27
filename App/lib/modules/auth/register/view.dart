@@ -232,7 +232,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        coreL10n.signinDontHaveAccount,
+                        coreL10n.signinAlreadyHaveAccount,
                         key: const Key(RegisterWidgetKeys.noAccountTextKey),
                       ),
                       TextButton(

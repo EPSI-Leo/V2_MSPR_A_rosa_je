@@ -171,6 +171,12 @@ abstract class CoreLocalizations {
   /// **'Not registered ?'**
   String get signinDontHaveAccount;
 
+  /// No description provided for @signinAlreadyHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account ?'**
+  String get signinAlreadyHaveAccount;
+
   /// No description provided for @signinLoginSuccess.
   ///
   /// In en, this message translates to:
