@@ -44,6 +44,9 @@ class CoreLocalizationsEn extends CoreLocalizations {
   String get signinDontHaveAccount => 'Not registered ?';
 
   @override
+  String get signinAlreadyHaveAccount => 'Already have an account ?';
+
+  @override
   String get signinLoginSuccess => 'Login Successful';
 
   @override
