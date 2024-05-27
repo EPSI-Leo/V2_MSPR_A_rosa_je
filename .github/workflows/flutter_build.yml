@@ -30,9 +30,11 @@ jobs:
 
     - name: Install dependencies
       run: flutter pub get
+      working-directory: ./App
 
     - name: Build APK
       run: flutter build apk --release
+      working-directory: ./App
 
     #- name: Upload APK
      # uses: actions/upload-artifact@v3

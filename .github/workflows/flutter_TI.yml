@@ -24,8 +24,8 @@ jobs:
 
     - name: Install dependencies
       run: flutter pub get
-      working-directory: ./app
+      working-directory: ./App
 
     - name: Run Flutter tests
       run: flutter test lib/integration_test/modules/auth/
-      working-directory: ./app
+      working-directory: ./App
