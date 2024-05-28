@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
 import 'package:arosa_je/modules/app/app_initialcenter_providers.dart';
+import 'package:arosa_je/modules/chat/chat_view.dart';
 import 'package:arosa_je/modules/map/notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -53,10 +54,13 @@ class MapView extends ConsumerWidget {
                     const Spacer(),
                     IconButton(
                         onPressed: () {
-                          /* Navigator.push(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const ChatScreen())); */
+                                  builder: (context) => ChatScreen(
+                                        receiveUserEmail: plant.userUsername,
+                                        receiveUserID: plant.userFirebaseUid,
+                                      )));
                         },
                         icon: const Icon(Icons.chat, color: Colors.black)),
                   ],

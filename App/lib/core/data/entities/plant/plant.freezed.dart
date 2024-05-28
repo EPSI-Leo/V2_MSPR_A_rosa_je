@@ -29,8 +29,8 @@ mixin _$Plant {
   String? get picture => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
-  String? get userFirebaseUid => throw _privateConstructorUsedError;
-  String? get userUsername => throw _privateConstructorUsedError;
+  String get userFirebaseUid => throw _privateConstructorUsedError;
+  String get userUsername => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,8 +52,8 @@ abstract class $PlantCopyWith<$Res> {
       String? picture,
       double? latitude,
       double? longitude,
-      String? userFirebaseUid,
-      String? userUsername});
+      String userFirebaseUid,
+      String userUsername});
 }
 
 /// @nodoc
@@ -78,8 +78,8 @@ class _$PlantCopyWithImpl<$Res, $Val extends Plant>
     Object? picture = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
-    Object? userFirebaseUid = freezed,
-    Object? userUsername = freezed,
+    Object? userFirebaseUid = null,
+    Object? userUsername = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -118,14 +118,14 @@ class _$PlantCopyWithImpl<$Res, $Val extends Plant>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
-      userFirebaseUid: freezed == userFirebaseUid
+      userFirebaseUid: null == userFirebaseUid
           ? _value.userFirebaseUid
           : userFirebaseUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userUsername: freezed == userUsername
+              as String,
+      userUsername: null == userUsername
           ? _value.userUsername
           : userUsername // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -147,8 +147,8 @@ abstract class _$$PlantImplCopyWith<$Res> implements $PlantCopyWith<$Res> {
       String? picture,
       double? latitude,
       double? longitude,
-      String? userFirebaseUid,
-      String? userUsername});
+      String userFirebaseUid,
+      String userUsername});
 }
 
 /// @nodoc
@@ -171,8 +171,8 @@ class __$$PlantImplCopyWithImpl<$Res>
     Object? picture = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
-    Object? userFirebaseUid = freezed,
-    Object? userUsername = freezed,
+    Object? userFirebaseUid = null,
+    Object? userUsername = null,
   }) {
     return _then(_$PlantImpl(
       id: freezed == id
@@ -211,14 +211,14 @@ class __$$PlantImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
-      userFirebaseUid: freezed == userFirebaseUid
+      userFirebaseUid: null == userFirebaseUid
           ? _value.userFirebaseUid
           : userFirebaseUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userUsername: freezed == userUsername
+              as String,
+      userUsername: null == userUsername
           ? _value.userUsername
           : userUsername // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -261,9 +261,9 @@ class _$PlantImpl implements _Plant {
   @override
   final double? longitude;
   @override
-  final String? userFirebaseUid;
+  final String userFirebaseUid;
   @override
-  final String? userUsername;
+  final String userUsername;
 
   @override
   String toString() {
@@ -323,8 +323,8 @@ abstract class _Plant implements Plant {
       required final String? picture,
       required final double? latitude,
       required final double? longitude,
-      required final String? userFirebaseUid,
-      required final String? userUsername}) = _$PlantImpl;
+      required final String userFirebaseUid,
+      required final String userUsername}) = _$PlantImpl;
 
   factory _Plant.fromJson(Map<String, dynamic> json) = _$PlantImpl.fromJson;
 
@@ -347,9 +347,9 @@ abstract class _Plant implements Plant {
   @override
   double? get longitude;
   @override
-  String? get userFirebaseUid;
+  String get userFirebaseUid;
   @override
-  String? get userUsername;
+  String get userUsername;
   @override
   @JsonKey(ignore: true)
   _$$PlantImplCopyWith<_$PlantImpl> get copyWith =>

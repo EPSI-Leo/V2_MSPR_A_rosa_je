@@ -15,8 +15,8 @@ class Plant with _$Plant {
     required String? picture,
     required double? latitude,
     required double? longitude,
-    required String? userFirebaseUid,
-    required String? userUsername,
+    required String userFirebaseUid,
+    required String userUsername,
   }) = _Plant;
 
   factory Plant.fromJson(Map<String, dynamic> json) => _$PlantFromJson(json);

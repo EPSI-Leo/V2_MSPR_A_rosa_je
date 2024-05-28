@@ -71,7 +71,7 @@ namespace Arosaje.Controllers
                         plant.Longitude,
                         plant.IdUser,
                         UserFirebaseUid = user.FirebaseUid,
-                        UserUsername = user.Username
+                        UserUsername = user.Email
                     }
                 )
                 .ToList();
