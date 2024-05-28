@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:arosa_je/core/api_client_exception.dart';
 import 'package:arosa_je/core/core.dart';
-import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
-import 'package:arosa_je/core/local/session_manager/session_manager.dart';
 import 'package:arosa_je/core/theme/app_spacing.dart';
 import 'package:arosa_je/modules/auth/login/model/auth_alert_message.dart';
 import 'package:arosa_je/modules/auth/login/notifier.dart';
@@ -170,12 +168,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                       email: _login.text,
                                       password: _password.text,
                                     );
-                                    ref
-                                        .read(sessionManagerProvider)
-                                        .writeSecureStorage(
-                                            SecureStorageKeys.userCredential,
-                                            userCredential.toString());
-
                                     final FirebaseFirestore _firestore =
                                         FirebaseFirestore.instance;
 
@@ -187,6 +179,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                       'uid': userCredential.user!.uid,
                                     }, SetOptions(merge: true));
                                   } on FirebaseAuthException catch (e) {
+                                    printDebug(e.toString());
                                     //TODO make the connection to firebase properly in notifier
                                   }
                                 }

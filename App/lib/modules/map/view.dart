@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
 import 'package:arosa_je/modules/app/app_initialcenter_providers.dart';
-import 'package:arosa_je/modules/chat/chat_view.dart';
 import 'package:arosa_je/modules/map/notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
