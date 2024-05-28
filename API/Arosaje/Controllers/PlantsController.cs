@@ -26,6 +26,7 @@ namespace Arosaje.Controllers
         [HttpGet("GetMyPlants")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public IActionResult GetMyPlants()
         {
             // Récupérer l'ID de l'utilisateur à partir du token JWT
