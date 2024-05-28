@@ -54,10 +54,10 @@ class MapView extends ConsumerWidget {
                     const Spacer(),
                     IconButton(
                         onPressed: () {
-                          Navigator.push(
+                          /* Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const ChatScreen()));
+                                  builder: (context) => const ChatScreen())); */
                         },
                         icon: const Icon(Icons.chat, color: Colors.black)),
                   ],

@@ -1,36 +1,65 @@
 import 'package:arosa_je/modules/chat/chat_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class PeoplePage extends StatelessWidget {
   PeoplePage({super.key});
-  final List<types.User> users = [
-    const types.User(id: '1', firstName: 'John', lastName: 'Doe'),
-    const types.User(id: '2', firstName: 'Jane', lastName: 'Smith'),
-    const types.User(id: '3', firstName: 'Alice', lastName: 'Johnson'),
-  ];
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('People')),
-      body: ListView.builder(
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users[index];
-          return ListTile(
-            title: Text('${user.firstName} ${user.lastName}'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ChatScreen(),
-                ),
-              );
-            },
+        appBar: AppBar(title: const Text('People')),
+        body: _buildUserList(context));
+  }
+
+  Widget _buildUserList(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('users').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView(
+            children: [
+              Column(
+                children: snapshot.data!.docs
+                    .map<Widget>((doc) => _buildUserListItem(context, doc))
+                    .toList(),
+              )
+            ],
           );
+        });
+  }
+
+  Widget _buildUserListItem(BuildContext context, DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+    if (_auth.currentUser!.email != data['email']) {
+      return ListTile(
+        title: Text(data['email']),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                  receiveUserEmail: data['email'],
+                  receiveUserID: data['uid'],
+                ),
+              ));
         },
-      ),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 }

@@ -1,6 +1,7 @@
 import "package:arosa_je/core/core.dart";
 import "package:arosa_je/modules/auth/register/notifier.dart";
 import "package:arosa_je/router/router.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
@@ -143,19 +144,30 @@ class _CGUState extends ConsumerState<CGU> {
                 child: ElevatedButton(
                     onPressed: () async {
                       try {
-                        await FirebaseAuth.instance
+                        final UserCredential userCredential = await FirebaseAuth
+                            .instance
                             .createUserWithEmailAndPassword(
                           email: widget.email,
                           password: widget.password,
-                        )
-                            .then((value) async {
-                          await ref.read(registerProvider.notifier).register(
+                        );
+
+                        await ref.read(registerProvider.notifier).register(
                               widget.username,
                               widget.password,
                               widget.lastName,
                               widget.firstName,
                               widget.email,
-                              value.user!.uid);
+                              userCredential.user!.uid,
+                            );
+
+                        final FirebaseFirestore _firestore =
+                            FirebaseFirestore.instance;
+                        await _firestore
+                            .collection('users')
+                            .doc(userCredential.user!.uid)
+                            .set({
+                          'email': userCredential.user!.email,
+                          'uid': userCredential.user!.uid,
                         });
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {

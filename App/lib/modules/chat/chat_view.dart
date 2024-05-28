@@ -3,7 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  const ChatScreen(
+      {super.key, required this.receiveUserEmail, required this.receiveUserID});
+  final String receiveUserEmail;
+  final String receiveUserID;
 
   @override
   ChatScreenState createState() => ChatScreenState();
@@ -22,7 +25,7 @@ class ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat App'),
+        title: const Text('Chat'),
       ),
       body: Column(
         children: [
