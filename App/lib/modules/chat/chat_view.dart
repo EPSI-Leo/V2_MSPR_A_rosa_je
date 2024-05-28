@@ -1,12 +1,15 @@
+import 'package:arosa_je/core/core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  ChatScreenState createState() => ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -19,7 +22,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat App'),
+        title: const Text('Chat App'),
       ),
       body: Column(
         children: [
@@ -37,7 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
 
                 if (!snapshot.hasData) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
@@ -51,7 +54,13 @@ class _ChatScreenState extends State<ChatScreen> {
                     return ListTile(
                       title: Text(message['text']),
                       subtitle: message['timestamp'] != null
-                          ? Text(message['timestamp'].toDate().toString())
+                          ? Text(DateTime.fromMillisecondsSinceEpoch(
+                                  (message['timestamp'] is Timestamp
+                                          ? (message['timestamp'] as Timestamp)
+                                              .millisecondsSinceEpoch
+                                          : message['timestamp']) *
+                                      1000)
+                              .toString())
                           : const Text('Timestamp not available'),
                     );
                   },
@@ -60,19 +69,19 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _textEditingController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Type a message',
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                   onPressed: () => _sendMessage(),
                 ),
               ],
@@ -93,17 +102,18 @@ class _ChatScreenState extends State<ChatScreen> {
         });
         _textEditingController.clear();
       } catch (e) {
-        print('Error sending message: $e');
+        printDebug('Error sending message: $e');
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text('Failed to send message. Please try again.'),
+              title: const Text('Error'),
+              content: const Text('Failed to send message. Please try again.'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );

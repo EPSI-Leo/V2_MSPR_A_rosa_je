@@ -72,8 +72,8 @@ class AddAdviceScreenState extends ConsumerState<AddAdviceScreen> {
             const SizedBox(height: 16.0),
             FilledButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.green),
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
                 if (nameController.text.isNotEmpty &&

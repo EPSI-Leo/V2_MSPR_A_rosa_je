@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.6
   flutter_localization: ^0.2.0
   flutter_riverpod: ^2.4.9
@@ -43,12 +42,13 @@ dependencies:
   flutter_chat_ui: ^1.6.13
   flutter_chat_types: ^3.6.2
   cloud_firestore: ^4.17.4
-
-dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
+  firebase_auth: ^4.19.6
+
+dev_dependencies:
   flutter_lints: ^3.0.0
   riverpod_generator: ^2.3.9
   custom_lint: ^0.5.7

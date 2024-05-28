@@ -149,7 +149,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         key: const Key(LoginWidgetKeys.loginButtonKey),
                         style: ButtonStyle(
                           backgroundColor: loginForm.isButtonActive
-                              ? MaterialStateProperty.all(Colors.green)
+                              ? WidgetStateProperty.all(Colors.green)
                               : null,
                         ),
                         onPressed: loginForm.isButtonActive

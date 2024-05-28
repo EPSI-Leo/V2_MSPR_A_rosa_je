@@ -85,7 +85,6 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
                 ),
               ),
             ),
-           
             bottomNavigationBar: (user.role == 'role: admin' ||
                     user.role == 'role: botaniste') //TODO à corriger ?
                 ? Padding(
@@ -93,9 +92,9 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
                     child: FilledButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
+                            WidgetStateProperty.all<Color>(Colors.green),
                         foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
+                            WidgetStateProperty.all<Color>(Colors.white),
                       ),
                       child: Text(coreL10n.addAdvice),
                       onPressed: () async {

@@ -7,8 +7,6 @@ import 'package:arosa_je/modules/app/app_initialcenter_providers.dart';
 import 'package:arosa_je/modules/chat/chat_view.dart';
 import 'package:arosa_je/modules/map/notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -53,13 +51,13 @@ class MapView extends ConsumerWidget {
                 Row(
                   children: [
                     Text('${coreL10n.plantName}: ${plant.name}'),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ChatScreen()));
+                                  builder: (context) => const ChatScreen()));
                         },
                         icon: const Icon(Icons.chat, color: Colors.black)),
                   ],
@@ -108,7 +106,7 @@ class MapView extends ConsumerWidget {
           }
         }
         return map(initialCenter!,
-            markers); //TODO initialCenter!  const LatLng(45.54705, 5.97151),
+            markers); //initialCenter!  const LatLng(45.54705, 5.97151),
       },
       loading: () => const Center(
         child: Center(

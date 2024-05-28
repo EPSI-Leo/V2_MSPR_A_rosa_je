@@ -12,8 +12,8 @@ class ArosajeTheme {
       ),
       fontFamily: '.SF Pro Text',
       searchBarTheme: SearchBarThemeData(
-        elevation: MaterialStateProperty.all(AppDimensions.elevationZero),
-        shape: MaterialStateProperty.all(
+        elevation: WidgetStateProperty.all(AppDimensions.elevationZero),
+        shape: WidgetStateProperty.all(
           const RoundedRectangleBorder(
             side: BorderSide(color: AppColors.grey300, width: 1),
             borderRadius: BorderRadius.all(Radius.circular(AppRadius.small)),

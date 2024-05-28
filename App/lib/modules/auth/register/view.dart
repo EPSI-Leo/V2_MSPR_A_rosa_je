@@ -202,7 +202,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         key: const Key(RegisterWidgetKeys.registerButtonKey),
                         style: ButtonStyle(
                           backgroundColor: isButtonActive
-                              ? MaterialStateProperty.all(Colors.green)
+                              ? WidgetStateProperty.all(Colors.green)
                               : null,
                         ),
                         onPressed: isButtonActive

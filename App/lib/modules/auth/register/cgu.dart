@@ -149,8 +149,6 @@ class _CGUState extends ConsumerState<CGU> {
                           password: widget.password,
                         )
                             .then((value) async {
-                          print(value.user);
-                          print(value.user!.uid);
                           await ref.read(registerProvider.notifier).register(
                               widget.username,
                               widget.password,
@@ -161,13 +159,15 @@ class _CGUState extends ConsumerState<CGU> {
                         });
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
-                          print('The password provided is too weak.');
+                          printDebug('The password provided is too weak.');
                         } else if (e.code == 'email-already-in-use') {
-                          print('The account already exists for that email.');
+                          printDebug(
+                              'The account already exists for that email.');
                         }
                       } catch (e) {
-                        print(e);
+                        printDebug(e.toString());
                       }
+                      // ignore: use_build_context_synchronously
                       context.goNamed(AppRoute.login.name);
                     },
                     style: ElevatedButton.styleFrom(
