@@ -52,7 +52,8 @@ class MapView extends ConsumerWidget {
                   children: [
                     Text('${coreL10n.plantName}: ${plant.name}'),
                     const Spacer(),
-                    IconButton(
+                    //TODO V3
+                    /* IconButton(
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -62,7 +63,7 @@ class MapView extends ConsumerWidget {
                                         receiveUserID: plant.userFirebaseUid,
                                       )));
                         },
-                        icon: const Icon(Icons.chat, color: Colors.black)),
+                        icon: const Icon(Icons.chat, color: Colors.black)), */
                   ],
                 ),
                 Text('${coreL10n.description}: ${plant.description}'),

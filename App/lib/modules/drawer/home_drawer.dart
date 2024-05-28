@@ -42,7 +42,8 @@ class HomeDrawer extends ConsumerWidget {
               context.goNamed(AppRoute.userPlantList.name);
             },
           ),
-          ListTile(
+          //TODO V3
+          /* ListTile(
             leading: const Icon(Icons.chat),
             title: const Text("Chat"), //TODO corel10n
             onTap: () {
@@ -50,7 +51,7 @@ class HomeDrawer extends ConsumerWidget {
                 return PeoplePage();
               }));
             },
-          ),
+          ), */
           ListTile(
             leading: const Icon(Icons.exit_to_app, color: Colors.red),
             title: Text(coreL10n.disconnect,

@@ -36,7 +36,10 @@ class ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.receiveUserEmail),
+          title: Text(
+            widget.receiveUserEmail,
+            style: TextStyle(fontSize: 24),
+          ),
         ),
         body: Column(
           children: [
