@@ -1,5 +1,7 @@
 import 'package:arosa_je/core/core.dart';
+import 'package:arosa_je/modules/chat/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -13,119 +15,108 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
+  final ChatService _chatService = ChatService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void _sendMessage() async {
+    if (_messageController.text.isNotEmpty) {
+      await _chatService.sendMessage(
+          widget.receiveUserID, _messageController.text);
+      _messageController.clear();
+    }
+  }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _messageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chat'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('messages')
-                  .orderBy('timestamp', descending: true)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                }
-
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                final messages = snapshot.data!.docs;
-                return ListView.builder(
-                  reverse: true,
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    final message = messages[index];
-                    return ListTile(
-                      title: Text(message['text']),
-                      subtitle: message['timestamp'] != null
-                          ? Text(DateTime.fromMillisecondsSinceEpoch(
-                                  (message['timestamp'] is Timestamp
-                                          ? (message['timestamp'] as Timestamp)
-                                              .millisecondsSinceEpoch
-                                          : message['timestamp']) *
-                                      1000)
-                              .toString())
-                          : const Text('Timestamp not available'),
-                    );
-                  },
-                );
-              },
+        appBar: AppBar(
+          title: Text(widget.receiveUserEmail),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: _buildMessageList(),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textEditingController,
-                    decoration: const InputDecoration(
-                      hintText: 'Type a message',
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.black,
-                  ),
-                  onPressed: () => _sendMessage(),
-                ),
-              ],
-            ),
-          ),
-        ],
+            _buildMessageInput(),
+          ],
+        ));
+  }
+
+  Widget _buildMessageList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _chatService.getMessages(
+          widget.receiveUserID, _auth.currentUser!.uid),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return ListView(
+          reverse: true,
+          children: snapshot.data!.docs
+              .map<Widget>((doc) => _buildMessageItem(doc))
+              .toList(),
+        );
+      },
+    );
+  }
+
+  Widget _buildMessageItem(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+    var alignment = data['senderID'] == _auth.currentUser!.uid
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
+
+    return Container(
+      alignment: alignment,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: alignment == Alignment.centerRight ? Colors.blue : Colors.grey,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          data['text'],
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
 
-  void _sendMessage() async {
-    final text = _textEditingController.text.trim();
-    if (text.isNotEmpty) {
-      try {
-        await FirebaseFirestore.instance.collection('messages').add({
-          'text': text,
-          'timestamp': FieldValue.serverTimestamp(),
-        });
-        _textEditingController.clear();
-      } catch (e) {
-        printDebug('Error sending message: $e');
-        showDialog(
-          // ignore: use_build_context_synchronously
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content: const Text('Failed to send message. Please try again.'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    }
+  Widget _buildMessageInput() {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _messageController,
+              decoration: const InputDecoration(
+                hintText: 'Enter your message',
+              ),
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.send, color: Colors.blue),
+          onPressed: _sendMessage,
+        ),
+      ],
+    );
   }
 }
