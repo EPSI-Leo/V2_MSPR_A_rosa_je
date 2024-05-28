@@ -81,7 +81,10 @@ class ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.send),
+                  icon: const Icon(
+                    Icons.send,
+                    color: Colors.black,
+                  ),
                   onPressed: () => _sendMessage(),
                 ),
               ],

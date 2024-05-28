@@ -162,9 +162,9 @@ class _AddPlantViewState extends ConsumerState<AddPlantView> {
                           },
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.green),
+                                WidgetStateProperty.all<Color>(Colors.green),
                             foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
+                                WidgetStateProperty.all<Color>(Colors.white),
                           ),
                           child: Text(
                             coreL10n.registerPlant,

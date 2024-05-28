@@ -43,7 +43,7 @@ class HomeDrawer extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.chat),
-            title: Text("Chat"), //TODO corel10n
+            title: const Text("Chat"), //TODO corel10n
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return PeoplePage();
@@ -60,6 +60,7 @@ class HomeDrawer extends ConsumerWidget {
                 SecureStorageKeys.token,
               ]);
 
+              // ignore: use_build_context_synchronously
               context.goNamed(AppRoute.login.name);
             },
           ),
