@@ -78,7 +78,8 @@ class MapView extends ConsumerWidget {
                                             plantName: plant.name,
                                           )));
                             },
-                            icon: const Icon(Icons.add, color: Colors.black))
+                            icon:
+                                const Icon(Icons.note_add, color: Colors.black))
                         : const SizedBox()
                     //TODO V3
                     /* IconButton(
