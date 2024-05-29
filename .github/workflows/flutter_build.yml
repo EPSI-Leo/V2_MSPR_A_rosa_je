@@ -3,10 +3,10 @@ name: Build Flutter APK
 #on:
 #  push:
 #    branches:
-#      - main
+#      - firebase
 #  pull_request:
 #    branches:
-#      - main
+#      - firebase
 on:
     workflow_dispatch:  # Déclenchement manuel
 
