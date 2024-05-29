@@ -168,10 +168,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                       email: _login.text,
                                       password: _password.text,
                                     );
-                                    final FirebaseFirestore _firestore =
+                                    final FirebaseFirestore firestore =
                                         FirebaseFirestore.instance;
 
-                                    _firestore
+                                    firestore
                                         .collection('users')
                                         .doc(userCredential.user!.uid)
                                         .set({

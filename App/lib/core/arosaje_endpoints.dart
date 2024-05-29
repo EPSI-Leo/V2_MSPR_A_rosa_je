@@ -7,4 +7,5 @@ class ArosajeEndpoints {
   static const String addPlant = "/api/plants/addplant";
   static const String getMyPlants = '/api/plants/getmyplants';
   static const String getAllPlants = '/api/plants/getallplants';
+  static const String getadviceformyplants = '/api/plants/getadviceformyplants';
 }

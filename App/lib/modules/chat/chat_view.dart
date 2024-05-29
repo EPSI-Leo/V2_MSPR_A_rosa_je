@@ -38,7 +38,7 @@ class ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: Text(
             widget.receiveUserEmail,
-            style: TextStyle(fontSize: 24),
+            style: const TextStyle(fontSize: 24),
           ),
         ),
         body: Column(

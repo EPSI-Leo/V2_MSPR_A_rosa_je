@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:arosa_je/core/data/entities/plant/plant.dart';
+import 'package:arosa_je/core/data/entities/advice/advice.dart';
+import 'package:arosa_je/core/data/entities/plant/plant_with_advices.dart';
 import 'package:arosa_je/modules/plants/my_plants/notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,16 +18,13 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
   final Map<int, bool> _expandedState = {};
 
   Image decodeBase64Image(String base64ImageData) {
-    // Decode base64 image data
     List<int> imageBytes = base64.decode(base64ImageData);
 
-    // Convert to Uint8List
     Uint8List uint8List = Uint8List.fromList(imageBytes);
 
-    // Create an Image widget
     return Image.memory(
       uint8List,
-      fit: BoxFit.cover, // Adjust the fit as needed
+      fit: BoxFit.cover,
     );
   }
 
@@ -53,7 +51,7 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
                 child: SingleChildScrollView(
                   child: ExpansionPanelList(
                     expansionCallback: (int index, bool isExpanded) {
-                      final plantId = data[index].plant.id!;
+                      final plantId = data[index].plant.plant.id!;
                       setState(() {
                         _expandedState[plantId] = isExpanded;
                       });
@@ -62,14 +60,19 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
                       return ExpansionPanel(
                         headerBuilder: (BuildContext context, bool isExpanded) {
                           return ListTile(
-                            title: Text(item.plant.name!),
+                            title: Text(item.plant.plant.name!),
                           );
                         },
                         body: ListTile(
-                          title: Text(item.plant.description!),
-                          subtitle: decodeBase64Image(item.plant.picture!),
-                        ),
-                        isExpanded: _expandedState[item.plant.id!] ?? false,
+                            title: Text(item.plant.plant.description!),
+                            subtitle: Column(
+                              children: [
+                                decodeBase64Image(item.plant.plant.picture!),
+                                _advicesList(item.plant.advices)
+                              ],
+                            )),
+                        isExpanded:
+                            _expandedState[item.plant.plant.id!] ?? false,
                       );
                     }).toList(),
                   ),
@@ -89,6 +92,17 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
               body: Center(child: Text("No results found : $error")),
             ));
   }
+
+  Widget _advicesList(List<AdviceWithName> advices) {
+    return Column(
+      children: advices
+          .map((advice) => ListTile(
+                title: Text('${advice.userFirstName} ${advice.userLastName}'),
+                subtitle: Text(advice.advice1),
+              ))
+          .toList(),
+    );
+  }
 }
 
 class Item {
@@ -97,6 +111,6 @@ class Item {
     this.isExpanded = false,
   });
 
-  Plant plant;
+  MyPlantsWithAdvices plant;
   bool isExpanded;
 }

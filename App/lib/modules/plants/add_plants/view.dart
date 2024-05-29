@@ -153,7 +153,6 @@ class _AddPlantViewState extends ConsumerState<AddPlantView> {
                                     _descriptionController.text,
                                     widget.picture,
                                   );
-                              //TODO à corriger mais ça me casse les couilles fort
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return const HomeView();

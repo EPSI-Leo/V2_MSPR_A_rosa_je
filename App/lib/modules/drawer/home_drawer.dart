@@ -1,7 +1,6 @@
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
 import 'package:arosa_je/core/local/session_manager/session_manager.dart';
-import 'package:arosa_je/modules/chat/chat_list.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

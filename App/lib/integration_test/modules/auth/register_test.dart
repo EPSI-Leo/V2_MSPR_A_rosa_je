@@ -1,4 +1,4 @@
-import 'package:arosa_je/core/l10n/core_localizations.dart'; 
+import 'package:arosa_je/core/l10n/core_localizations.dart';
 import 'package:arosa_je/integration_test/robots/robot.dart';
 import 'package:arosa_je/modules/auth/register/view.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:integration_test/integration_test.dart';
 
 void main() {
   group('Login Integration Tests', () {
-     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
     late Robot robot;
 
     testWidgets('Verify register screen elements and registration process',
@@ -74,9 +74,6 @@ void main() {
 
       await robot.clickButton(const Key(RegisterWidgetKeys.registerButtonKey));
       await tester.pumpAndSettle();
-
-      // TODO: Vérifiez la navigation vers la page de confirmation ou une autre action attendue
-      // expect(find.byKey(const Key(ConfirmationWidgetKeys.confirmationScreenKey)), findsOneWidget);
     });
   });
 }

@@ -59,9 +59,6 @@ void main() {
 
       await robot.clickButton(const Key(LoginWidgetKeys.loginButtonKey));
       await tester.pumpAndSettle();
-
-      // TODO: Vérifiez la navigation vers la page d'accueil ou une autre action attendue
-      // expect(find.byKey(const Key(HomeWidgetKeys.homeScreenKey)), findsOneWidget);
     });
 
     /* testWidgets('Login with incorrect credentials shows error',

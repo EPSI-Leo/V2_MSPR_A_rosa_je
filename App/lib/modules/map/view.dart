@@ -3,8 +3,11 @@ import 'dart:typed_data';
 
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
+import 'package:arosa_je/core/data/entities/user/user.dart';
+import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
+import 'package:arosa_je/core/local/session_manager/session_manager.dart';
+import 'package:arosa_je/modules/advices/add_advice/view.dart';
 import 'package:arosa_je/modules/app/app_initialcenter_providers.dart';
-import 'package:arosa_je/modules/chat/chat_view.dart';
 import 'package:arosa_je/modules/map/notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -18,8 +21,19 @@ class MapView extends ConsumerWidget {
   });
 
   final List<Marker> markers = [];
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    late User user;
+
+    getUserInfos() async {
+      final sessionManager = ref.read(sessionManagerProvider);
+      final userInfos =
+          await sessionManager.readSecureStorage(SecureStorageKeys.userInfos);
+      final user = User.fromString(userInfos!);
+      return user;
+    }
+
     final coreL10n = context.coreL10n;
     LatLng? initialCenter = ref.read(initialCenterProvider).value;
     final plantsList = ref.watch(allPlantsProvider);
@@ -38,7 +52,7 @@ class MapView extends ConsumerWidget {
       );
     }
 
-    void showAlertDialog(BuildContext context, Plant plant) {
+    void showAlertDialog(BuildContext context, Plant plant, User user) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -52,6 +66,20 @@ class MapView extends ConsumerWidget {
                   children: [
                     Text('${coreL10n.plantName}: ${plant.name}'),
                     const Spacer(),
+                    (user.role == 'role: admin' ||
+                            user.role == 'role: botaniste')
+                        ? IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddAdviceScreen(
+                                            idPlant: plant.id,
+                                            plantName: plant.name,
+                                          )));
+                            },
+                            icon: const Icon(Icons.add, color: Colors.black))
+                        : const SizedBox()
                     //TODO V3
                     /* IconButton(
                         onPressed: () {
@@ -98,8 +126,8 @@ class MapView extends ConsumerWidget {
                 height: 80.0,
                 point: LatLng(plant.latitude!, plant.longitude!),
                 child: IconButton(
-                  onPressed: () {
-                    showAlertDialog(context, plant);
+                  onPressed: () async {
+                    showAlertDialog(context, plant, await getUserInfos());
                   },
                   icon: const Image(
                     image: AssetImage('assets/images/icon.png'),

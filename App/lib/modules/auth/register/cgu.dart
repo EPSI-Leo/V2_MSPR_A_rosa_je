@@ -160,9 +160,9 @@ class _CGUState extends ConsumerState<CGU> {
                               userCredential.user!.uid,
                             );
 
-                        final FirebaseFirestore _firestore =
+                        final FirebaseFirestore firestore =
                             FirebaseFirestore.instance;
-                        await _firestore
+                        await firestore
                             .collection('users')
                             .doc(userCredential.user!.uid)
                             .set({
