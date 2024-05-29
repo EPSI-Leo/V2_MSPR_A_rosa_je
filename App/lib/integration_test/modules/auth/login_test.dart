@@ -47,7 +47,7 @@ void main() {
 
       // Entrez le nom d'utilisateur
       await robot.enterTextField(
-          const Key(LoginWidgetKeys.usernameFieldKey), 'correct_user');
+          const Key(LoginWidgetKeys.usernameFieldKey), 'test@gmail.com');
       await tester.pumpAndSettle();
 
       // Entrez le mot de passe

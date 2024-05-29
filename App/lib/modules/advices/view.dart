@@ -85,24 +85,24 @@ class _AdvicesViewState extends ConsumerState<AdvicesView> {
                 ),
               ),
             ),
-            bottomNavigationBar: (user.role == 'role: admin' ||
-                    user.role == 'role: botaniste') //TODO à corriger ?
-                ? Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: FilledButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(Colors.green),
-                        foregroundColor:
-                            WidgetStateProperty.all<Color>(Colors.white),
-                      ),
-                      child: Text(coreL10n.addAdvice),
-                      onPressed: () async {
-                        context.goNamed(AppRoute.addAdvice.name);
-                      },
-                    ),
-                  )
-                : null,
+            bottomNavigationBar:
+                (user.role == 'role: admin' || user.role == 'role: botaniste')
+                    ? Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: FilledButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.all<Color>(Colors.green),
+                            foregroundColor:
+                                WidgetStateProperty.all<Color>(Colors.white),
+                          ),
+                          child: Text(coreL10n.addAdvice),
+                          onPressed: () async {
+                            context.goNamed(AppRoute.addAdvice.name);
+                          },
+                        ),
+                      )
+                    : null,
           );
         }
         return const Text('No advices found');
