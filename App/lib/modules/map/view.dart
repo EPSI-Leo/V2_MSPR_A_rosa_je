@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -24,8 +26,6 @@ class MapView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    late User user;
-
     getUserInfos() async {
       final sessionManager = ref.read(sessionManagerProvider);
       final userInfos =

@@ -44,7 +44,7 @@ class HomeDrawer extends ConsumerWidget {
           //TODO V3
           /* ListTile(
             leading: const Icon(Icons.chat),
-            title: const Text("Chat"), //TODO corel10n
+            title: const Text(coreL10n.chatTitle), //TODO corel10n
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return PeoplePage();

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:arosa_je/core/data/entities/advice/advice.dart';
+import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/plant/plant_with_advices.dart';
 import 'package:arosa_je/modules/plants/my_plants/notifier.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
   @override
   Widget build(BuildContext context) {
     final plantsList = ref.watch(myPlantsProvider);
-    //TODO   final coreL10n = context.coreL10n;
+    final coreL10n = context.coreL10n;
 
     return plantsList.when(
         data: (plants) {
@@ -45,7 +45,7 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
             return Scaffold(
               backgroundColor: Colors.grey[200],
               appBar: AppBar(
-                title: const Text('My Plants'),
+                title: Text(coreL10n.myPlants),
               ),
               body: SafeArea(
                 child: SingleChildScrollView(
@@ -80,16 +80,16 @@ class _MyPlantsState extends ConsumerState<MyPlants> {
               ),
             );
           }
-          return const Text('No plants found');
+          return Text(coreL10n.noResult);
         },
         loading: () => const Center(
               child: CircularProgressIndicator(color: Colors.black),
             ),
         error: (error, stackTrace) => Scaffold(
               appBar: AppBar(
-                title: const Text('My Plants'),
+                title: Text(coreL10n.myPlants),
               ),
-              body: Center(child: Text("No results found : $error")),
+              body: Center(child: Text(coreL10n.noResult)),
             ));
   }
 
