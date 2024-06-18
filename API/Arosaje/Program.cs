@@ -1,7 +1,9 @@
 using Arosaje.Entities;
 using Arosaje.Hubs;
+using Arosaje.Services;
 using JwtRoleAuthentication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -10,6 +12,17 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSignalR();
@@ -96,10 +109,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapHub<ChatHub>("/chatHub");
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin");
 app.UseStatusCodePages();
 app.UseAuthentication(); 
 app.UseAuthorization();
+app.MapHub<ChatHub>("/chatHub");
 app.MapControllers();
 app.Run();

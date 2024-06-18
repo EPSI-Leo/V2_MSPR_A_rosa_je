@@ -1,9 +1,9 @@
-﻿namespace Arosaje.Hubs;
-
-using Arosaje.Entities;
+﻿using Arosaje.Entities;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
+namespace Arosaje.Hubs;
 public class ChatHub : Hub
 {
     private readonly ArosajeContext _context;
@@ -31,8 +31,8 @@ public class ChatHub : Hub
 
     public override Task OnConnectedAsync()
     {
-        string name = Context.User.Identity.Name;
-        Groups.AddToGroupAsync(Context.ConnectionId, name);
+        string id = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        Groups.AddToGroupAsync(Context.ConnectionId, id);
         return base.OnConnectedAsync();
     }
 }

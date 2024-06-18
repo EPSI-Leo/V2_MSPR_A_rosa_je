@@ -47,7 +47,7 @@ public class TokenService
     {
         var claims = new List<Claim>
         {
-            new Claim("UserId", Id)
+            new Claim(ClaimTypes.NameIdentifier, Id)
         };
 
         return claims;
