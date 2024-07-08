@@ -116,6 +116,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                     decoration: InputDecoration(
                       hintText: coreL10n.signinPassword,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
+                      errorText: ref.watch(registerFormProvider).isPasswordError
+                          ? "Mot de passe invalide, minimum 6 caractères"
+                          : null,
                       suffixIcon: IconButton(
                         icon: Icon(
                           obscureText ? Icons.visibility_off : Icons.visibility,
@@ -199,11 +202,11 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         key: const Key(RegisterWidgetKeys.registerButtonKey),
                         style: ButtonStyle(
                           backgroundColor: isButtonActive
-                              ? MaterialStateProperty.all(Colors.green)
+                              ? WidgetStateProperty.all(Colors.green)
                               : null,
                         ),
                         onPressed: isButtonActive
-                            ? () {
+                            ? () async {
                                 if (_formKey.currentState?.validate() ??
                                     false) {
                                   context.goNamed(AppRoute.cgu.name,

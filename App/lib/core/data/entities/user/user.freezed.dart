@@ -26,6 +26,7 @@ mixin _$User {
   String? get email => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
   String? get role => throw _privateConstructorUsedError;
+  String? get firebaseUid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $UserCopyWith<$Res> {
       String? lastName,
       String? email,
       String? username,
-      String? role});
+      String? role,
+      String? firebaseUid});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? email = freezed,
     Object? username = freezed,
     Object? role = freezed,
+    Object? firebaseUid = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -91,6 +94,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String?,
+      firebaseUid: freezed == firebaseUid
+          ? _value.firebaseUid
+          : firebaseUid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -108,7 +115,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? lastName,
       String? email,
       String? username,
-      String? role});
+      String? role,
+      String? firebaseUid});
 }
 
 /// @nodoc
@@ -127,6 +135,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? email = freezed,
     Object? username = freezed,
     Object? role = freezed,
+    Object? firebaseUid = freezed,
   }) {
     return _then(_$UserImpl(
       id: freezed == id
@@ -153,6 +162,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String?,
+      firebaseUid: freezed == firebaseUid
+          ? _value.firebaseUid
+          : firebaseUid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -166,7 +179,8 @@ class _$UserImpl implements _User {
       required this.lastName,
       required this.email,
       required this.username,
-      required this.role});
+      required this.role,
+      required this.firebaseUid});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -183,10 +197,12 @@ class _$UserImpl implements _User {
   final String? username;
   @override
   final String? role;
+  @override
+  final String? firebaseUid;
 
   @override
   String toString() {
-    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, username: $username, role: $role)';
+    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, username: $username, role: $role, firebaseUid: $firebaseUid)';
   }
 
   @override
@@ -202,13 +218,15 @@ class _$UserImpl implements _User {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.firebaseUid, firebaseUid) ||
+                other.firebaseUid == firebaseUid));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, firstName, lastName, email, username, role);
+  int get hashCode => Object.hash(
+      runtimeType, id, firstName, lastName, email, username, role, firebaseUid);
 
   @JsonKey(ignore: true)
   @override
@@ -231,7 +249,8 @@ abstract class _User implements User {
       required final String? lastName,
       required final String? email,
       required final String? username,
-      required final String? role}) = _$UserImpl;
+      required final String? role,
+      required final String? firebaseUid}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -247,6 +266,8 @@ abstract class _User implements User {
   String? get username;
   @override
   String? get role;
+  @override
+  String? get firebaseUid;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

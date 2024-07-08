@@ -40,7 +40,8 @@ namespace Arosaje.ModelViews
 
             // Retourner une réponse 200 OK
             return Ok("Utilisateur créé avec succès !");
-}
+        }
+
         // POST: api/Users/Login
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -48,7 +49,7 @@ namespace Arosaje.ModelViews
         public IActionResult Login([FromBody] LoginModel model)
         {
             // Récupérer l'utilisateur par son nom d'utilisateur
-            var existingUser = _context.Users.FirstOrDefault(u => u.Username == model.Username);
+            var existingUser = _context.Users.FirstOrDefault(u => u.Email == model.Email);
 
             if (existingUser == null)
             {
@@ -102,7 +103,8 @@ namespace Arosaje.ModelViews
                 user.LastName,
                 user.Email,
                 user.Username,
-                user.Role
+                user.Role,
+                user.FirebaseUid
             };
 
             // Retournez les informations de l'utilisateur sans le mot de passe et l'ID

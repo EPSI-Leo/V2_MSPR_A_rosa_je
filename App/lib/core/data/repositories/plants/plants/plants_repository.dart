@@ -1,4 +1,5 @@
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
+import 'package:arosa_je/core/data/entities/plant/plant_with_advices.dart';
 import 'package:arosa_je/core/data/sources/remote/plants/api_plants.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -46,7 +47,7 @@ class PlantsRepository {
     );
   }
 
-  Future<List<Plant>?> myPlants() async {
+  Future<List<MyPlantsWithAdvices>?> myPlants() async {
     return await api.myPlants();
   }
 

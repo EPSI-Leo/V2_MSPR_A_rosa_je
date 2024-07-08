@@ -26,6 +26,7 @@ namespace Arosaje.Controllers
         [HttpGet("GetMyPlants")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public IActionResult GetMyPlants()
         {
             // Récupérer l'ID de l'utilisateur à partir du token JWT
@@ -37,16 +38,53 @@ namespace Arosaje.Controllers
                 return Unauthorized("Utilisateur non autorisé.");
             }
 
-            // Récupérer les plantes associées à l'ID utilisateur
-            var userPlants = _context.Plants.Where(p => p.IdUser == Convert.ToInt32(userId)).ToList();
+            // Récupérer les plantes de l'utilisateur
+            var userPlants = _context.Plants
+                .Where(p => p.IdUser == Convert.ToInt32(userId))
+                .ToList();
 
             if (userPlants == null || userPlants.Count == 0)
             {
                 return NotFound("Aucune plante trouvée pour cet utilisateur.");
             }
 
-            return Ok(userPlants);
+            // Récupérer les plantes de l'utilisateur
+            var userPlantsList = _context.Plants
+                .Where(p => p.IdUser == Convert.ToInt32(userId))
+                .ToList();
+
+            if (userPlantsList == null || userPlantsList.Count == 0)
+            {
+                return NotFound("Aucune plante trouvée pour cet utilisateur.");
+            }
+
+            // Récupérer les conseils associés à chaque plante avec les noms d'utilisateur
+            var userPlantsWithAdvices = new List<object>();
+
+            foreach (var plant in userPlantsList)
+            {
+                var plantAdvices = _context.Advices
+                    .Where(a => a.IdPlant == plant.Id)
+                    .Select(a => new
+                    {
+                        Id = a.Id,
+                        IdPlant = a.IdPlant,
+                        UserFirstName = _context.Users.FirstOrDefault(u => u.Id == a.IdUser) != null ? _context.Users.First(u => u.Id == a.IdUser).FirstName : null,
+                        UserLastName = _context.Users.FirstOrDefault(u => u.Id == a.IdUser) != null ? _context.Users.First(u => u.Id == a.IdUser).LastName : null,
+                        Advice1 = a.Advice1
+                    })
+                    .ToList();
+
+                userPlantsWithAdvices.Add(new
+                {
+                    Plant = plant,
+                    Advices = plantAdvices
+                });
+            }
+
+            return Ok(userPlantsWithAdvices);
         }
+
 
         // GET: api/Plants/GetAllPlants
         [HttpGet("GetAllPlants")]
@@ -54,16 +92,35 @@ namespace Arosaje.Controllers
         [Authorize] // Ajout de l'attribut Authorize
         public IActionResult GetAllPlants()
         {
-            var plants = _context.Plants.ToList();
+            var plants = _context.Plants
+                .Join(
+                    _context.Users,
+                    plant => plant.IdUser,
+                    user => user.Id,
+                    (plant, user) => new
+                    {
+                        plant.Id,
+                        plant.Name,
+                        plant.BeginAt,
+                        plant.EndAt,
+                        plant.Description,
+                        plant.Picture,
+                        plant.Latitude,
+                        plant.Longitude,
+                        plant.IdUser,
+                        UserFirebaseUid = user.FirebaseUid,
+                        UserUsername = user.Email
+                    }
+                )
+                .ToList();
 
             if (plants == null || plants.Count == 0)
             {
-                return NotFound("Aucune plante trouvee.");
+                return NotFound("Aucune plante trouvée.");
             }
 
             return Ok(plants);
         }
-
 
         // POST: api/Plants/AddPlant
         [HttpPost("AddPlant")]
@@ -112,4 +169,6 @@ namespace Arosaje.Controllers
             public double Longitude { get; set; }
         }
     }
+
+
 }

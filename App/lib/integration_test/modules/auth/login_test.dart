@@ -1,4 +1,4 @@
-import 'package:arosa_je/core/l10n/core_localizations.dart'; 
+import 'package:arosa_je/core/l10n/core_localizations.dart';
 import 'package:arosa_je/integration_test/robots/robot.dart';
 import 'package:arosa_je/modules/auth/login/view.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:integration_test/integration_test.dart';
 
 void main() {
   group('Login Integration Tests', () {
-     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
     late Robot robot;
 
     testWidgets('Verify login screen elements and login process',
@@ -47,7 +47,7 @@ void main() {
 
       // Entrez le nom d'utilisateur
       await robot.enterTextField(
-          const Key(LoginWidgetKeys.usernameFieldKey), 'correct_user');
+          const Key(LoginWidgetKeys.usernameFieldKey), 'test@gmail.com');
       await tester.pumpAndSettle();
 
       // Entrez le mot de passe
@@ -59,9 +59,6 @@ void main() {
 
       await robot.clickButton(const Key(LoginWidgetKeys.loginButtonKey));
       await tester.pumpAndSettle();
-
-      // TODO: Vérifiez la navigation vers la page d'accueil ou une autre action attendue
-      // expect(find.byKey(const Key(HomeWidgetKeys.homeScreenKey)), findsOneWidget);
     });
 
     /* testWidgets('Login with incorrect credentials shows error',

@@ -15,5 +15,6 @@ class RegisterStatus with _$RegisterStatus {
     @Default(false) bool isEmailError,
     @Default(false) bool isButtonActive,
     @Default(false) bool isLoading,
+    @Default(false) bool isPasswordError,
   }) = _RegisterStatus;
 }

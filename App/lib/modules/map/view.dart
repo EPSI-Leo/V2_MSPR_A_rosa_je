@@ -1,14 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
+import 'package:arosa_je/core/data/entities/user/user.dart';
+import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
+import 'package:arosa_je/core/local/session_manager/session_manager.dart';
+import 'package:arosa_je/modules/advices/add_advice/view.dart';
 import 'package:arosa_je/modules/app/app_initialcenter_providers.dart';
-import 'package:arosa_je/modules/chat/chat_view.dart';
 import 'package:arosa_je/modules/map/notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
@@ -20,8 +23,17 @@ class MapView extends ConsumerWidget {
   });
 
   final List<Marker> markers = [];
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    getUserInfos() async {
+      final sessionManager = ref.read(sessionManagerProvider);
+      final userInfos =
+          await sessionManager.readSecureStorage(SecureStorageKeys.userInfos);
+      final user = User.fromString(userInfos!);
+      return user;
+    }
+
     final coreL10n = context.coreL10n;
     LatLng? initialCenter = ref.read(initialCenterProvider).value;
     final plantsList = ref.watch(allPlantsProvider);
@@ -40,7 +52,7 @@ class MapView extends ConsumerWidget {
       );
     }
 
-    void showAlertDialog(BuildContext context, Plant plant) {
+    void showAlertDialog(BuildContext context, Plant plant, User user) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -53,19 +65,34 @@ class MapView extends ConsumerWidget {
                 Row(
                   children: [
                     Text('${coreL10n.plantName}: ${plant.name}'),
-                    Spacer(),
-                    IconButton(
+                    const Spacer(),
+                    (user.role == 'role: admin' ||
+                            user.role == 'role: botaniste')
+                        ? IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddAdviceScreen(
+                                            idPlant: plant.id,
+                                            plantName: plant.name,
+                                          )));
+                            },
+                            icon:
+                                const Icon(Icons.note_add, color: Colors.black))
+                        : const SizedBox()
+                    //TODO V3
+                    /* IconButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ChatPage(
-                                      user: User(
-                                          id: plant.idUser.toString(),
-                                          firstName: plant.name,
-                                          lastName: plant.name))));
+                                  builder: (context) => ChatScreen(
+                                        receiveUserEmail: plant.userUsername,
+                                        receiveUserID: plant.userFirebaseUid,
+                                      )));
                         },
-                        icon: const Icon(Icons.chat, color: Colors.black)),
+                        icon: const Icon(Icons.chat, color: Colors.black)), */
                   ],
                 ),
                 Text('${coreL10n.description}: ${plant.description}'),
@@ -100,8 +127,8 @@ class MapView extends ConsumerWidget {
                 height: 80.0,
                 point: LatLng(plant.latitude!, plant.longitude!),
                 child: IconButton(
-                  onPressed: () {
-                    showAlertDialog(context, plant);
+                  onPressed: () async {
+                    showAlertDialog(context, plant, await getUserInfos());
                   },
                   icon: const Image(
                     image: AssetImage('assets/images/icon.png'),
@@ -112,7 +139,7 @@ class MapView extends ConsumerWidget {
           }
         }
         return map(initialCenter!,
-            markers); //TODO initialCenter!  const LatLng(45.54705, 5.97151),
+            markers); //initialCenter!  const LatLng(45.54705, 5.97151),
       },
       loading: () => const Center(
         child: Center(

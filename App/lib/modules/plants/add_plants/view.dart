@@ -153,7 +153,6 @@ class _AddPlantViewState extends ConsumerState<AddPlantView> {
                                     _descriptionController.text,
                                     widget.picture,
                                   );
-                              //TODO à corriger mais ça me casse les couilles fort
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return const HomeView();
@@ -162,9 +161,9 @@ class _AddPlantViewState extends ConsumerState<AddPlantView> {
                           },
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.green),
+                                WidgetStateProperty.all<Color>(Colors.green),
                             foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
+                                WidgetStateProperty.all<Color>(Colors.white),
                           ),
                           child: Text(
                             coreL10n.registerPlant,

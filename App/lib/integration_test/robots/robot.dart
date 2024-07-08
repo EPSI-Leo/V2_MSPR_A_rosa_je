@@ -53,7 +53,6 @@ class Robot {
   }
 
   void verifyTextContains(text) {
-    //TODO à tester avec les coreL10n
     expect(find.textContaining(text), findsOneWidget);
   }
 

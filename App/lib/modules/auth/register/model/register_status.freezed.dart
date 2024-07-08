@@ -25,6 +25,7 @@ mixin _$RegisterStatus {
   bool get isEmailError => throw _privateConstructorUsedError;
   bool get isButtonActive => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isPasswordError => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RegisterStatusCopyWith<RegisterStatus> get copyWith =>
@@ -46,7 +47,8 @@ abstract class $RegisterStatusCopyWith<$Res> {
       AuthAlertMessage alertMessage,
       bool isEmailError,
       bool isButtonActive,
-      bool isLoading});
+      bool isLoading,
+      bool isPasswordError});
 }
 
 /// @nodoc
@@ -71,6 +73,7 @@ class _$RegisterStatusCopyWithImpl<$Res, $Val extends RegisterStatus>
     Object? isEmailError = null,
     Object? isButtonActive = null,
     Object? isLoading = null,
+    Object? isPasswordError = null,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
@@ -109,6 +112,10 @@ class _$RegisterStatusCopyWithImpl<$Res, $Val extends RegisterStatus>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isPasswordError: null == isPasswordError
+          ? _value.isPasswordError
+          : isPasswordError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -130,7 +137,8 @@ abstract class _$$RegisterStatusImplCopyWith<$Res>
       AuthAlertMessage alertMessage,
       bool isEmailError,
       bool isButtonActive,
-      bool isLoading});
+      bool isLoading,
+      bool isPasswordError});
 }
 
 /// @nodoc
@@ -153,6 +161,7 @@ class __$$RegisterStatusImplCopyWithImpl<$Res>
     Object? isEmailError = null,
     Object? isButtonActive = null,
     Object? isLoading = null,
+    Object? isPasswordError = null,
   }) {
     return _then(_$RegisterStatusImpl(
       firstName: null == firstName
@@ -191,6 +200,10 @@ class __$$RegisterStatusImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isPasswordError: null == isPasswordError
+          ? _value.isPasswordError
+          : isPasswordError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -207,7 +220,8 @@ class _$RegisterStatusImpl implements _RegisterStatus {
       this.alertMessage = AuthAlertMessage.none,
       this.isEmailError = false,
       this.isButtonActive = false,
-      this.isLoading = false});
+      this.isLoading = false,
+      this.isPasswordError = false});
 
   @override
   @JsonKey()
@@ -236,10 +250,13 @@ class _$RegisterStatusImpl implements _RegisterStatus {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool isPasswordError;
 
   @override
   String toString() {
-    return 'RegisterStatus(firstName: $firstName, lastName: $lastName, username: $username, password: $password, email: $email, alertMessage: $alertMessage, isEmailError: $isEmailError, isButtonActive: $isButtonActive, isLoading: $isLoading)';
+    return 'RegisterStatus(firstName: $firstName, lastName: $lastName, username: $username, password: $password, email: $email, alertMessage: $alertMessage, isEmailError: $isEmailError, isButtonActive: $isButtonActive, isLoading: $isLoading, isPasswordError: $isPasswordError)';
   }
 
   @override
@@ -263,12 +280,24 @@ class _$RegisterStatusImpl implements _RegisterStatus {
             (identical(other.isButtonActive, isButtonActive) ||
                 other.isButtonActive == isButtonActive) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.isPasswordError, isPasswordError) ||
+                other.isPasswordError == isPasswordError));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, firstName, lastName, username,
-      password, email, alertMessage, isEmailError, isButtonActive, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      firstName,
+      lastName,
+      username,
+      password,
+      email,
+      alertMessage,
+      isEmailError,
+      isButtonActive,
+      isLoading,
+      isPasswordError);
 
   @JsonKey(ignore: true)
   @override
@@ -288,7 +317,8 @@ abstract class _RegisterStatus implements RegisterStatus {
       final AuthAlertMessage alertMessage,
       final bool isEmailError,
       final bool isButtonActive,
-      final bool isLoading}) = _$RegisterStatusImpl;
+      final bool isLoading,
+      final bool isPasswordError}) = _$RegisterStatusImpl;
 
   @override
   String get firstName;
@@ -308,6 +338,8 @@ abstract class _RegisterStatus implements RegisterStatus {
   bool get isButtonActive;
   @override
   bool get isLoading;
+  @override
+  bool get isPasswordError;
   @override
   @JsonKey(ignore: true)
   _$$RegisterStatusImplCopyWith<_$RegisterStatusImpl> get copyWith =>

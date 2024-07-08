@@ -26,8 +26,9 @@ class AdvicesRepository {
   Future<bool> postAdvice(
     String name,
     String advice1,
+    int? idPlant,
   ) async {
-    await api.postAdvice(name, advice1);
+    await api.postAdvice(name, advice1, idPlant);
     return true;
   }
 }

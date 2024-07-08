@@ -56,6 +56,7 @@ class ApiAdvices extends ApiClient {
   Future<bool?> postAdvice(
     String name,
     String advice1,
+    int? idPlant,
   ) async {
     final token =
         await sessionManager.readSecureStorage(SecureStorageKeys.token);
@@ -63,6 +64,7 @@ class ApiAdvices extends ApiClient {
     var body = {
       "name": name.toString(),
       "advice1": advice1.toString(),
+      "idPlant": idPlant,
     };
 
     return this.post(ArosajeEndpoints.postAdvice,

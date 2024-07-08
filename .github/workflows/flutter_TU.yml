@@ -3,10 +3,10 @@ name: Flutter TU
 on:
   push:
     branches:
-      - main
+      - firebase
   pull_request:
     branches:
-      - main
+      - firebase
 
 jobs:
   test:

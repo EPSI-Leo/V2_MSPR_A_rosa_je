@@ -43,12 +43,16 @@ class LoginForm extends _$LoginForm {
     );
   }
 
-  void setUsername(String username) {
+  void setEmail(String email) {
     state = state.copyWith(
-      username: username,
+      username: email,
     );
 
     isFieldsEmpty();
+  }
+
+  void setIsEmailError(bool isError) {
+    state = state.copyWith(isEmailError: isError);
   }
 
   void setPassword(String passsword) {
@@ -70,7 +74,11 @@ class LoginForm extends _$LoginForm {
   }
 
   void isFieldsEmpty() {
-    setIsButtonActive(state.username.isNotEmpty && state.password.isNotEmpty);
+    setIsButtonActive(
+      state.username.isNotEmpty &&
+          state.password.isNotEmpty &&
+          !state.isEmailError,
+    );
   }
 
   void setLoading(bool isLoading) {

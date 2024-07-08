@@ -29,6 +29,8 @@ mixin _$Plant {
   String? get picture => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
+  String? get userFirebaseUid => throw _privateConstructorUsedError;
+  String? get userUsername => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +51,9 @@ abstract class $PlantCopyWith<$Res> {
       String? description,
       String? picture,
       double? latitude,
-      double? longitude});
+      double? longitude,
+      String? userFirebaseUid,
+      String? userUsername});
 }
 
 /// @nodoc
@@ -74,6 +78,8 @@ class _$PlantCopyWithImpl<$Res, $Val extends Plant>
     Object? picture = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? userFirebaseUid = freezed,
+    Object? userUsername = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -112,6 +118,14 @@ class _$PlantCopyWithImpl<$Res, $Val extends Plant>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
+      userFirebaseUid: freezed == userFirebaseUid
+          ? _value.userFirebaseUid
+          : userFirebaseUid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userUsername: freezed == userUsername
+          ? _value.userUsername
+          : userUsername // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -132,7 +146,9 @@ abstract class _$$PlantImplCopyWith<$Res> implements $PlantCopyWith<$Res> {
       String? description,
       String? picture,
       double? latitude,
-      double? longitude});
+      double? longitude,
+      String? userFirebaseUid,
+      String? userUsername});
 }
 
 /// @nodoc
@@ -155,6 +171,8 @@ class __$$PlantImplCopyWithImpl<$Res>
     Object? picture = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? userFirebaseUid = freezed,
+    Object? userUsername = freezed,
   }) {
     return _then(_$PlantImpl(
       id: freezed == id
@@ -193,6 +211,14 @@ class __$$PlantImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
+      userFirebaseUid: freezed == userFirebaseUid
+          ? _value.userFirebaseUid
+          : userFirebaseUid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userUsername: freezed == userUsername
+          ? _value.userUsername
+          : userUsername // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -209,7 +235,9 @@ class _$PlantImpl implements _Plant {
       required this.description,
       required this.picture,
       required this.latitude,
-      required this.longitude});
+      required this.longitude,
+      required this.userFirebaseUid,
+      required this.userUsername});
 
   factory _$PlantImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlantImplFromJson(json);
@@ -232,10 +260,14 @@ class _$PlantImpl implements _Plant {
   final double? latitude;
   @override
   final double? longitude;
+  @override
+  final String? userFirebaseUid;
+  @override
+  final String? userUsername;
 
   @override
   String toString() {
-    return 'Plant(id: $id, idUser: $idUser, name: $name, beginAt: $beginAt, endAt: $endAt, description: $description, picture: $picture, latitude: $latitude, longitude: $longitude)';
+    return 'Plant(id: $id, idUser: $idUser, name: $name, beginAt: $beginAt, endAt: $endAt, description: $description, picture: $picture, latitude: $latitude, longitude: $longitude, userFirebaseUid: $userFirebaseUid, userUsername: $userUsername)';
   }
 
   @override
@@ -254,13 +286,17 @@ class _$PlantImpl implements _Plant {
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+                other.longitude == longitude) &&
+            (identical(other.userFirebaseUid, userFirebaseUid) ||
+                other.userFirebaseUid == userFirebaseUid) &&
+            (identical(other.userUsername, userUsername) ||
+                other.userUsername == userUsername));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, idUser, name, beginAt, endAt,
-      description, picture, latitude, longitude);
+      description, picture, latitude, longitude, userFirebaseUid, userUsername);
 
   @JsonKey(ignore: true)
   @override
@@ -286,7 +322,9 @@ abstract class _Plant implements Plant {
       required final String? description,
       required final String? picture,
       required final double? latitude,
-      required final double? longitude}) = _$PlantImpl;
+      required final double? longitude,
+      required final String? userFirebaseUid,
+      required final String? userUsername}) = _$PlantImpl;
 
   factory _Plant.fromJson(Map<String, dynamic> json) = _$PlantImpl.fromJson;
 
@@ -308,6 +346,10 @@ abstract class _Plant implements Plant {
   double? get latitude;
   @override
   double? get longitude;
+  @override
+  String? get userFirebaseUid;
+  @override
+  String? get userUsername;
   @override
   @JsonKey(ignore: true)
   _$$PlantImplCopyWith<_$PlantImpl> get copyWith =>

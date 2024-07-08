@@ -249,4 +249,10 @@ class CoreLocalizationsFr extends CoreLocalizations {
 
   @override
   String get plantInfosSentence => 'Informations sur la plante';
+
+  @override
+  String get noResult => 'Pas de résultat';
+
+  @override
+  String get chatTitle => 'Chat';
 }

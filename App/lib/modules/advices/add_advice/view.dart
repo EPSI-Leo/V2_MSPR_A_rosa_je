@@ -8,18 +8,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class AddAdviceScreen extends ConsumerStatefulWidget {
-  const AddAdviceScreen({super.key});
+  const AddAdviceScreen({super.key, this.idPlant, this.plantName});
+
+  final int? idPlant;
+  final String? plantName;
 
   @override
   AddAdviceScreenState createState() => AddAdviceScreenState();
 }
 
 class AddAdviceScreenState extends ConsumerState<AddAdviceScreen> {
-  final TextEditingController nameController = TextEditingController();
   final TextEditingController adviceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController nameController =
+        TextEditingController(text: widget.plantName);
+
     final coreL10n = context.coreL10n;
     ref.watch(addAviceProvider);
 
@@ -72,15 +77,15 @@ class AddAdviceScreenState extends ConsumerState<AddAdviceScreen> {
             const SizedBox(height: 16.0),
             FilledButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.green),
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
-                if (nameController.text.isNotEmpty &&
-                    adviceController.text.isNotEmpty) {
-                  ref
-                      .read(addAviceProvider.notifier)
-                      .addAvice(nameController.text, adviceController.text);
+                if (adviceController.text.isNotEmpty) {
+                  ref.read(addAviceProvider.notifier).addAvice(
+                      nameController.text,
+                      adviceController.text,
+                      widget.idPlant);
                 } else {
                   // Show an error message or handle the case where input is incomplete
                 }

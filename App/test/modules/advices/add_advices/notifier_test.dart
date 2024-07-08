@@ -11,6 +11,7 @@ void main() {
 
   late String name;
   late String advice1;
+  late int? idPlant;
 
   setUp(() {
     advicesRepository = MockAdvicesRepository();
@@ -27,11 +28,12 @@ void main() {
     test('advicesRepository called', () async {
       name = 'name';
       advice1 = 'advice1';
+      idPlant = 1;
 
-      when(() => advicesRepository.postAdvice(name, advice1))
+      when(() => advicesRepository.postAdvice(name, advice1, idPlant))
           .thenAnswer((_) async => true);
 
-      final result = await advicesRepository.postAdvice(name, advice1);
+      final result = await advicesRepository.postAdvice(name, advice1, idPlant);
       expect(result, true);
     });
   });

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:arosa_je/core/api_client.dart';
 import 'package:arosa_je/core/arosaje_endpoints.dart';
 import 'package:arosa_je/core/data/entities/plant/plant.dart';
+import 'package:arosa_je/core/data/entities/plant/plant_with_advices.dart';
 import 'package:arosa_je/core/foundation/config.dart';
 import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
 import 'package:arosa_je/core/local/session_manager/session_manager.dart';
@@ -92,7 +93,7 @@ class ApiPlants extends ApiClient {
     return base64Encode(imageBytes);
   }
 
-  Future<List<Plant>?> myPlants() async {
+  Future<List<MyPlantsWithAdvices>?> myPlants() async {
     final token =
         await sessionManager.readSecureStorage(SecureStorageKeys.token);
 
@@ -105,7 +106,7 @@ class ApiPlants extends ApiClient {
       deserializer: (json) {
         final List<dynamic> plantJsonList = json as List<dynamic>;
         return plantJsonList
-            .map((plantJson) => Plant.fromJson(plantJson))
+            .map((plantJson) => MyPlantsWithAdvices.fromJson(plantJson))
             .toList();
       },
     );

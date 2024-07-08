@@ -6,6 +6,8 @@ import 'package:arosa_je/core/theme/app_spacing.dart';
 import 'package:arosa_je/modules/auth/login/model/auth_alert_message.dart';
 import 'package:arosa_je/modules/auth/login/notifier.dart';
 import 'package:arosa_je/router/router.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -97,12 +99,22 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   TextFormField(
                     key: const Key(LoginWidgetKeys.usernameFieldKey),
                     decoration: InputDecoration(
-                      hintText: coreL10n.signinUsername,
+                      hintText: coreL10n.signupEmail,
                       hintStyle: Theme.of(context).textTheme.bodyLarge,
+                      errorText: ref.watch(loginFormProvider).isEmailError
+                          ? coreL10n.validateEmailValid
+                          : null,
                     ),
                     controller: _login,
                     onChanged: (value) {
-                      ref.read(loginFormProvider.notifier).setUsername(value);
+                      final isEmail =
+                          RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value);
+                      ref.read(loginFormProvider.notifier).setEmail(value);
+                      ref
+                          .read(loginFormProvider.notifier)
+                          .setIsEmailError(!isEmail);
+                      ref.read(loginFormProvider.notifier).isFieldsEmpty();
                     },
                   ),
                   const AppGap.xs(),
@@ -139,17 +151,39 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         key: const Key(LoginWidgetKeys.loginButtonKey),
                         style: ButtonStyle(
                           backgroundColor: loginForm.isButtonActive
-                              ? MaterialStateProperty.all(Colors.green)
+                              ? WidgetStateProperty.all(Colors.green)
                               : null,
                         ),
                         onPressed: loginForm.isButtonActive
-                            ? () {
+                            ? () async {
                                 if (_formKey.currentState?.validate() ??
                                     false) {
                                   ref
                                       .read(loginProvider.notifier)
                                       .login(_login.text, _password.text);
+                                  try {
+                                    UserCredential userCredential =
+                                        await FirebaseAuth.instance
+                                            .signInWithEmailAndPassword(
+                                      email: _login.text,
+                                      password: _password.text,
+                                    );
+                                    final FirebaseFirestore firestore =
+                                        FirebaseFirestore.instance;
+
+                                    firestore
+                                        .collection('users')
+                                        .doc(userCredential.user!.uid)
+                                        .set({
+                                      'email': userCredential.user!.email,
+                                      'uid': userCredential.user!.uid,
+                                    }, SetOptions(merge: true));
+                                  } on FirebaseAuthException catch (e) {
+                                    printDebug(e.toString());
+                                    //TODO make the connection to firebase properly in notifier
+                                  }
                                 }
+
                                 FocusManager.instance.primaryFocus?.unfocus();
                               }
                             : null,

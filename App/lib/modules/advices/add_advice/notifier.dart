@@ -13,6 +13,7 @@ class AddAvice extends _$AddAvice {
   Future<void> addAvice(
     String name,
     String advice1,
+    int? idPlant,
   ) async {
     state = const AsyncLoading();
     /* ref.read(addAviceFormProvider.notifier).setConnectionMessageError(
@@ -22,6 +23,7 @@ class AddAvice extends _$AddAvice {
     state = await AsyncValue.guard(() => addAviceRepository.postAdvice(
           name,
           advice1,
+          idPlant,
         ));
   }
 }

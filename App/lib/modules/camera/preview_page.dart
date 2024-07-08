@@ -22,8 +22,8 @@ class PreviewPage extends StatelessWidget {
           Text(picture.name),
           FilledButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.green),
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
                 Navigator.push(

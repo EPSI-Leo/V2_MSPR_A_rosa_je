@@ -54,7 +54,8 @@ namespace Arosaje.Controllers
             {
                 IdUser = Convert.ToInt32(userId),
                 Name = request.Name,
-                Advice1 = request.Advice1
+                Advice1 = request.Advice1,
+                IdPlant = request.IdPlant 
             };
 
             _context.Advices.Add(advice);
@@ -63,10 +64,13 @@ namespace Arosaje.Controllers
             return CreatedAtAction(nameof(Get), new { id = advice.Id }, advice);
         }
 
+
         public class AdviceCreateRequest
         {
             public string Name { get; set; }
             public string Advice1 { get; set; }
+            public int? IdPlant { get; set; } 
         }
+
     }
 }

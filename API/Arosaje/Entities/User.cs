@@ -17,7 +17,9 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public int Cgu { get; set; }
+    public bool Cgu { get; set; }
 
     public string Role { get; set; } = null!;
+
+    public string FirebaseUid { get; set; } = null!;
 }

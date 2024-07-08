@@ -16,6 +16,8 @@ _$PlantImpl _$$PlantImplFromJson(Map<String, dynamic> json) => _$PlantImpl(
       picture: json['picture'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
+      userFirebaseUid: json['userFirebaseUid'] as String?,
+      userUsername: json['userUsername'] as String?,
     );
 
 Map<String, dynamic> _$$PlantImplToJson(_$PlantImpl instance) =>
@@ -29,4 +31,6 @@ Map<String, dynamic> _$$PlantImplToJson(_$PlantImpl instance) =>
       'picture': instance.picture,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
+      'userFirebaseUid': instance.userFirebaseUid,
+      'userUsername': instance.userUsername,
     };

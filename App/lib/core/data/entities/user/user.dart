@@ -12,6 +12,7 @@ class User with _$User {
     required String? email,
     required String? username,
     required String? role,
+    required String? firebaseUid,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -20,7 +21,7 @@ class User with _$User {
     final cleanedData = userData.replaceAll('User(', '').replaceAll(')', '');
     final List<String> data =
         cleanedData.split(',').map((e) => e.trim()).toList();
-    if (data.length != 6) {
+    if (data.length != 7) {
       throw ArgumentError('Invalid user data');
     }
     return User(
@@ -30,6 +31,7 @@ class User with _$User {
       email: data[3].trim(),
       username: data[4].trim(),
       role: data[5].trim(),
+      firebaseUid: data[6].trim(),
     );
   }
 }

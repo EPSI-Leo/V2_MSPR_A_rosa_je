@@ -20,7 +20,7 @@ final loginProvider = AutoDisposeAsyncNotifierProvider<Login, bool>.internal(
 );
 
 typedef _$Login = AutoDisposeAsyncNotifier<bool>;
-String _$loginFormHash() => r'd5453dd279ef98cf9879eca44b5a441270a66dd1';
+String _$loginFormHash() => r'3b0e4db6b778114b7a54fa85374cb0d03142cf37';
 
 /// See also [LoginForm].
 @ProviderFor(LoginForm)

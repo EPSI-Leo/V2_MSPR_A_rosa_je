@@ -29,9 +29,9 @@ public partial class ArosajeContext : DbContext
 
             entity.ToTable("advices");
 
-            entity.HasIndex(e => e.IdPlant, "fk_advices_plants");
+            entity.HasIndex(e => e.IdPlant, "id_plant");
 
-            entity.HasIndex(e => e.IdUser, "fk_advices_users");
+            entity.HasIndex(e => e.IdUser, "id_user");
 
             entity.Property(e => e.Id)
                 .HasColumnType("int(11)")
@@ -60,7 +60,7 @@ public partial class ArosajeContext : DbContext
 
             entity.ToTable("plants");
 
-            entity.HasIndex(e => e.IdUser, "fk_plants_users");
+            entity.HasIndex(e => e.IdUser, "id_user");
 
             entity.Property(e => e.Id)
                 .HasColumnType("int(11)")
@@ -92,12 +92,13 @@ public partial class ArosajeContext : DbContext
             entity.Property(e => e.Id)
                 .HasColumnType("int(11)")
                 .HasColumnName("id");
-            entity.Property(e => e.Cgu)
-                .HasColumnType("int(11)")
-                .HasColumnName("cgu");
+            entity.Property(e => e.Cgu).HasColumnName("cgu");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .HasColumnName("email");
+            entity.Property(e => e.FirebaseUid)
+                .HasMaxLength(255)
+                .HasColumnName("firebase_uid");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .HasColumnName("first_name");

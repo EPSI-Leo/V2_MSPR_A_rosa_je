@@ -584,6 +584,18 @@ abstract class CoreLocalizations {
   /// In en, this message translates to:
   /// **'Plant information'**
   String get plantInfosSentence;
+
+  /// No description provided for @noResult.
+  ///
+  /// In en, this message translates to:
+  /// **'No result'**
+  String get noResult;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get chatTitle;
 }
 
 class _CoreLocalizationsDelegate extends LocalizationsDelegate<CoreLocalizations> {

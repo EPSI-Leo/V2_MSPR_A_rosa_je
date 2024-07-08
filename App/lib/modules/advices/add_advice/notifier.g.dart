@@ -6,7 +6,7 @@ part of 'notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addAviceHash() => r'78e33dfe57d49dd24ad785ed2740b491412f00f6';
+String _$addAviceHash() => r'15d4ba809617fb7f43f80936eef944cfe12cdcab';
 
 /// See also [AddAvice].
 @ProviderFor(AddAvice)

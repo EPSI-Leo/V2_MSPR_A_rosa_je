@@ -1,9 +1,11 @@
 import "package:arosa_je/core/core.dart";
 import "package:arosa_je/modules/auth/register/notifier.dart";
 import "package:arosa_je/router/router.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CGU extends ConsumerStatefulWidget {
   const CGU({
@@ -140,15 +142,45 @@ class _CGUState extends ConsumerState<CGU> {
               const AppGap.medium(),
               Expanded(
                 child: ElevatedButton(
-                    onPressed: () {
-                      ref.read(registerProvider.notifier).register(
-                            widget.username,
-                            widget.password,
-                            widget.lastName,
-                            widget.firstName,
-                            widget.email,
-                          );
-                          context.goNamed(AppRoute.login.name);
+                    onPressed: () async {
+                      try {
+                        final UserCredential userCredential = await FirebaseAuth
+                            .instance
+                            .createUserWithEmailAndPassword(
+                          email: widget.email,
+                          password: widget.password,
+                        );
+
+                        await ref.read(registerProvider.notifier).register(
+                              widget.username,
+                              widget.password,
+                              widget.lastName,
+                              widget.firstName,
+                              widget.email,
+                              userCredential.user!.uid,
+                            );
+
+                        final FirebaseFirestore firestore =
+                            FirebaseFirestore.instance;
+                        await firestore
+                            .collection('users')
+                            .doc(userCredential.user!.uid)
+                            .set({
+                          'email': userCredential.user!.email,
+                          'uid': userCredential.user!.uid,
+                        });
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'weak-password') {
+                          printDebug('The password provided is too weak.');
+                        } else if (e.code == 'email-already-in-use') {
+                          printDebug(
+                              'The account already exists for that email.');
+                        }
+                      } catch (e) {
+                        printDebug(e.toString());
+                      }
+                      // ignore: use_build_context_synchronously
+                      context.goNamed(AppRoute.login.name);
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.blue,

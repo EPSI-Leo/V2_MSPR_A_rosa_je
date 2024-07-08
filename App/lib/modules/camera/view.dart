@@ -38,8 +38,8 @@ class _CameraPageState extends State<CameraView> {
     try {
       await _cameraController.setFlashMode(FlashMode.off);
       XFile picture = await _cameraController.takePicture();
-      // ignore: use_build_context_synchronously
       Navigator.push(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(
               builder: (context) => PreviewPage(

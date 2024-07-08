@@ -22,4 +22,5 @@ public partial class Plant
     public double Latitude { get; set; }
 
     public double Longitude { get; set; }
+
 }

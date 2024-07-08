@@ -8,7 +8,7 @@ part of 'advice.dart';
 
 _$AdviceImpl _$$AdviceImplFromJson(Map<String, dynamic> json) => _$AdviceImpl(
       id: json['id'] as int,
-      idUser: json['idUser'] as int,
+      idUser: json['idUser'] as int?,
       idPlant: json['idPlant'] as int?,
       name: json['name'] as String,
       advice1: json['advice1'] as String,
