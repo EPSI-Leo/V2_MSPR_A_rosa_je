@@ -24,7 +24,12 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_PORT": "3306",
+        "DB_USER": "moi",
+        "DB_SERVER": "localhost",
+        "DB_NAME": "arosaje",
+        "DB_PASSWORD": "moi123"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7061;http://localhost:5210"

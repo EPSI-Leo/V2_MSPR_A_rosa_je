@@ -1,12 +1,18 @@
 using Arosaje.Entities;
+using Arosaje.Services;
 using JwtRoleAuthentication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Configuration;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var confBuilder = new ConfigurationBuilder();
+confBuilder.AddJsonFile("appsettings.json");
+confBuilder.AddEnvironmentVariables();
+var configuration = confBuilder.Build();
 
 // Add services
 builder.Services.AddControllers();
@@ -44,11 +50,11 @@ builder.Services.AddProblemDetails();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 
-builder.Services.AddScoped<TokenService>(); // Ajout de TokenService dans le conteneur d'injection de dépendances
-
+builder.Services.AddScoped<TokenService>(); // Ajout de TokenService dans le conteneur d'injection de dÃ©pendances
+string connectionString = ConnectionStringHelper.BuildConnectionString(configuration, "DefaultConnection");
 builder.Services.AddDbContext<ArosajeContext>(options =>
 {
-    options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseMySQL(connectionString);
 });
 
 // Add services to the container.
@@ -74,6 +80,7 @@ builder.Services.AddAuthentication(options =>
             ValidateIssuerSigningKey = true,
             ValidIssuer = validIssuer,
             ValidAudience = validAudience,
+            RoleClaimType = "Role",
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(symmetricSecurityKey)
             ),

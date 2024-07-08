@@ -26,10 +26,10 @@ abstract class Config {
 
 class _PreprodConfig implements Config {
   @override
-  String get baseUrl => 'http://10.0.2.2:7181';
+  String get baseUrl => 'http://127.0.0.1:8080/';
 }
 
 class _ProdConfig implements Config {
   @override
-  String get baseUrl => 'http://10.0.2.2:7181';
+  String get baseUrl => 'http://127.0.0.1:8080/';
 }

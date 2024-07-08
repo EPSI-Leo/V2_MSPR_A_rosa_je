@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 using Arosaje.Models;
+using System.Data;
 
 public class TokenService
 {
@@ -18,11 +19,11 @@ public class TokenService
         _logger = logger;
     }
 
-    public string CreateToken(String Id)
+    public string CreateToken(String Id, String role)
     {
         var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
         var token = CreateJwtToken(
-            CreateClaims(Id),
+            CreateClaims(Id, role),
             CreateSigningCredentials(),
             expiration
         );
@@ -43,11 +44,12 @@ public class TokenService
             signingCredentials: credentials
         );
 
-    private List<Claim> CreateClaims(String Id)
+    private List<Claim> CreateClaims(String Id, String role)
     {
         var claims = new List<Claim>
         {
-            new Claim("UserId", Id)
+            new Claim("UserId", Id),
+            new Claim("Role", role)
         };
 
         return claims;

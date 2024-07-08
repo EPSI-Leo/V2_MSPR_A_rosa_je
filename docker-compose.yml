@@ -1,20 +1,28 @@
-version: '3'
+version: "3"
 
 services:
   db:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: arosaje
-      MYSQL_USER: moi
-      MYSQL_PASSWORD: moi123
-      MYSQL_ROOT_PASSWORD: aaaaaaaa
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
     volumes:
-      - /c/dev/bdd_mspr:/docker-entrypoint-initdb.d
+      - ${VOLUME_DB}:/docker-entrypoint-initdb.d
       - volume_mspr:/var/lib/mysql
 
   api:
     build: ./API
+    environment:
+      DB_SERVER: ${DB_SERVER}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
     ports:
       - "8080:8080"
       - "8081:8081"

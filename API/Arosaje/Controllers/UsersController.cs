@@ -62,7 +62,7 @@ namespace Arosaje.ModelViews
             }
 
             // Générer le token JWT
-            var token = _tokenService.CreateToken(existingUser.Id.ToString());
+            var token = _tokenService.CreateToken(existingUser.Id.ToString(), existingUser.Role);
 
             // Retourner l'ID de l'utilisateur et le token JWT en tant que partie de la réponse
             return Ok(new { Id = existingUser.Id, Token = token });
@@ -114,9 +114,10 @@ namespace Arosaje.ModelViews
         [HttpDelete("DeleteUser/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(int.Parse(id));
 
             if (user == null)
             {
