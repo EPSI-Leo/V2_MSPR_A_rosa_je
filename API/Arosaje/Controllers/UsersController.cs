@@ -114,6 +114,7 @@ namespace Arosaje.ModelViews
 
         // DELETE: api/Users/DeleteUser/{id}
         [HttpDelete("DeleteUser/{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteUser(string id)

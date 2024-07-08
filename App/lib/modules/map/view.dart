@@ -10,6 +10,7 @@ import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
 import 'package:arosa_je/core/local/session_manager/session_manager.dart';
 import 'package:arosa_je/modules/advices/add_advice/view.dart';
 import 'package:arosa_je/modules/app/app_initialcenter_providers.dart';
+import 'package:arosa_je/modules/chat/chat_view.dart';
 import 'package:arosa_je/modules/map/notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -80,19 +81,19 @@ class MapView extends ConsumerWidget {
                             },
                             icon:
                                 const Icon(Icons.note_add, color: Colors.black))
-                        : const SizedBox()
+                        : const SizedBox(),
                     //TODO V3
-                    /* IconButton(
+                    IconButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ChatScreen(
-                                        receiveUserEmail: plant.userUsername,
-                                        receiveUserID: plant.userFirebaseUid,
+                                        receiveUserEmail: plant.userUsername!,
+                                        receiveUserID: plant.userFirebaseUid!,
                                       )));
                         },
-                        icon: const Icon(Icons.chat, color: Colors.black)), */
+                        icon: const Icon(Icons.chat, color: Colors.black)),
                   ],
                 ),
                 Text('${coreL10n.description}: ${plant.description}'),
