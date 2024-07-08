@@ -1,6 +1,7 @@
 import 'package:arosa_je/core/core.dart';
 import 'package:arosa_je/core/local/session_manager/secure_storage_keys.dart';
 import 'package:arosa_je/core/local/session_manager/session_manager.dart';
+import 'package:arosa_je/modules/chat/chat_list.dart';
 import 'package:arosa_je/router/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,15 +43,15 @@ class HomeDrawer extends ConsumerWidget {
             },
           ),
           //TODO V3
-          /* ListTile(
+          ListTile(
             leading: const Icon(Icons.chat),
-            title: const Text(coreL10n.chatTitle), //TODO corel10n
+            title: Text(coreL10n.chatTitle), //TODO corel10n
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return PeoplePage();
               }));
             },
-          ), */
+          ),
           ListTile(
             leading: const Icon(Icons.exit_to_app, color: Colors.red),
             title: Text(coreL10n.disconnect,
