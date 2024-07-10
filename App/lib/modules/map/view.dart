@@ -82,7 +82,6 @@ class MapView extends ConsumerWidget {
                             icon:
                                 const Icon(Icons.note_add, color: Colors.black))
                         : const SizedBox(),
-                    //TODO V3
                     IconButton(
                         onPressed: () {
                           Navigator.push(

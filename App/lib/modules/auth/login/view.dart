@@ -180,7 +180,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                     }, SetOptions(merge: true));
                                   } on FirebaseAuthException catch (e) {
                                     printDebug(e.toString());
-                                    //TODO make the connection to firebase properly in notifier
                                   }
                                 }
 
